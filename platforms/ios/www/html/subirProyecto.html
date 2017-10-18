@@ -1,0 +1,78 @@
+<ion-view title="Iniciar Proyecto" id="page5">
+    <ion-content padding="true" class="has-header">
+        <div id="subirproyecto-button-bar5" class="button-bar">
+            <button id="subirProyecto-button35" ng-click="showOption = {'new':true, 'open': false}" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-add">Nuevo</button>
+            <button id="subirProyecto-button35" ng-click="showOption ={'open':true, 'new': false}" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-folder">Abrir</button>
+        </div>
+        <label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showOption.open">
+          <span class="input-label">Seleccione el Proyecto</span>
+          <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
+           ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
+        </label>
+
+        <form id="subirProyecto-form2" class="list" ng-show="showOption.new">
+
+            <label class="item item-input" id="subirProyecto-input5">
+        <span class="input-label">Separador</span>
+        <input type="text" placeholder="," ng-model="csv.separator">
+      </label>
+
+
+
+            <ion-toggle toggle-class="toggle-positive" id="toggleheadercsv1" ng-model="csv.header"><strong> Tiene Encabezado? </strong></ion-toggle>
+
+            <label class="item item-input" id="subirProyecto-input5">
+        <span class="input-label">Seleccione el CSV</span>
+        <ng-csv-import content="csv.content"
+        header="csv.header" 
+        separator="csv.separator"
+        result="csv.result"></ng-csv-import>
+      </label>
+            <label class="item" id="subirProyecto-input5" ng-model "csv.result">
+      Vista Previa: {{csv.content}}
+      </label>
+
+
+            <div id="subirProyecto-button-bar2" class="button-bar">
+                <!--button 
+        id="subirProyecto-button35" ng-click="addCSV()"  ng-show="showupload=false" style="border-radius:50px 50px 50px 50px;" 
+        class="button button-positive button-block icon-right ion-android-upload">Cargar</button>
+        <button 
+        id="subirProyecto-button35" ng-click="menu.ajustarCSV()" ng-show="showStartBarr" style="border-radius:50px 50px 50px 50px;" 
+        class="button button-positive button-block icon-right ion-android-checkmark-circle">Iniciar
+      </button-->
+                <button id="subirProyecto-button35" ng-click="addCSV()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
+
+
+            </div>
+        </form>
+        <table class="table table-bordered table-hover table-condensed" ng-show="showContinueForm==true">
+            <tr style="font-weight: bold">
+                <td style="width:30%">Proyecto</td>
+                <td style="width:20%">Stracon</td>
+
+                <!--td style="width:30%">Valores</td-->
+
+
+            </tr>
+            <tr style="font-weight: bold">
+                <td style="width:30%">{{selectedproj.doc._id}}</td>
+                <td style="width:20%">{{selectedproj.doc.stracon || 'Sin Asignar'}}</td>
+
+                <!--td style="width:30%">Valores</td-->
+
+
+            </tr>
+
+
+        </table>
+
+        <div id="subirProyecto-button-bar2" class="button-bar">
+
+
+            <button id="subirProyecto-button35" ng-click="gotoMenu()" ng-show="showContinueForm==true" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-arrow-dropright-circle">Continuar</button>
+
+        </div>
+
+    </ion-content>
+</ion-view>

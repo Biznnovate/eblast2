@@ -1,0 +1,23 @@
+<ion-view title="Vista de Proyecto" id="page13">
+    <ion-content padding="true" class="has-header">
+        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+            <tr>
+                <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
+          Otros Proyectos</button>
+                </td>
+            </tr>
+        </table>
+        <label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
+            <span class="input-label">Seleccione el Proyecto</span>
+            <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
+             ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
+  </label>
+        <button ng-click="gotoProductos()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-edit">Productos Utilizados</button>
+        <button ng-click="gotoMuestra()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-android-locate">Agregar Muestreo de Calidad</button>
+        <button ng-click="gotoSismo()" id="vistaDeProyecto-button22" class="button button-positive button-block icon-left ion-ios-pulse-strong">Agregar Sismografo</button>
+        <button ng-click="gotoDataGral()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Datos Generales</button>
+        <button ng-click="gotoCarga()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Cargas</button>
+        <button ng-click="gotoReporte()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Barrenos</button>
+    </ion-content>
+</ion-view>

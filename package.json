@@ -1,0 +1,78 @@
+{
+    "name": "e-blast",
+    "version": "1.1.1",
+    "description": "e-Blast: An Ionic project",
+    "dependencies": {
+        "@ionic-native/core": "^4.2.0",
+        "@ionic-native/file-transfer": "^4.2.0",
+        "angular-chart.js": "^1.1.1",
+        "angular-save-html-to-pdf": "^1.3.2",
+        "angular-ui-grid": "^4.0.6",
+        "angular2-csv": "^0.2.3",
+        "chart.js": "^2.7.0",
+        "cordova-android": "^6.2.3",
+        "cordova-browser": "^4.1.0",
+        "cordova-ios": "^4.4.0",
+        "cordova-plugin-compat": "^1.1.0",
+        "cordova-plugin-console": "1.0.5",
+        "cordova-plugin-device": "1.1.4",
+        "cordova-plugin-file": "^4.3.3",
+        "cordova-plugin-file-transfer": "^1.6.3",
+        "cordova-plugin-splashscreen": "~4.0.1",
+        "cordova-plugin-statusbar": "2.2.1",
+        "cordova-plugin-whitelist": "1.3.1",
+        "device": "^0.3.8",
+        "express": "^4.16.2",
+        "gulp": "^3.5.6",
+        "gulp-concat": "^2.2.0",
+        "gulp-minify-css": "^0.3.0",
+        "gulp-rename": "^1.2.0",
+        "gulp-sass": "^2.0.4",
+        "html2canvas": "^0.5.0-beta4",
+        "ionic-plugin-deploy": "~0.6.7",
+        "ionic-plugin-keyboard": "~2.2.1",
+        "jspdf": "^1.3.3",
+        "ngcsv": "^0.2.0",
+        "pdfmake": "^0.1.32",
+        "pouchdb-find": "^6.2.0"
+    },
+    "devDependencies": {
+        "bower": "^1.3.3",
+        "grunt": "^1.0.1",
+        "gulp-util": "^2.2.14",
+        "shelljs": "^0.3.0"
+    },
+    "cordovaPlugins": [
+        "cordova-plugin-statusbar",
+        "cordova-plugin-whitelist",
+        "cordova-plugin-console",
+        "cordova-plugin-splashscreen",
+        "cordova-plugin-device",
+        "ionic-plugin-keyboard"
+    ],
+    "cordovaPlatforms": [
+        "ios",
+        {
+            "platform": "ios",
+            "version": "",
+            "locator": "ios"
+        }
+    ],
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-console": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-whitelist": {},
+            "ionic-plugin-deploy": {},
+            "ionic-plugin-keyboard": {},
+            "cordova-plugin-file-transfer": {}
+        },
+        "platforms": [
+            "android",
+            "browser",
+            "ios"
+        ]
+    }
+}

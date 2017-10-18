@@ -1,0 +1,220 @@
+ <ion-view title="Preview - Datos Generales" id="page24">
+    <style>
+        table, th , td {
+          border: 1px solid grey;
+          border-collapse: collapse;
+          padding: 5px;
+          width: 35%;
+        }
+        table tr:nth-child(odd) {
+          background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+          background-color: #ffffff;
+        }
+        </style>
+  <ion-content padding="true" class="has-header">
+
+     
+          <label class="item item-select" id="editarVoladuraMapa-select19">
+             <span class="input-label">Proyecto</span>
+             <select ng-options="id as id.doc.stracon for id in projInfo.rows | orderBy: 'doc.stracon'" ng-model="selectedId" ng-change="updateSelectId(selectedId)"></select>
+           </label>
+      
+<form id="generarReporteProductos-form13" ng-show="selectedProj!=''" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()" >
+           
+ <div class="btn-edit">
+                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                  Editar
+                </button>
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                    <ul class="dropdown-menu " role="menu">
+                        <li><button class="btn btn-link" onClick ="$('#portada').tableExport({type:'pdf', escape:'true'});"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                        <li><button class="btn btn-link" onClick ="$('#portada').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                        <li><button class="btn btn-link" onClick ="$('#portada').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li>
+                        <li><button class="btn btn-link" onClick ="$('#portada').tableExport({type:'doc',escape:'false'});"><span class="glyphicon glyphicon-share"></span> DOC</button></li>
+                        <li><button class="btn btn-link" onClick ="$('#portada').tableExport({type:'png',escape:'false'});"><span class="glyphicon glyphicon-share"></span> PNG</button></li>
+                       
+                    </ul>
+                </div>
+              </div>
+          <div id="portada">    
+              <strong>REPORTE DE VOLADURA</strong>
+          <table class="table table-bordered table-hover table-condensed">
+              <tr>
+                <td><strong>Voladura No.</strong> {{selectedId.doc.voladuranum}}</td>
+                <td><strong>Hora de Voladura</strong> <span editable-time="selectedId.doc.horavol" > {{selectedId.doc.horavol}}</span></td>
+                <td><strong>Fecha de Vol</strong> <span editable-text="selectedId.doc.fechatiro" > {{selectedId.doc.fechatiro}}</span></td>
+              </tr>
+              <tr>
+                   <td><strong>Proyecto No.</strong> {{selectedId.doc.stracon}}</td>
+                   <td><strong>Hora Inicio Cargado</strong>  <span editable-text="selectedId.doc.horaini" >{{selectedId.doc.horaini}}</span></td>
+               </tr>
+                   <tr>
+                     <td><strong>Ubicacion</strong>{{prod.prod}}</td>
+                     <td><strong>Fecha de Inicio Cargado</strong> <span editable-text="selectedId.doc.fechacarga" >{{selectedId.doc.fechacarga}}</span></td>
+                     
+                   </tr>
+                   <tr>
+                      <td > 
+                     
+                      </td>
+                     </tr>
+                     <tr>
+                       <td><strong>Tipo de Tiro</strong> <span editable-text="selectedId.doc.tipotiro" >{{selectedId.doc.tipotiro}}</span></td>
+                       <td><strong>Tipo de Material</strong> <span editable-text="selectedId.doc.material" >{{selectedId.doc.material}}</span></td>
+                       <td><strong>ML Perforados</strong>  <span editable-text="selectedId.doc.mlperf" >{{selectedId.doc.mlperf}}</span></td>
+                     </tr>
+                     <tr>
+                          <td><strong>Barrenos de Prod. Cargados</strong>  <span editable-text="selectedId.doc.barcarg" >{{selectedId.doc.barcarg}}</span></span></td>
+                         <td><strong>Diametro </strong> <span editable-text="selectedId.doc.diam" >{{selectedId.doc.diam}}</span></td>
+                         <td><strong>Prof. Agua Prom. </strong> <span editable-text="selectedId.doc.profagua" >{{selectedId.doc.profagua}}</span></td>
+  
+                       </tr>
+                       <tr>
+                         <td><strong>No. Filas </strong>  <span editable-text="selectedId.doc.filas" >{{selectedId.doc.filas}}</span></td>
+                         <td><strong>Bordo </strong> <span editable-text="selectedId.doc.bordo" >{{selectedId.doc.tipotiro}}</span></td>
+                         <td><strong>Espaciamiento </strong> <span editable-text="selectedId.doc.esp" >{{selectedId.doc.esp}}</span></td>
+  
+                       </tr>
+                       <tr>
+                          <td><strong>Profundidad Promedio </strong>  <span editable-text="selectedId.doc.profprom" >{{selectedId.doc.profprom}}</span></td>
+                         <td><strong>Altura Cara Libre </strong> <span editable-text="selectedId.doc.caralibre" >{{selectedId.doc.caralibre}}</span></td>
+                         <td><strong>Sub Perforacion </strong> <span editable-text="selectedId.doc.subperf" >{{selectedId.doc.subperf}}</span></td>
+                       </tr>
+                       <tr>
+                          <td><strong>Tipo de Taco </strong>  <span editable-text="selectedId.doc.tipotaco" >{{selectedId.doc.tipotaco}}</span></td>
+                         <td><strong>Altura de Taco </strong> <span editable-text="selectedId.doc.alttaco" >{{selectedId.doc.alttaco}}</span></td>
+                         <td><strong>ML Cargados </strong> <span editable-text="selectedId.doc.mlcarg" >{{selectedId.doc.mlcarg}}</span></td>
+                       </tr>
+                       <tr>
+                          <td><strong>Barrenos de Precorte Cargados </strong>  <span editable-text="selectedId.doc.precortecarg" >{{selectedId.doc.precortecarg}}</span></td>
+                         <td><strong>ML de Precorte </strong> <span editable-text="selectedId.doc.mlprecorte" >{{selectedId.doc.mlprecorte}}</span></td>
+                       </tr>
+                         <tr style="font-weight: bold">
+                            <td> 
+                            </td>
+                           </tr>
+                           <tr>
+                             <td><strong>Explosivos </strong> </span></td>
+                             <td><strong>Cantidad Total </strong></td>
+                             <td><strong>Producido Por </strong></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp1.exp" >{{selectedId.doc.exp1.exp}}</span></td>
+                             <td> <span editable-text="selectedId.doc.exp1.cant" >{{selectedId.doc.exp1.cant}}</span></td>
+                             <td> <span editable-text="selectedId.doc.exp1.prodpor" >{{selectedId.doc.exp1.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp2.exp" >{{selectedId.doc.exp2.exp}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp2.cant" >{{selectedId.doc.exp2.cant}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp2.prodpor" >{{selectedId.doc.exp2.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp3.exp" >{{selectedId.doc.exp3.exp}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp3.cant" >{{selectedId.doc.exp3.cant}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp3.prodpor" >{{selectedId.doc.exp3.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp4.exp" >{{selectedId.doc.exp4.exp}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp4.cant" >{{selectedId.doc.exp4.cant}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp4.prodpor" >{{selectedId.doc.exp4.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp5.exp" >{{selectedId.doc.exp5.exp}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp5.cant" >{{selectedId.doc.exp5.cant}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp5.prodpor" >{{selectedId.doc.exp5.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td> <span editable-text="selectedId.doc.exp6.exp" >{{selectedId.doc.exp6.exp}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp6.cant" >{{selectedId.doc.exp6.cant}}</span></td>
+                              <td> <span editable-text="selectedId.doc.exp6.prodpor" >{{selectedId.doc.exp6.prodpor}}</span></td>
+                           </tr>
+                           <tr>
+                              <td><strong>Iniciadores </strong> </span></td>
+                              <td><strong>Cantidad Total </strong></td>
+                              <td><strong>Producido Por </strong></td>
+                            </tr>
+                            <tr>
+                                <td> <span editable-text="selectedId.doc.ini1.exp" >{{selectedId.doc.ini1.exp}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini1.cant" >{{selectedId.doc.ini1.cant}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini1.prodpor" >{{selectedId.doc.ini1.prodpor}}</span></td>
+                            </tr>
+                            <tr>
+                                <td> <span editable-text="selectedId.doc.ini2.exp" >{{selectedId.doc.ini2.exp}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini2.cant" >{{selectedId.doc.ini2.cant}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini2.prodpor" >{{selectedId.doc.ini2.prodpor}}</span></td>
+                            </tr>
+                            <tr>
+                                <td> <span editable-text="selectedId.doc.ini3.exp" >{{selectedId.doc.ini3.exp}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini3.cant" >{{selectedId.doc.ini3.cant}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini3.prodpor" >{{selectedId.doc.ini3.prodpor}}</span></td>
+                            </tr>
+                            <tr>
+                                <td> <span editable-text="selectedId.doc.ini4.exp" >{{selectedId.doc.ini4.exp}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini4.cant" >{{selectedId.doc.ini4.cant}}</span></td>
+                                <td> <span editable-text="selectedId.doc.ini4.prodpor" >{{selectedId.doc.ini4.prodpor}}</span></td>
+                            </tr>
+                             <tr style="font-weight: bold">
+                                <td> 
+                                 <strong>Peso Total de Explosivos Incluyendo Iniciadores</strong>  <span editable-text="selectedId.doc.pesotot" >{{selectedId.doc.pesotot}} kg</span>
+                                </td>
+                               </tr>
+                               <tr>
+                                <td></td>
+                               </tr>
+                               <tr>
+                                  <td> 
+                                    <strong>Tipo de Detonadores (Longitud y Retardos)</td>
+                               </tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet1" >{{selectedId.doc.tipodet1}}</span></td></tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet2" >{{selectedId.doc.tipodet2}}</span></td></tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet3" >{{selectedId.doc.tipodet3}}</span></td></tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet4" >{{selectedId.doc.tipodet4}}</span></td></tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet5" >{{selectedId.doc.tipodet5}}</span></td></tr>
+                               <tr><td><span editable-text="selectedId.doc.tipodet6" >{{selectedId.doc.tipodet6}}</span></td></tr>
+
+                               <tr style="font-weight: bold">
+                                  <td> 
+                                   <strong>Peso de Explosivo por Barreno</strong>  <span editable-text="selectedId.doc.pesoexpbar" >{{selectedId.doc.pesoexpbar}} kg</span>
+                                  </td>
+                                 </tr>
+                                 <tr style="font-weight: bold">
+                                    <td> 
+                                     <strong>Peso Maximo de Explosivo por Barreno</strong>  <span editable-text="selectedId.doc.pesomaxbar" >{{selectedId.doc.pesomaxbar}} kg</span>
+                                    </td>
+                                   </tr>
+                                   <tr style="font-weight: bold">
+                                      <td> 
+                                       <strong>Material Producido</strong>  <span editable-text="selectedId.doc.matprod" >{{selectedId.doc.matprod}} m3</span>
+                                      </td>
+                                     </tr>
+                                     <tr style="font-weight: bold">
+                                        <td> 
+                                         <strong>Factor de Carga</strong> <span editable-text="selectedId.doc.fc" >{{selectedId.doc.fc}} kg/m3</span>
+                                        </td>
+                                       </tr>
+                                       <tr style="font-weight: bold">
+                                          <td> 
+                                           <strong>Fragmentacion</strong> <span editable-select="front.frag" e-name="frag" e-ng-options="s as s for s in fragoptions">{{front.frag}}</span>
+                                          </td>
+                                         </tr>
+
+    </table>
+          </div>
+     <!-- buttons -->
+    
+      <div class="btn-form" ng-show="tableform.$visible">
+        <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+        <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+      </div> 
+         
+        </form>
+
+
+    <button  id="subirProyecto-button35" ng-click="updateProductos()" style="border-radius:50px 50px 50px 50px;" 
+    class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar</button>
+    
+  </ion-content>
+</ion-view>
