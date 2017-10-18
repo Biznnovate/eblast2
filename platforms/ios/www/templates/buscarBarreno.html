@@ -1,0 +1,20 @@
+<ion-view title="Buscar Barreno" id="page21">
+  <ion-content padding="true" class="has-header">
+    <form id="buscarBarreno-form19" class="list">
+      <label class="item item-input" id="buscarBarreno-input84">
+        <span class="input-label">Barreno</span>
+        <input type="text" placeholder="{{fields.id}}" ng-model="fields.id">
+      </label>
+      <label class="item item-select" id="buscarBarreno-select26">
+        <span class="input-label">Status</span>
+        <select ng-model="fields.status">
+          <option>Any Status</option>
+          <option>red</option>
+          <option>grey</option>
+          <option>blue</option>
+        </select>
+      </label>
+    </form>
+    <button id="buscarBarreno-button27" ng-click="search()" class="button button-positive button-block">Buscar Barreno</button>
+  </ion-content>
+</ion-view>

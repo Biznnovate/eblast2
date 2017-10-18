@@ -1,0 +1,9 @@
+{
+  "name": "e-Blast",
+  "app_id": "23f02b18",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic1",
+  "watchPatterns": []
+}

@@ -1,0 +1,146 @@
+<ion-view title="Toma de Muestra" id="page11">
+    <ion-content padding="true" class="has-header">
+        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+            <tr>
+                <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
+          Otros Proyectos</button>
+                </td>
+            </tr>
+        </table>
+        <label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
+            <span class="input-label">Seleccione el Proyecto</span>
+            <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
+             ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
+  </label>
+        <strong>{{muestraData.length}}</strong>
+        <form id="tomaDeMuestra-form9" class="list">
+            <ul>
+                <li>
+                    <label class="item item-input" id="editarVoladuraMapa-search4">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Buscar barreno por ID" ng-model = "searchedbarr.barr">
+              </label>
+                </li>
+                <li>
+                    <label class="item item-select" id="editarVoladuraMapa-select19">
+                <span class="input-label">ID de Barreno</span>
+                <select ng-options="barreno as barreno.barr for barreno in Barrenos | orderBy: 'barr/1' | filter : searchedbarr " ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)"></select>
+              </label>
+                </li>
+            </ul>
+            <label class="item item-input" id="editarVoladuraMapa-inputcamion">
+        <span class="input-label">Camión</span>
+        <input type="text" placeholder="" ng-model="camion" ng-change="updateCamion(camion)">
+      </label>
+            <label class="item item-input" id="tomaDeMuestra-input18">
+        <span class="input-label">Hora</span>
+        <input type="time" placeholder="10" ng-model="hora" ng-change="updateHora(hora)">
+      </label>
+
+            <label class="item item-input" id="tomaDeMuestra-input19">
+        <span class="input-label">R1 (LPH)</span>
+        <input type="number" placeholder="" ng-model="r1" ng-change="updateR1(r1)">
+      </label>
+            <label class="item item-input" id="tomaDeMuestra-input33">
+        <span class="input-label">R2 (LPH)</span>
+        <input type="number" placeholder="" ng-model="r2" ng-change="updateR2(r2)">
+      </label>
+            <label class="item item-input" id="tomaDeMuestra-input20">
+        <span class="input-label">kg/min (all)</span>
+        <input type="number" placeholder=""  ng-model="rpm" ng-change="updateRpm(rpm)">
+      </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+        <span class="input-label">Temp F</span>
+        <input type="number" placeholder=""  ng-model="temp" ng-change="updateTemp(temp)">
+      </label>
+            <span class="input-label">Tiempo/Densidad</span>
+
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">0</span>
+                <input type="number" placeholder="Dens g/cc "  ng-model="dens0" ng-change="updateDens0(dens0)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">5</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens5" 
+                ng-change="updateDens5(dens5)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">10</span>
+                <input type="number" placeholder="Dens g/cc" 
+                 ng-model="dens10" ng-change="updateDens10(dens10)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">15</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens15" 
+                ng-change="updateDens15(dens15)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">20</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens20" 
+                ng-change="updateDens20(dens20)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">25</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens25" 
+                ng-change="updateDens25(dens25)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">30</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens30" 
+                ng-change="updateDens30(dens30)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">35</span>
+                <input type="number" placeholder="Dens g/cc" ng-model="dens35" 
+                ng-change="updateDens35(dens35)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">40</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens40" 
+                ng-change="updateDens40(dens40)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">45</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens45" 
+                ng-change="updateDens45(dens45)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">50</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens50" 
+                ng-change="updateDens50(dens50)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">55</span>
+                <input type="number" placeholder="Dens g/cc" ng-model="dens55" 
+                ng-change="updateDens55(dens55)">
+          </label>
+            <label class="item item-input" id="tomaDeMuestra-input21">
+                <span class="input-label">60</span>
+                <input type="number" placeholder="Dens g/cc"  ng-model="dens60" 
+                ng-change="updateDens60(dens60)">
+          </label>
+
+            <canvas id="bar" class="chart chart-line" ng-show="showGraph" chart-data="timeData" chart-labels="labels" chart-series="" chart-colors="red">
+</canvas>
+        </form>
+        <form id="tomaDeMuestra-form12" class="list">
+            <label class="item item-input" id="tomaDeMuestra-textarea1">
+        <span class="input-label">Comentarios</span><textarea placeholder="(Opcional)"ng-model="coments" 
+                ng-change="updateComents(coments)"></textarea></label>
+        </form>
+        <strong>{{message}}</strong>
+
+        <div id="editarVoladuraMapa-button-bar5" class="button-bar" ng-hide="showBarrnam">
+
+            <!--button id="editarVoladuraMapa-button31" ng-click="reloadPage()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button-->
+            <button id="editarVoladuraMapa-button32" ng-click="gotoPreview()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-stats-bars"></button>
+
+            <button id="editarVoladuraMapa-button33" ng-click="newMuestra()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+        </div>
+        <button id="editarVoladuraMapa-button33" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Finalizar</button>
+
+
+
+    </ion-content>
+</ion-view>

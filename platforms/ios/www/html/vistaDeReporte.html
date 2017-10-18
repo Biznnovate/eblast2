@@ -1,0 +1,108 @@
+<ion-view title="Reporte de Barrenos" id="page16">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+    <ion-content padding="true" class="has-header">
+
+
+
+
+        <div class="btn-edit">
+            <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+          Editar
+        </button>
+            <div class="btn-group">
+                <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                <ul class="dropdown-menu " role="menu">
+
+                    <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                    <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                    <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                    <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+                </ul>
+            </div>
+        </div>
+
+        <div id="barrenos" print-section>
+            <table border="1">
+                <thead>
+                    <tr class="table-header" style="font-weight: bold">
+                        <th>HOLE {{BarrenosUpdatedCalcs.length}}</th>
+                        <th>DEPH</th>
+                        <th>REAL DEPH {{getProfRealTotal() | number:2}}mts</th>
+                        <th>SUB PERF</th>
+                        <th>TACO INICIAL</th>
+                        <th>TACO FINAL</th>
+                        <th>Diam (pulg)</th>
+                        <th>Iniciador</th>
+                        <th>Iniciador Peso {{getCi()| number:2}}kgs</th>
+                        <th>Explosivo</th>
+                        <th>Explosivo Peso {{getPt() | number:2}}kgs</th>
+                        <th>Peso Total {{getCi() + getPt() | number:2}}kgs</th>
+                        <th>Bordo</th>
+                        <th>Espaciamiento</th>
+                        <th>Vol. Barreno {{getVolumenTotal() | number:2}}</th>
+                        <th>POWDER FACTOR</th>
+                        <!--th>EM. DENSITY</th-->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in Barrenos | orderBy: 'barr' ">
+
+                        <td>{{x.barr}}</td>
+                        <td>{{x.prof}}</td>
+                        <td>{{x.profreal}}</td>
+                        <td>{{x.subperf}}</td>
+                        <td>{{x.tacoini}}</td>
+                        <td>{{x.taco}}</td>
+                        <td>{{x.diametro}}</td>
+                        <td>
+                            <table>
+                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ini' | filter:y.barr=x.barr ">
+                                    <td>{{y.prod}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>{{x.calcs.Ci| number:2}}</td>
+                        <td>
+                            <table>
+                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='cg' | filter:y.barr=x.barr">
+                                    <td ng-show="y.tipoid=='cg'">{{y.prod}}</td>
+                                </tr>
+                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ce' | filter:y.barr=x.barr">
+                                    <td ng-show="y.tipoid=='ce'">{{y.prod}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>{{x.calcs.Pt | number:2}}</td>
+                        <td>{{x.calcs.Pt+x.calcs.Ci | number:2}}</td>
+                        <td>{{x.bordo}}</td>
+                        <td>{{x.espaciamiento}}</td>
+                        <td>{{x.calcs.V}}</td>
+
+                        <td>{{x.calcs.Fc | number:2}}</td>
+                        <!--td step="0.01">{{x.doc.densidad}}</td-->
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </ion-content>
+</ion-view>

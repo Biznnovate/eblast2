@@ -1,0 +1,34 @@
+<ion-view title="Agregar Barreno" id="page18">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-ios-arrow-back" ng-click="gotoView()"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <form id="agregarBarreno-form14" class="list">
+      <label class="item item-input" id="agregarBarreno-input75">
+        <span class="input-label">ID de Barreno</span>
+        <input type="text" placeholder="" ng-model="data.id">
+      </label>
+      <label class="item item-input" id="agregarBarreno-input76">
+        <span class="input-label">Coordx</span>
+        <input type="text" placeholder="" ng-model="data.coordx">
+      </label>
+      <label class="item item-input" id="agregarBarreno-input77">
+        <span class="input-label">CoordY</span>
+        <input type="text" placeholder="" ng-model="data.coordy">
+      </label>
+      <label class="item item-input" id="agregarBarreno-input85">
+        <span class="input-label">Distancia</span>
+        <input type="text" placeholder="" ng-model="data.dist">
+      </label>
+      <label class="item item-select" id="agregarBarreno-select27">
+        <span class="input-label">Status</span>
+        <select ng-model="data.status" ng-value="grey">
+          <option>red</option>
+          <option>blue</option>
+          <option>grey</option>
+        </select>
+      </label>
+    </form>
+    <button id="agregarBarreno-button23" ng-click="submit()" ng-disabled="submitting" class="button button-positive button-block">Enviar</button>
+  </ion-content>
+</ion-view>

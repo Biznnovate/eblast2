@@ -1,0 +1,23 @@
+<ion-view title="Ver Barrenos" id="page19">
+  <ion-nav-buttons side="left" class="has-header">
+    <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right" class="has-header">
+    <button class="button button-icon icon ion-android-add" ng-click="gotoAdd()"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <button id="verBarrenos-button34" ng-click="gotoSearch()" class="button button-positive button-block">Buscar</button>
+    <ion-list id="verBarrenos-list6">
+      <ion-item class="item-avatar" id="verBarrenos-list-item24" ui-sref="menu.editarVoladuraMapa({&quot;id&quot;:&quot;&quot;+barreno.Col1+&quot;&quot;})" ng-repeat="barreno in Barrenos | orderBy:'+'" ng-click="deleteItem($index)">
+        <h2>Barreno: {{barreno.Col1}}</h2>
+        <p style="white-space:normal;">Profundiad(m): {{barreno.Col4}} </p>
+        <ion-option-button class="button-positive">Edit</ion-option-button>
+      </ion-item>
+      <ion-item class="item-avatar" id="verBarrenos-list-item10" ui-sref="menu.editarVoladuraMapa({&quot;id&quot;:&quot;&quot;+survey.id+&quot;&quot;})" ng-repeat="survey in surveys | orderBy:'+'" style="background-color: {{survey.status}};" ng-click="">
+        <h2>Barreno: {{survey.id}}</h2>
+        <p style="white-space:normal;">Distancia(m): {{survey.dist}} </p>
+        <ion-option-button class="button-positive">Edit</ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

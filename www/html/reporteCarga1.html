@@ -1,0 +1,71 @@
+<ion-view title="Reporte de Carga1" id="page25">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+    <ion-content padding="true" class="has-header">
+
+        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+
+            <div class="btn-edit">
+                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+              Editar
+            </button>
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                    <ul class="dropdown-menu " role="menu">
+
+                        <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                        <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                        <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                        <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+                    </ul>
+                </div>
+            </div>
+
+            <div id="barrenos" print-section>
+                <table border="1">
+                    <thead>
+                        <tr class="table-header" style="font-weight: bold">
+                            <th>No. de Barrenos</th>
+                            <th>Prof. Diseñada (m)</th>
+                            <th>Prof. Real (m)</th>
+                            <th>Sub Perforación</th>
+                            <th>Taco (m)</th>
+                            <th>Peso Explosivo/Retardo (Kgs)</th>
+                            <th>Bordo (m)</th>
+                            <th>Espaciamiento (m)</th>
+                            <th>Volumen</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in Barrenos | orderBy: 'barr' ">
+                            <td style="text-align:center">{{x.barr}}</td>
+                            <td style="text-align:center">{{x.prof}}</td>
+                            <td style="text-align:center">{{x.profreal}}</td>
+                            <td style="text-align:center">{{x.subperf}}</td>
+                            <td style="text-align:center">{{x.taco}}</td>
+                            <td style="text-align:center">{{x.calcs.Pt | number:2}}</td>
+                            <td style="text-align:center">{{x.bordo}}</td>
+                            <td style="text-align:center">{{x.espaciamiento}}</td>
+                            <td style="text-align:center">{{x.calcs.V | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </ion-content>
+</ion-view>
