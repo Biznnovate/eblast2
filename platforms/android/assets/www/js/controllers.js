@@ -1956,6 +1956,7 @@ angular.module('app.controllers', [])
 
         $scope.projID = $scope.editBarreno.proj || '';
         $scope.tipoID = $scope.editBarreno.id || '';
+
         let tempDB = new pouchDB('temp');
         let localprojDB = new pouchDB('projects');
         let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
@@ -1984,8 +1985,31 @@ angular.module('app.controllers', [])
             $scope.newBarreno = { 'nam': barrparam }
         }
 
+        $scope.loadprojTipos = function() {
+            var id = $scope.projID;
+            if ($scope.projID != '') {
+
+                console.log('Projid en shobarrform' + id)
+                localprojDB.get(id).then(function(doc) {
+                    $scope.projTipos = doc.tipos || [];
+                    $scope.tipos = doc.tipos || [];
+
+                    console.log('projtiposthing' + doc.tipos)
+                    var selectedID = $scope.tipoBarrNam;
+                    var rows = $scope.projTipos;
+                    console.log('Selected ID: ' + selectedID);
+                    console.log('tiporows' + rows);
 
 
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            } else {
+                $scope.projTipos = [];
+            }
+            // alert($scope.projTipos.length)
+        }
+        $scope.loadprojTipos();
         //UpdatenewBarreno();
         //$scope.newBarreno = {'nam': barrparam};
         console.log($scope.newBarreno);
@@ -2064,64 +2088,14 @@ angular.module('app.controllers', [])
                 // error!
             });
         }
+
         $scope.showBarrForm = function() {
             let tempDB = new pouchDB('temp');
             $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
-            var id = $scope.projID;
-
-            console.log('Projid en shobarrform' + id)
-            localprojDB.get(id).then(function(doc) {
-                $scope.projTipos = doc.tipos || [];
-                $scope.tipos = doc.tipos || [];
-                console.log('projtiposthing' + doc.tipos)
-                var selectedID = $scope.tipoBarrNam;
-                var rows = $scope.projTipos;
-                console.log('Selected ID: ' + selectedID);
-                console.log('tiporows' + rows);
+            $scope.loadprojTipos();
+            $scope.barrForm = true;
 
 
-            }).catch(function(err) {
-                console.log(err);
-            });
-            $scope.cleanTempDB();
-
-
-
-            var tipos = $scope.tipos;
-            console.log('Creando Temp de Tipos para trabajar ' + tipos)
-            angular.forEach($scope.tipos, function(tipos) {
-                tempDB.put({
-                    _id: tipos.id,
-                    id: tipos.id,
-                    carga: tipos.carga,
-                    prof: tipos.prof,
-                    peso: tipos.peso,
-                    densidad: tipos.densidad,
-                    tipodecarga: tipos.tipodecarga,
-                    taco: tipos.taco,
-                    tacoini: tipos.tacoini,
-                    aire: tipos.aire,
-                    bordo: tipos.bordo,
-                    espaciamiento: tipos.espaciamiento,
-                    diametro: tipos.diametro,
-                    subperf: tipos.subperf,
-                    tipoexplo: tipos.tipoexplo,
-
-                }).then(function(response) {
-                    // handle response
-
-                    console.log('Put de Tempdb en Showbarrform ' + response);
-                });
-            });
-            tempDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.projTipostest = result.rows;
-                console.log('se bajaron los tipos actualizados' + result)
-                $scope.barrForm = true;
-            });
 
 
         }
@@ -2236,7 +2210,7 @@ angular.module('app.controllers', [])
             $scope.enableAddProd = false;
 
         };
-        $scope.cantprodgra_u = 1;
+        $scope.cantprodgra_u = 0;
         $scope.updateCantGra = function(obj) {
             console.log(obj)
             console.log($scope.cantprodgra)
@@ -2289,10 +2263,18 @@ angular.module('app.controllers', [])
             console.log(obj)
             $scope.selectedproj_u = obj;
             $scope.projID = obj.doc._id;
+            $scope.loadprojTipos();
             $scope.selectProjFunc();
 
 
         }
+        $scope.projTiposAmount = function() {
+            for (var i = 0; i < $scope.projTipos.length; i++) {
+                var total = $scope.projTipos.length
+            }
+            return total;
+        }
+
 
 
         $scope.changeProjID = function() {
@@ -2347,7 +2329,7 @@ angular.module('app.controllers', [])
             });
         }
         $scope.insertTipoBarrenos = function() {
-            let tempDB = new pouchDB('temp');
+
             var subperfo = $scope.subperf_u || $scope.subperf;
             var tipodecarga = $scope.tipodecarga_u;
             var tipo = $scope.tipoBarrNam_u || $scope.editBarreno.id;
@@ -2399,6 +2381,8 @@ angular.module('app.controllers', [])
             }).on('error', function(err) {
                 // boo, we hit an error!
             });
+
+            //  $scope.loadprojTipos();
 
             $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'status': new Date().toISOString() });
 
@@ -2523,7 +2507,8 @@ angular.module('app.controllers', [])
             }).on('error', function(err) {
                 // boo, we hit an error!
             });
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'status': new Date().toISOString() });
+            var newstatus = new Date().toISOString();
+            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'status': newstatus });
 
 
         }

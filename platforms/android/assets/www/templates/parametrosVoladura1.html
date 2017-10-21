@@ -18,7 +18,7 @@
           <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
            ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
         </label>
-        <button ng-click="showTiposTable=true" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        <button ng-click="showTiposTable=true" ng-model="projTipos" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Tipos Creados ( {{projTipos.length}} ) </button>
         <button ng-click="showTiposTable=false" ng-show="showTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Ocultar Tipos</button>
