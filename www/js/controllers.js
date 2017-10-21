@@ -2236,7 +2236,7 @@ angular.module('app.controllers', [])
             $scope.enableAddProd = false;
 
         };
-        $scope.cantprodgra_u = 1;
+        $scope.cantprodgra_u = 0;
         $scope.updateCantGra = function(obj) {
             console.log(obj)
             console.log($scope.cantprodgra)
