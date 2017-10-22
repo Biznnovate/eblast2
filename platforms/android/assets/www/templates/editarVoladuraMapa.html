@@ -37,7 +37,7 @@
         <button id="editarVoladuraMapa-button33" ng-show="showmap==true" ng-click="hideMap()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropup-circle">Ocultar Mapa</button>
         <button id="editarVoladuraMapa-button33" ng-show="showmap==false" ng-click="dataChartBarrs()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropdown-circle">Desplegar Mapa</button>
         <strong>{{message}}</strong>
-        <button id="editarVoladuraMapa-button34" ng-show="showReloadButton==true" ng-click="reloadPage()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Continuar</button>
+
         <form id="editarVoladuraMapa-form11" ng-show="showReloadButton==false" class="list" ng-model="tempTiposBarr">
 
 
@@ -47,7 +47,7 @@
 
 
         </form>
-        <form>
+        <form id="editarVoladuraMapa-form1">
             <div class="row" ng-show="showBarrnam">
 
                 <label class="item item-input" id="editarVoladuraMapa-input25">
@@ -71,7 +71,7 @@
                     <td> <label class="item item-select" id="editarVoladuraMapa-select19">
                         <span class="input-label">ID de Barreno</span>
                         <select ng-options="barreno as barreno.barr for barreno in Barrenos | orderBy: 'barr/1' | filter : statusFilter  | filter : searchedbarr " 
-                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)"></select>
+                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[0]"></select>
                             </label>
 
                         <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showselectbarrchar">
@@ -107,15 +107,16 @@
             </div>
 
         </form>
+        <label class="item item-select" id="editarVoladuraMapa-select14">
+                <span class="input-label">Seleccione el Tipo</span>
+                <select ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
+                ng-change="updateSelectedTipo(selectedTipo)"></select>
+              </label>
 
-        <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
-            <div ng-show="showReloadButton==false">
-                <label class="item item-select" id="editarVoladuraMapa-select14">
-          <span class="input-label">Valores Predeterminados</span>
-          <select ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" ng-change="updateSelectedTipo(selectedTipo)"></select>
-        </label>
-                </ion-list>
-                <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+        <form id="editarVoladuraMapa-form2" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
+
+
+            <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
         </form>
         <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Fija'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
             <div class="btn-edit">
@@ -241,14 +242,21 @@
             <label class="item item-input" id="editarVoladuraMapa-inputaire ">
         <span class="input-label">Aire (mts)</span>
         <input type="number" placeholder="" ng-model="aire" ng-change="updateAire(aire)">
+        
       </label>
             <div ng-show="tipodecarga=='Variable'" class="text-center">
+                <label class="item item-input" id="editarVoladuraMapa-inputaire ">
+            <span class="input-label">Carga Total (kg)</span>
+            <input type="number" placeholder="" ng-model="calcVals.Ct" ng-change="updateCt(calcVals.Ct)">
+          </label>
+
                 <br>
 
 
                 <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
 
             </div>
+
 
             <label class="item item-input" id="editarVoladuraMapa-inputbordo" ng-show="barrDetails">
         <span class="input-label">Bordo (mts)</span>
@@ -269,21 +277,20 @@
             <label class="item item-input" id="editarVoladuraMapa-inputsubperf" ng-show="barrDetails">
         <span class="input-label">Sub-perforación </span>
         <input type="number" placeholder=" " ng-model="subperf" ng-change="updateSubperf(subperf)">
-\
-        
+ </label>
 
-
-            </div>
-            <div id="editarVoladuraMapa-button-bar5" class="button-bar" ng-hide="showBarrnam">
-                <!--button id="editarVoladuraMapa-button34" ng-click="editBarr()" id="editarVoladuraMapa-button25" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-edit"></button-->
-                <button id="editarVoladuraMapa-button31" ng-click="addNewBarr()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
-
-              
-                <button id="editarVoladuraMapa-button33" ng-click="updateBarr()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
-            </div>
-
-            <button id="editarVoladuraMapa-button34" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Finalizar</button>
         </form>
+
+        <div id="editarVoladuraMapa-button-bar5" class="button-bar">
+            <!--button id="editarVoladuraMapa-button34" ng-click="editBarr()" id="editarVoladuraMapa-button25" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-edit"></button-->
+            <button id="editarVoladuraMapa-button31" ng-click="addNewBarr()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
+
+
+            <button id="editarVoladuranMapa-butto33" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+        </div>
+
+        <button id="editarVoladuraMapa-button34" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Finalizar</button>
+
         <div id="editarVoladuraMapa-button-bar6" class="button-bar" ng-show="showBarrnam">
             <button id="editarVoladuraMapa-button31" ng-click="updateSelectedNewBarr(selectedBarreno,newBarrnam)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-left ion-android-checkmark-circle">Agregar Barreno</button>
         </div>
