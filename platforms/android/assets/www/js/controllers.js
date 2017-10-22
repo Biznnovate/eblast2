@@ -1954,8 +1954,10 @@ angular.module('app.controllers', [])
             'proj': $stateParams.proj,
         }
 
+
         $scope.projID = $scope.editBarreno.proj || '';
         $scope.tipoID = $scope.editBarreno.id || '';
+        $scope.projTipos = $scope.editBarreno.status || [];
 
         let tempDB = new pouchDB('temp');
         let localprojDB = new pouchDB('projects');
@@ -1986,6 +1988,8 @@ angular.module('app.controllers', [])
         }
 
         $scope.loadprojTipos = function() {
+            $scope.projTipos = [];
+
             var id = $scope.projID;
             if ($scope.projID != '') {
 
@@ -1996,18 +2000,21 @@ angular.module('app.controllers', [])
 
                     console.log('projtiposthing' + doc.tipos)
                     var selectedID = $scope.tipoBarrNam;
-                    var rows = $scope.projTipos;
+                    //var rows = $scope.projTipos;
                     console.log('Selected ID: ' + selectedID);
-                    console.log('tiporows' + rows);
-
+                    // console.log('tiporows' + rows);
+                    $scope.countTipos = doc.tipos.length;
 
                 }).catch(function(err) {
                     console.log(err);
                 });
+
+
             } else {
-                $scope.projTipos = [];
+                console.log('no proj selected')
             }
-            // alert($scope.projTipos.length)
+
+
         }
         $scope.loadprojTipos();
         //UpdatenewBarreno();
@@ -2090,14 +2097,11 @@ angular.module('app.controllers', [])
         }
 
         $scope.showBarrForm = function() {
-            let tempDB = new pouchDB('temp');
-            $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
+
+            // $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
+
             $scope.loadprojTipos();
             $scope.barrForm = true;
-
-
-
-
         }
 
         $scope.tipoprodId = '';
@@ -2210,7 +2214,7 @@ angular.module('app.controllers', [])
             $scope.enableAddProd = false;
 
         };
-        $scope.cantprodgra_u = 0;
+
         $scope.updateCantGra = function(obj) {
             console.log(obj)
             console.log($scope.cantprodgra)
@@ -2218,6 +2222,7 @@ angular.module('app.controllers', [])
             $scope.enableAddProd = false;
 
         };
+
         $scope.updateBordo = function(obj) {
             console.log(obj)
             console.log($scope.bordo)
@@ -2328,12 +2333,12 @@ angular.module('app.controllers', [])
                 $scope.listed_productos = response.users;
             });
         }
-        $scope.insertTipoBarrenos = function() {
-
+        $scope.pushingTipoBarreno = function() {
             var subperfo = $scope.subperf_u || $scope.subperf;
             var tipodecarga = $scope.tipodecarga_u;
             var tipo = $scope.tipoBarrNam_u || $scope.editBarreno.id;
-            var id = $scope.projID;
+
+            $scope.loadprojTipos();
 
             var newTipo = {
                 id: tipo,
@@ -2353,7 +2358,11 @@ angular.module('app.controllers', [])
                 precorte: $scope.precorte || '',
             };
             $scope.projTipos.push(newTipo);
-
+            $scope.countTipos = $scope.projTipos.length;
+        }
+        $scope.insertTipoBarrenos = function() {
+            var id = $scope.projID;
+            $scope.pushingTipoBarreno();
             localprojDB.get(id).then(function(doc) {
                 return localprojDB.put({
                     _id: id,
@@ -2372,20 +2381,10 @@ angular.module('app.controllers', [])
                     console.log(err);
                 });
             });
+            // $scope.loadprojTipos();
 
-
-
-            localprojDB.sync(remoteprojDB).on('complete', function() {
-                // yay, we're in sync!
-
-            }).on('error', function(err) {
-                // boo, we hit an error!
-            });
-
-            //  $scope.loadprojTipos();
-
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'status': new Date().toISOString() });
-
+            // $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+            // $scope.barrForm = false;
 
         }
         $scope.deleteTipo = function(index) {
@@ -2507,8 +2506,8 @@ angular.module('app.controllers', [])
             }).on('error', function(err) {
                 // boo, we hit an error!
             });
-            var newstatus = new Date().toISOString();
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'status': newstatus });
+            // $scope.loadprojTipos();
+            //  $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, });
 
 
         }
@@ -2536,7 +2535,7 @@ angular.module('app.controllers', [])
             for (var i = 0; i < $scope.prods.length; i++) {
 
                 var product = $scope.prods[i];
-                var cantidad = product.cantidad || product.cantidad_gra || product.cantidad_ini;
+                var cantidad = product.cantidad || product.cantidad_gra || product.cantidad_ini || 1;
                 total += (product.peso / 1 * cantidad);
                 $scope.PesoTotal = total;
             }
@@ -2617,7 +2616,6 @@ angular.module('app.controllers', [])
                     'densidad': (obj.densidad) / 1,
                     'cantidad': $scope.cantprod_u / 1,
                     'cantidad_gra': $scope.cantprodgra_u / 1,
-
                     'tipodecarga': $scope.tipodecarga_u,
 
 
@@ -2997,7 +2995,7 @@ angular.module('app.controllers', [])
             }
         }
 
-
+        $scope.shownewBarrForm = false;
 
         $scope.updateSelectedBarr = function(obj) {
             console.log(obj)
@@ -3017,7 +3015,9 @@ angular.module('app.controllers', [])
 
             //count barrenos
             $scope.message = "Presione Agregar Barreno"
+            $scope.shownewBarrForm = true;
             $scope.calc();
+
         };
         $scope.updateSelectedBarr2 = function(obj) {
             console.log(obj)
@@ -3560,6 +3560,7 @@ angular.module('app.controllers', [])
                 Lv: Lv,
                 Pe: Pe,
                 V: V,
+                Ct: Ct,
                 Pt: Pt,
                 Fc: Fc
             }
@@ -4128,6 +4129,7 @@ angular.module('app.controllers', [])
             var selectedID = $scope.selectedbarr.barr;
             var rows = $scope.Barrenos;
 
+
             //var index = $scope.Barrenos.barr.indexOf(selectedID)
             //console.log('El indice es'+index)
             //$scope.Barrenos.splice(index,1);     
@@ -4183,7 +4185,7 @@ angular.module('app.controllers', [])
                 console.log(err);
             });
 
-
+            $scope.shownewBarrForm = false;
 
             localprojDB.sync(remoteprojDB).on('complete', function() {
                 // yay, we're in sync!
@@ -4195,36 +4197,15 @@ angular.module('app.controllers', [])
 
 
             $scope.message = "El Barreno fue Actualizado.";
-            $scope.showReloadButton = true;
+            //$scope.showReloadButton = true;
             console.log($scope.message);
-            $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
+            // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
 
 
         }
-        $scope.showReloadButton = false;
 
-        $scope.reloadPage = function() {
-            $window.location.reload();
-            $scope.showReloadButton = false;
-            localDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.Barrenos = result;
-            }).catch(function(err) {
-                console.log(err);
-            });
-            tipolocalDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.tipobarr = result;
-            }).catch(function(err) {
-                console.log(err);
-            });
-        }
+
+
         $scope.message2 = '';
         $scope.showAddNewBarr = true;
         //create a new Barreno
@@ -4501,10 +4482,13 @@ angular.module('app.controllers', [])
 
         $scope.updateSelectedBarr = function(obj) {
             console.log(obj)
-                // console.log($scope.barr_u)
-                // console.log($scope.selectedBarreno)
+
+            // console.log($scope.barr_u)
+            // console.log($scope.selectedBarreno)
             $scope.barr_u = obj.barr;
             console.log($scope.barr_u)
+
+
         };
 
         $scope.updateCamion = function(obj) {
