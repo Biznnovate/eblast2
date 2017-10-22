@@ -1440,7 +1440,19 @@ angular.module('app.controllers', [])
 
         $scope.continueOpt = true;
 
+        $scope.temptable = {
+            item1: '1',
+            item2: '2.2'
 
+        }
+        $scope.tempcalcs = {
+            calc1: 1 * $scope.temptable.item1,
+            calc2: parseFloat($scope.temptable.item2, 2),
+            calc3: parseFloat($scope.temptable.item2, 2) * 3.5,
+
+        }
+
+        console.log('calcs ' + $scope.tempcalcs)
 
         $scope.columninfo = [];
 
@@ -1490,13 +1502,13 @@ angular.module('app.controllers', [])
 
                 for (i = 0; i < arrayObj.length; i++) {
 
-                    arrayObj[i].prof = arrayObj[i]['Col1 '];
+                    arrayObj[i].prof = arrayObj[i]['Col1'];
                     delete arrayObj[i].Col1;
                 }
             } else if (obj.id == 'diam') {
                 $scope.showSelectDiam = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].diam = arrayObj[i]['Col1 '];
+                    arrayObj[i].diam = arrayObj[i]['Col1'];
                     delete arrayObj[i].Col1;
                 }
             }
@@ -1527,13 +1539,13 @@ angular.module('app.controllers', [])
             } else if (obj.id == 'prof') {
                 $scope.showSelectProf = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].prof = arrayObj[i]['Col2 '];
+                    arrayObj[i].prof = arrayObj[i]['Col2'];
                     delete arrayObj[i].Col2;
                 }
             } else if (obj.id == 'diam') {
                 $scope.showSelectDiam = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].diam = arrayObj[i]['Col2 '];
+                    arrayObj[i].diam = arrayObj[i]['Col2'];
                     delete arrayObj[i].Col2;
                 }
             }
@@ -1564,13 +1576,13 @@ angular.module('app.controllers', [])
             } else if (obj.id == 'prof') {
                 $scope.showSelectProf = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].prof = arrayObj[i]['Col3 '];
+                    arrayObj[i].prof = arrayObj[i]['Col3'];
                     delete arrayObj[i].Col3;
                 }
             } else if (obj.id == 'diam') {
                 $scope.showSelectDiam = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].diam = arrayObj[i]['Col3 '];
+                    arrayObj[i].diam = arrayObj[i]['Col3'];
                     delete arrayObj[i].Col3;
                 }
             }
@@ -1601,13 +1613,13 @@ angular.module('app.controllers', [])
             } else if (obj.id == 'prof') {
                 $scope.showSelectProf = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].prof = arrayObj[i]['Col4 '];
+                    arrayObj[i].prof = arrayObj[i]['Col4'];
                     delete arrayObj[i].Col4;
                 }
             } else if (obj.id == 'diam') {
                 $scope.showSelectDiam = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].diam = arrayObj[i]['Col4 '];
+                    arrayObj[i].diam = arrayObj[i]['Col4'];
                     delete arrayObj[i].Col4;
                 }
             }
@@ -1638,13 +1650,13 @@ angular.module('app.controllers', [])
             } else if (obj.id == 'prof') {
                 $scope.showSelectProf = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].prof = arrayObj[i]['Col5 '];
+                    arrayObj[i].prof = arrayObj[i]['Col5'];
                     delete arrayObj[i].Col5;
                 }
             } else if (obj.id == 'diam') {
                 $scope.showSelectDiam = true;
                 for (i = 0; i < arrayObj.length; i++) {
-                    arrayObj[i].diam = arrayObj[i]['Col5 '];
+                    arrayObj[i].diam = parseFloat(arrayObj[i]['Col5']);
                     delete arrayObj[i].Col5;
                 }
             }
@@ -1662,9 +1674,10 @@ angular.module('app.controllers', [])
                     barr: val.barr,
                     coordx: val.coordx,
                     coordy: val.coordy,
-                    prof: (parseFloat(val.prof)) * conv,
+                    prof: parseFloat(val.prof) * conv,
                     diam: val.diam,
                 }
+                console.log('data prof' + val.prof)
                 $scope.columnsTemp.push(data);
 
             });
@@ -1685,7 +1698,7 @@ angular.module('app.controllers', [])
                     coordx: val.coordx,
                     coordy: val.coordy,
                     prof: val.prof,
-                    diam: (parseInt(val.diam)) * conv,
+                    diam: parseFloat(val.diam) * conv,
                 }
                 $scope.columnsTemp.push(data);
 
