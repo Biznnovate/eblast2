@@ -952,6 +952,57 @@ angular.module('app.controllers', [])
         cleanLocalDB();
         $scope.addCSV = function() {
             let localDB = new pouchDB('barrenoscsv');
+            // let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
+
+            $scope.showcleanup = true;
+            $scope.showupload = true;
+            var data = $scope.csv.content;
+            //$scope.Uploadcsv = function(){
+            //  Uploadcsv.then(function(data){
+
+            //$scope.items_csv = data;
+            var rows = data.split('\n');
+            var obj = [];
+            $scope.columns = [];
+            angular.forEach(rows, function(val) {
+                var o = val.split(',');
+
+                var objstr = JSON.stringify(obj);
+                //alert(objstr);
+                //function checkData(csvval) {
+                //return csvval == null;
+                //}
+                var columns = {
+                    Col1: o[0],
+                    Col2: o[1],
+                    Col3: o[2],
+                    Col4: o[3],
+                    Col5: o[4],
+                }
+                $scope.columns.push(columns);
+                //localDB.sync(remoteDB).on('complete', function() {
+                // yay, we're in sync!
+                // }).on('error', function(err) {
+                // boo, we hit an error!
+                // });
+
+
+
+
+
+
+
+
+                $state.go('menu.ajustarCSV', { 'status': $scope.columns, });
+
+
+
+
+            });
+            console.log('Se subieron ' + $scope.columns.length + ' columnas')
+        }
+        $scope.addCSV1 = function() {
+            let localDB = new pouchDB('barrenoscsv');
             let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
 
             $scope.showcleanup = true;
@@ -1320,29 +1371,24 @@ angular.module('app.controllers', [])
 
         $scope.projInfo = {
             'id': $stateParams.id,
+            'status': $stateParams.status,
 
         }
+        $scope.columns = $scope.projInfo.status;
         $scope.projID = '';
         $scope.updateProjNam = function(obj) {
             console.log(obj)
             $scope.projnam_u = obj;
             $scope.showIniciar = true;
             $scope.projID = obj + new Date().toISOString();
+
+        }
+        $scope.corregir = function() {
+            $state.go('menu.subirProyecto');
         }
         console.log($scope.projInfo);
         //tipos de columna
-        let localDB = new pouchDB('barrenos');
-        let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenos', { skipSetup: true });
-        remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-            console.log("I'm Batman.");
-            return remoteDB.getSession();
-        });
 
-        localDB.sync(remoteDB).on('complete', function() {
-            // yay, we're in sync!
-        }).on('error', function(err) {
-            // boo, we hit an error!
-        });
         let localprojDB = new pouchDB('projects');
         let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
         remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
@@ -1356,46 +1402,7 @@ angular.module('app.controllers', [])
         });
 
 
-        let localCSVDB = new pouchDB('barrenoscsv');
-        let remoteCSVDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv', { skipSetup: true });
-        remoteCSVDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-            console.log("I'm Batman.");
-            return remoteCSVDB.getSession();
-        });
-        //call barrenos from CSV
-        localCSVDB.allDocs({
-            include_docs: true,
-            attachments: true
-        }).then(function(result) {
-            // handle result
-            console.log(result);
-            $scope.Barrenos = result;
-        }).catch(function(err) {
-            console.log(err);
-        });
-        let localDivCSV = new pouchDB('barrenoscsvdiv');
-        let remoteDivCSV = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsvdiv', { skipSetup: true });
-        remoteDivCSV.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-            console.log("I'm Batman.");
-            return remoteDivCSV.getSession();
-        });
-
-
-        localDivCSV.sync(remoteDivCSV).on('complete', function() {
-            // yay, we're in sync!
-        }).on('error', function(err) {
-            // boo, we hit an error!
-        });
-
-
-
-
-        localCSVDB.sync(remoteCSVDB).on('complete', function() {
-            // yay, we're in sync!
-        }).on('error', function(err) {
-            // boo, we hit an error!
-        });
-
+        $scope.viewPreview = false;
         $scope.column_type_list = [
             { 'id': 'Col1', 'nam': 'Columna 1', 'status': '' },
             { 'id': 'Col2', 'nam': 'Columna 2', 'status': '' },
@@ -1405,6 +1412,14 @@ angular.module('app.controllers', [])
 
         ];
 
+        $scope.column_nam_list = [
+            { 'id': 'barr', 'nam': 'ID del Barreno', 'status': '' },
+            { 'id': 'coordx', 'nam': 'Easting', 'status': '' },
+            { 'id': 'coordy', 'nam': 'Northing', 'status': '' },
+            { 'id': 'prof', 'nam': 'Profundidad', 'status': '' },
+            { 'id': 'diam', 'nam': 'Diametro', 'status': '' },
+
+        ];
 
         $scope.unitTableProf = [
             { 'id': 'mm', 'val': 1000, 'nam': 'Milímetros (mm)' },
@@ -1426,7 +1441,19 @@ angular.module('app.controllers', [])
 
         $scope.continueOpt = true;
 
+        $scope.temptable = {
+            item1: '1',
+            item2: '2.2'
 
+        }
+        $scope.tempcalcs = {
+            calc1: 1 * $scope.temptable.item1,
+            calc2: parseFloat($scope.temptable.item2, 2),
+            calc3: parseFloat($scope.temptable.item2, 2) * 3.5,
+
+        }
+
+        console.log('calcs ' + $scope.tempcalcs)
 
         $scope.columninfo = [];
 
@@ -1435,73 +1462,7 @@ angular.module('app.controllers', [])
         $scope.showIniciar = false;
         $scope.titleToggle = false;
 
-        $scope.createWDB = function() {
-            var createNewProj = function() {
-                var nam = $scope.projID;
 
-                localprojDB.put({
-                    _id: $scope.projID,
-                    proj: $scope.projnam_u,
-                    date: new Date().toISOString(),
-
-
-
-
-                }).then(function(response) {
-                    console.log('Proyecto Creado ' + response)
-
-                    // handle response
-
-                }).catch(function(err) {
-                    console.log(err);
-                });
-
-                localprojDB.sync(remoteprojDB).on('complete', function() {
-                    // yay, we're in sync!
-                }).on('error', function(err) {
-                    // boo, we hit an error!
-                });
-
-                console.log('New Project Created!')
-            }
-            createNewProj();
-            angular.forEach($scope.Barrenos.rows, function(value, key) {
-                var id = value.doc._id;
-                $scope.tempresp = value;
-
-                localDB.put({
-                    _id: value.doc._id,
-
-
-
-
-                }).then(function(response) {
-
-                }).catch(function(err) {
-                    console.log(err);
-                });
-            });
-            localDB.sync(remoteDB).on('complete', function() {
-                // yay, we're in sync!
-            }).on('error', function(err) {
-                // boo, we hit an error!
-            });
-            localDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.barrenos = result;
-
-            }).catch(function(err) {
-                console.log(err);
-            });
-            $scope.showBarrSelect = 'yes';
-            $scope.message = 'Paso 1: Seleccione la Columna que contiene el ID del Barreno';
-            $scope.disSBarr = false;
-            $scope.showIniciar = false;
-            $scope.titleToggle = true;
-        }
 
 
         //declare db with columntypes
@@ -1509,16 +1470,274 @@ angular.module('app.controllers', [])
 
 
 
+        $scope.showSelectProf = false;
+        $scope.showSelectDiam = false;
 
-        $scope.showBarrSelect = '';
-        $scope.showCoordxSelect = '';
-        $scope.showCoordySelect = '';
-        $scope.showProf = '';
-        $scope.showProfunit = '';
-        $scope.showDiam = '';
-        $scope.showDiamunit = '';
 
-        $scope.selectBarreno = function(obj) {
+        $scope.selectCol1 = function(obj, conv) {
+
+            console.log(obj);
+            $scope.showSelectProf = false;
+            $scope.showSelectDiam = false;
+            $scope.columnsIndex = [];
+            var conversion = conv || 1;
+            var arrayObj = $scope.columns;
+            if (obj.id == 'barr') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].barr = arrayObj[i]['Col1'];
+                    delete arrayObj[i].Col1;
+                }
+
+            } else if (obj.id == 'coordx') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordx = arrayObj[i]['Col1'];
+                    delete arrayObj[i].Col1;
+                }
+            } else if (obj.id == 'coordy') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordy = arrayObj[i]['Col1'];
+                    delete arrayObj[i].Col1;
+                }
+            } else if (obj.id == 'prof') {
+                $scope.showSelectProf = true;
+
+                for (i = 0; i < arrayObj.length; i++) {
+
+                    arrayObj[i].prof = arrayObj[i]['Col1'];
+                    delete arrayObj[i].Col1;
+                }
+            } else if (obj.id == 'diam') {
+                $scope.showSelectDiam = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].diam = arrayObj[i]['Col1'];
+                    delete arrayObj[i].Col1;
+                }
+            }
+        }
+        $scope.selectCol2 = function(obj, conv) {
+            console.log(obj);
+            $scope.columnsIndex = [];
+            $scope.showSelectProf = false;
+            $scope.showSelectDiam = false;
+            var conversion = conv || 1;
+            var arrayObj = $scope.columns;
+            if (obj.id == 'barr') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].barr = arrayObj[i]['Col2'];
+                    delete arrayObj[i].Col2;
+                }
+
+            } else if (obj.id == 'coordx') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordx = arrayObj[i]['Col2'];
+                    delete arrayObj[i].Col2;
+                }
+            } else if (obj.id == 'coordy') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordy = arrayObj[i]['Col2'];
+                    delete arrayObj[i].Col2;
+                }
+            } else if (obj.id == 'prof') {
+                $scope.showSelectProf = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].prof = arrayObj[i]['Col2'];
+                    delete arrayObj[i].Col2;
+                }
+            } else if (obj.id == 'diam') {
+                $scope.showSelectDiam = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].diam = arrayObj[i]['Col2'];
+                    delete arrayObj[i].Col2;
+                }
+            }
+        }
+        $scope.selectCol3 = function(obj, conv) {
+            console.log(obj);
+            $scope.showSelectProf = false;
+            $scope.showSelectDiam = false;
+            $scope.columnsIndex = [];
+            var conversion = conv || 1;
+            var arrayObj = $scope.columns;
+            if (obj.id == 'barr') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].barr = arrayObj[i]['Col3'];
+                    delete arrayObj[i].Col3;
+                }
+
+            } else if (obj.id == 'coordx') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordx = arrayObj[i]['Col3'];
+                    delete arrayObj[i].Col3;
+                }
+            } else if (obj.id == 'coordy') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordy = arrayObj[i]['Col3'];
+                    delete arrayObj[i].Col3;
+                }
+            } else if (obj.id == 'prof') {
+                $scope.showSelectProf = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].prof = arrayObj[i]['Col3'];
+                    delete arrayObj[i].Col3;
+                }
+            } else if (obj.id == 'diam') {
+                $scope.showSelectDiam = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].diam = arrayObj[i]['Col3'];
+                    delete arrayObj[i].Col3;
+                }
+            }
+        }
+        $scope.selectCol4 = function(obj, conv) {
+            console.log(obj);
+            $scope.showSelectProf = false;
+            $scope.showSelectDiam = false;
+            $scope.columnsIndex = [];
+            var conversion = conv || 1;
+            var arrayObj = $scope.columns;
+            if (obj.id == 'barr') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].barr = arrayObj[i]['Col4'];
+                    delete arrayObj[i].Col4;
+                }
+
+            } else if (obj.id == 'coordx') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordx = arrayObj[i]['Col4'];
+                    delete arrayObj[i].Col4;
+                }
+            } else if (obj.id == 'coordy') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordy = arrayObj[i]['Col4'];
+                    delete arrayObj[i].Col4;
+                }
+            } else if (obj.id == 'prof') {
+                $scope.showSelectProf = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].prof = arrayObj[i]['Col4'];
+                    delete arrayObj[i].Col4;
+                }
+            } else if (obj.id == 'diam') {
+                $scope.showSelectDiam = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].diam = arrayObj[i]['Col4'];
+                    delete arrayObj[i].Col4;
+                }
+            }
+        }
+        $scope.selectCol5 = function(obj, conv) {
+            console.log(obj);
+            $scope.showSelectProf = false;
+            $scope.showSelectDiam = false;
+            $scope.columnsIndex = [];
+            var conversion = conv || 1;
+            var arrayObj = $scope.columns;
+            if (obj.id == 'barr') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].barr = arrayObj[i]['Col5'];
+                    delete arrayObj[i].Col5;
+                }
+
+            } else if (obj.id == 'coordx') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordx = arrayObj[i]['Col5'];
+                    delete arrayObj[i].Col5;
+                }
+            } else if (obj.id == 'coordy') {
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].coordy = arrayObj[i]['Col5'];
+                    delete arrayObj[i].Col5;
+                }
+            } else if (obj.id == 'prof') {
+                $scope.showSelectProf = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].prof = arrayObj[i]['Col5'];
+                    delete arrayObj[i].Col5;
+                }
+            } else if (obj.id == 'diam') {
+                $scope.showSelectDiam = true;
+                for (i = 0; i < arrayObj.length; i++) {
+                    arrayObj[i].diam = arrayObj[i]['Col5'];
+                    delete arrayObj[i].Col5;
+                }
+            }
+        }
+
+        $scope.selectProfu1 = function(obj) {
+            console.log(obj + ' valor ' + obj.val);
+
+            $scope.columnsIndex = [];
+            var conv = obj.val;
+            var arrayObj = $scope.columns;
+            $scope.columnsTemp = []
+            angular.forEach(arrayObj, function(val) {
+                var data = {
+                    barr: val.barr,
+                    coordx: val.coordx,
+                    coordy: val.coordy,
+                    prof: parseFloat(val.prof) * conv,
+                    diam: val.diam,
+                }
+                console.log('data prof' + val.prof)
+                $scope.columnsTemp.push(data);
+
+            });
+
+            $scope.columns = $scope.columnsTemp;
+            $scope.showSelectProf = false;
+
+        }
+        $scope.selectProfu = function(obj) {
+
+            console.log(obj + ' valor ' + obj.val);
+
+            $scope.columnsIndex = [];
+            var conv = obj.val;
+            var arrayObj = $scope.columns;
+            $scope.columnsTemp = []
+            angular.forEach(arrayObj, function(val) {
+                var data = {
+                    barr: val.barr,
+                    coordx: val.coordx,
+                    coordy: val.coordy,
+                    prof: parseFloat(val.prof) * conv,
+                    diam: val.diam,
+                }
+                $scope.columnsTemp.push(data);
+
+            });
+
+            $scope.columns = $scope.columnsTemp;
+            $scope.showSelectProf = false;
+
+        }
+        $scope.selectDiame = function(obj) {
+
+            console.log(obj + ' valor ' + obj.val);
+
+            $scope.columnsIndex = [];
+            var conv = obj.val;
+            var arrayObj = $scope.columns;
+            $scope.columnsTemp = []
+            angular.forEach(arrayObj, function(val) {
+                var data = {
+                    barr: val.barr,
+                    coordx: val.coordx,
+                    coordy: val.coordy,
+                    prof: val.prof,
+                    diam: parseFloat(val.diam) * conv,
+                }
+                $scope.columnsTemp.push(data);
+
+            });
+
+            $scope.columns = $scope.columnsTemp;
+            $scope.showSelectDiam = false;
+
+        }
+
+
+        $scope.selectBarreno1 = function(obj) {
             console.log(obj)
                 //console.log($scope.barrcol)
             $scope.barrcol_u = obj.id;
@@ -1787,54 +2006,59 @@ angular.module('app.controllers', [])
 
         }
 
+        $scope.confirmData = function() {
+            $scope.barrenosToInsert = [];
+            angular.forEach($scope.columns, function(value) {
+                var barreno = {
+                    barr: value.barr,
+                    status: 'Pending',
+                    coordx: value.coordx,
+                    coordy: value.coordy,
+                    prof: value.prof,
+                    diam: value.diam,
+                }
+                $scope.barrenosToInsert.push(barreno);
 
+            });
+            console.log('For Each de Barrenos ' + $scope.barrenosToInsert.length)
+
+        }
         $scope.insertBarrenos = function() {
-            localDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                console.log('Se creo las columnas' + result.rows)
-                $scope.barrRows = result.rows;
-            }).then(function() {
-                $scope.barrenosToInsert = [];
-                angular.forEach($scope.barrRows, function(value) {
-                    var barreno = {
-                        barr: value.doc.barr,
-                        status: 'Pending',
-                        coordx: value.doc.coordx,
-                        coordy: value.doc.coordy,
-                        prof: value.doc.prof,
-                        diam: value.doc.diam,
-                    }
-                    $scope.barrenosToInsert.push(barreno);
+            let localprojDB = new pouchDB('projects');
+            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprojDB.getSession();
+            });
 
-                });
-                console.log('For Each de Barrenos ' + $scope.barrenosToInsert.length)
+            var projID = $scope.projnam_u + new Date().toISOString();
+            var proj = $scope.projnam_u;
+            var date = new Date().toISOString();
+            //console.log('data para subir projID ' + projID + ' proj ' + proj + ' date ' + date)
+            localprojDB.put({
+                _id: projID,
+                proj: proj,
+                date: date,
 
 
-            }).then(function() {
-
-                var id = $scope.projID;
-                console.log('se creo el proyecto ' + id);
-
-                localprojDB.get(id).then(function(doc) {
-                    return localprojDB.put({
-                        _id: id,
-                        _rev: doc._rev,
-                        proj: doc.proj,
-                        date: doc.date,
-                        barrenos: $scope.barrenosToInsert,
-                    });
-
-
-                }).catch(function(err) {
-                    console.log(err);
-
-                });
+            }).then(function(response) {
+                console.log(' subio correctamente')
+            }).catch(function(err) {
+                console.log(err);
 
             });
 
-
+            localprojDB.get(projID).then(function(doc) {
+                return localprojDB.put({
+                    _id: projID,
+                    _rev: doc._rev,
+                    proj: doc.proj,
+                    date: doc.date,
+                    barrenos: $scope.barrenosToInsert,
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            });
 
             localprojDB.sync(remoteprojDB).on('complete', function() {
                 // yay, we're in sync!
@@ -1844,14 +2068,7 @@ angular.module('app.controllers', [])
 
             $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
         }
-        $scope.gotoMenu = function() {
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
-            localDB.sync(remoteDB).on('complete', function() {
-                // yay, we're in sync!
-            }).on('error', function(err) {
-                // boo, we hit an error!
-            });
-        }
+
 
     }
 ])
