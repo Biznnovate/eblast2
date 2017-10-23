@@ -2023,7 +2023,7 @@ angular.module('app.controllers', [])
             console.log('For Each de Barrenos ' + $scope.barrenosToInsert.length)
 
         }
-        $scope.insertBarrenos = function() {
+        $scope.insertBarrenosProj = function() {
             let localprojDB = new pouchDB('projects');
             let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
             remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
@@ -2031,7 +2031,8 @@ angular.module('app.controllers', [])
                 return remoteprojDB.getSession();
             });
 
-            var projID = $scope.projnam_u + new Date().toISOString();
+            $scope.projID = $scope.projnam_u + new Date().toISOString();
+            var projID = $scope.projID;
             var proj = $scope.projnam_u;
             var date = new Date().toISOString();
             //console.log('data para subir projID ' + projID + ' proj ' + proj + ' date ' + date)
@@ -2055,6 +2056,7 @@ angular.module('app.controllers', [])
                     proj: doc.proj,
                     date: doc.date,
                     barrenos: $scope.barrenosToInsert,
+                    tipos: [],
                 }).catch(function(err) {
                     console.log(err);
                 });
@@ -2205,7 +2207,7 @@ angular.module('app.controllers', [])
         }
 
         $scope.loadprojTipos = function() {
-            $scope.projTipos = [];
+
 
             var id = $scope.projID;
             if ($scope.projID != '') {
@@ -2229,6 +2231,7 @@ angular.module('app.controllers', [])
 
             } else {
                 console.log('no proj selected')
+                $scope.projTipos = [];
             }
 
 
@@ -2506,6 +2509,7 @@ angular.module('app.controllers', [])
 
         $scope.editTipo = function(obj) {
             $scope.tipoEditando = {};
+            $scope.newBarreno.nam = obj.id || '';
             $scope.tipoID = obj.id || '';
             $scope.editBarreno.status = 'Edit'
             $scope.showBarrForm();
@@ -2576,11 +2580,43 @@ angular.module('app.controllers', [])
             };
             $scope.projTipos.push(newTipo);
             $scope.countTipos = $scope.projTipos.length;
+            console.log('hay ' + $scope.countTipos + ' Tipos para subir')
         }
         $scope.insertTipoBarrenos = function() {
             var id = $scope.projID;
-            $scope.pushingTipoBarreno();
+
+            //$scope.pushingTipoBarreno();
+            var subperfo = $scope.subperf_u || $scope.subperf;
+            var tipodecarga = $scope.tipodecarga_u;
+            var tipo = $scope.tipoBarrNam_u || $scope.editBarreno.id;
+
+
+            //$scope.loadprojTipos();
+
+            var newTipo = {
+                id: tipo,
+                carga: $scope.prods,
+                prof: $scope.LargoTotal,
+                peso: $scope.PesoTotal,
+                densidad: $scope.DensidadTotal,
+                tipodecarga: tipodecarga,
+                tacoini: $scope.tacoini_u || 0,
+                taco: $scope.taco_u || 0,
+                aire: $scope.aire_u || 0,
+                bordo: $scope.bordo_u || 0,
+                espaciamiento: $scope.espaciamiento_u || 0,
+                diametro: $scope.diametro_u,
+                subperf: subperfo,
+                tipoexplo: $scope.tipoExplo || '',
+                precorte: $scope.precorte || '',
+            };
+            $scope.projTipos.push(newTipo);
+            $scope.countTipos = $scope.projTipos.length;
+            console.log('hay ' + $scope.countTipos + ' Tipos para subir')
+            console.log('se va a subir tipos a ' + id)
+
             localprojDB.get(id).then(function(doc) {
+
                 return localprojDB.put({
                     _id: id,
                     _rev: doc._rev,
@@ -2591,12 +2627,15 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
-
-
-
                 }).catch(function(err) {
                     console.log(err);
                 });
+            });
+            localprojDB.sync(remoteprojDB).on('complete', function() {
+                // yay, we're in sync!
+
+            }).on('error', function(err) {
+                // boo, we hit an error!
             });
             // $scope.loadprojTipos();
 

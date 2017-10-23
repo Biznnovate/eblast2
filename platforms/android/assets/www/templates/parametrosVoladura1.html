@@ -4,7 +4,7 @@
         <!--ion-item id="parametrosVoladura1-list-itemupd11" ng-repeat="tipo in projTipos | filter: tipo._id=tipoBarrNam_u" ng-model="projTipos">{{tipo._id}}</ion-item-->
         <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
             <tr>
-                <td><strong><h3>Proyecto: {{selectedproj.doc.proj}}</h3></strong></td>
+                <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
                 <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
           Otros Proyectos</button>
                 </td>
@@ -205,9 +205,8 @@
 
         <div id="parametrosVoladura1-button-bar1" class="button-bar">
 
-            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newTipoForm.$setPristine(); tipoID=='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle"
-                ng-show="barrForm==true&&editBarreno.status!='Edit'">Crear Tipo</button>
-            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos(); barrForm=false; newTipoForm.$setPristine(); tipoID=='';" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle "
+            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle" ng-show="barrForm==true&&editBarreno.status!='Edit'">Crear Tipo</button>
+            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos(); newBarreno.nam=''; barrForm=false; newTipoForm.$setPristine(); tipoID=='';" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle "
                 ng-show="barrForm==true&&editBarreno.status=='Edit' ">Actualizar Tipo</button>
 
             <button id="parametrosVoladura1-button56 " ng-click="gotoPage() " id="parametrosVoladura1-button60 " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-arrow-forward ">Continuar</button>
