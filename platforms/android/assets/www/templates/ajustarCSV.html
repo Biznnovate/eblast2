@@ -116,8 +116,8 @@
                 </div>
             </ion-item>
         </ion-list>
-        <button id="editarVoladuraMapa-button32" ng-click="viewPreview=true; showConfirm=true" ng-hide="viewPreview||showConfirm=true" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Ingresar Medidas</button>
+        <button id="editarVoladuraMapa-button32" ng-click="viewPreview=true; showConfirm=true" ng-hide="viewPreview&&showConfirm=true" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Ingresar Medidas</button>
         <button id="editarVoladuraMapa-button33" ng-click="confirmData(); confirmContinue=true" ng-show="showConfirm" ng-hide="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar Datos</button>
-        <button id="editarVoladuraMapa-button33" ng-click="insertBarrenos()" ng-show="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
+        <button id="editarVoladuraMapa-button33" ng-click="insertBarrenosProj()" ng-show="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
     </ion-content>
 </ion-view>
