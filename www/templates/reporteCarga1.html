@@ -53,11 +53,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="x in Barrenos | orderBy: 'barr' ">
+                        <tr ng-repeat="x in Barrenos |orderBy: 'barr/1' ">
                             <td style="text-align:center">{{x.barr}}</td>
                             <td style="text-align:center">{{x.prof}}</td>
                             <td style="text-align:center">{{x.profreal}}</td>
-                            <td style="text-align:center">{{x.subperf}}</td>
+                            <td style="text-align:center">{{x.calcs.s}}</td>
                             <td style="text-align:center">{{x.taco}}</td>
                             <td style="text-align:center">{{x.calcs.Pt | number:2}}</td>
                             <td style="text-align:center">{{x.bordo}}</td>
