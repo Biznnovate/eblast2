@@ -63,15 +63,15 @@
             <!--button id="parametrosVoladura1-button53" ng-click="showBarrFormUpdate()" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle">Actualizar</button-->
 
         </form>
-
+        <label class="item item-input" id="parametrosVoladura1-input93" ng-show="tipoID==''">
+            <span class="input-label">Nombre del Tipo de Barreno</span>
+    
+            <input type="text" placeholder="Escriba el Nombre del Barreno" 
+            ng-model="newBarreno.nam"  ng-value="newBarreno.nam"
+            ng-change='updateBarrenoNam(newBarreno.nam)'>
+          </label>
         <form id="newTipoForm" class="list" ng-show="barrForm">
-            <label class="item item-input" id="parametrosVoladura1-input93">
-                        <span class="input-label">Nombre del Tipo de Barreno</span>
-                
-                        <input type="text" placeholder="Escriba el Nombre del Barreno" 
-                        ng-model="newBarreno.nam"  ng-value="newBarreno.nam"
-                        ng-change='updateBarrenoNam(newBarreno.nam)'>
-                      </label>
+
             <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle10" ng-true-value="Precorte" ng-false-value="" ng-model="precorte">Precorte?</ion-toggle>
 
             <label class="item item-input" id="editarVoladuraMapa-inputtaco">

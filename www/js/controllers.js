@@ -2263,7 +2263,7 @@ angular.module('app.controllers', [])
         $scope.onlyNumbers = /^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$/;
 
         //muestra los datos a capturar
-        $scope.barrForm = false;
+        //$scope.barrForm = false;
         $scope.reloadButton = '';
         $scope.updateButton = '';
         $scope.createButton = '';
@@ -2512,6 +2512,7 @@ angular.module('app.controllers', [])
             $scope.newBarreno.nam = obj.id || '';
             $scope.tipoID = obj.id || '';
             $scope.editBarreno.status = 'Edit'
+            $scope.barrForm = true;
             $scope.showBarrForm();
             var tipo = obj.id;
             console.log('Tipo seleccionado para editar:' + obj.id)
@@ -2764,7 +2765,7 @@ angular.module('app.controllers', [])
             });
             // $scope.loadprojTipos();
             //  $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, });
-
+            $scope.tipoID = '';
 
         }
 
