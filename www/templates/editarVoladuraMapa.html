@@ -38,7 +38,7 @@
         <button id="editarVoladuraMapa-button33" ng-show="showmap==false" ng-click="dataChartBarrs()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropdown-circle">Desplegar Mapa</button>
         <strong>{{message}}</strong>
 
-        <form id="editarVoladuraMapa-form11" ng-show="showReloadButton==false" class="list" ng-model="tempTiposBarr">
+        <form id="editarVoladuraMapa-form11" class="list" ng-model="tempTiposBarr">
 
 
             <div class="text-center">
@@ -54,10 +54,10 @@
         <span class="input-label">Nuevo ID de Barreno:  N-</span>
         <input type="text" placeholder="" ng-model="newBarrnam" ng-change="updateBarrid(newBarrnam)">
       </label>
+
+                <strong>{{message2}}</strong>
+
             </div>
-            <strong>{{message2}}</strong>
-
-
 
 
 
@@ -107,7 +107,7 @@
             </div>
 
         </form>
-        <label class="item item-select" id="editarVoladuraMapa-select14">
+        <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
                 <span class="input-label">Seleccione el Tipo</span>
                 <select ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
                 ng-change="updateSelectedTipo(selectedTipo)"></select>
@@ -119,12 +119,12 @@
             <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
         </form>
         <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Fija'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
-            <div class="btn-edit">
+            <!--div class="btn-edit">
                 <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
                   Editar
                 </button>
 
-            </div>
+            </div-->
             <div id="productTable">
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
@@ -169,9 +169,9 @@
         {{largoIni}} {{largoEmp}}
         <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Variable'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
             <div class="btn-edit">
-                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                <!--button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
                   Editar
-                </button>
+                </button-->
 
             </div>
             <div id="productTable">
@@ -280,20 +280,24 @@
  </label>
 
         </form>
+        <form ng-show="enableaddNew" class="list">
+
+        </form>
+
 
         <div id="editarVoladuraMapa-button-bar5" class="button-bar">
             <!--button id="editarVoladuraMapa-button34" ng-click="editBarr()" id="editarVoladuraMapa-button25" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-edit"></button-->
-            <button id="editarVoladuraMapa-button31" ng-click="addNewBarr()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
+            <button id="editarVoladuraMapa-button31" ng-click="addNewBarr();disableAddNewBarr=true" ng-disable="disableAddNewBarr" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
 
-
-            <button id="editarVoladuranMapa-butto33" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+            <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+            <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
         </div>
 
         <button id="editarVoladuraMapa-button34" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Finalizar</button>
 
-        <div id="editarVoladuraMapa-button-bar6" class="button-bar" ng-show="showBarrnam">
+        <!--div id="editarVoladuraMapa-button-bar6" class="button-bar" ng-show="showBarrnam">
             <button id="editarVoladuraMapa-button31" ng-click="updateSelectedNewBarr(selectedBarreno,newBarrnam)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-left ion-android-checkmark-circle">Agregar Barreno</button>
-        </div>
+        </div-->
 
 
         <form ng-show="enableResults" class="list">

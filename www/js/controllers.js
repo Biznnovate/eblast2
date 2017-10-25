@@ -2176,7 +2176,7 @@ angular.module('app.controllers', [])
 
         $scope.projID = $scope.editBarreno.proj || '';
         $scope.tipoID = $scope.editBarreno.id || '';
-        $scope.projTipos = $scope.editBarreno.status || [];
+        $scope.projTipos = [];
 
         let tempDB = new pouchDB('temp');
         let localprojDB = new pouchDB('projects');
@@ -2300,6 +2300,11 @@ angular.module('app.controllers', [])
         $scope.updateBarrenoNam = function(obj) {
             $scope.tipoBarrNam_u = obj;
             $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
+            $scope.tipoID = obj;
+            $scope.enableCreate = true;
+            $scope.showMainform = true;
+
+            console.log('updateBarrenoNam tipobarrnam ' + $scope.tipoBarrNam + 'tipoID ' + $scope.tipoID)
         }
         $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
         $scope.cleanTempDB = function() {
@@ -2507,15 +2512,19 @@ angular.module('app.controllers', [])
             }
             //producto as producto.prod for producto in listed_productos | filter:producto.id=tipoProdv2.id
 
-        $scope.editTipo = function(obj) {
+        $scope.editTipo = function(obj, idx) {
+
             $scope.tipoEditando = {};
-            $scope.newBarreno.nam = obj.id || '';
-            $scope.tipoID = obj.id || '';
-            $scope.editBarreno.status = 'Edit'
+            $scope.newBarreno.nam = obj.id;
+            $scope.tipoIndex = idx;
+            $scope.tipoID = obj.id;
+            $scope.tipoBarrNam = obj.id;
+            $scope.editBarrenoStatus = true;
             $scope.barrForm = true;
+            $scope.showMainform = true;
             $scope.showBarrForm();
             var tipo = obj.id;
-            console.log('Tipo seleccionado para editar:' + obj.id)
+            console.log('Tipo seleccionado para editar: ' + obj.id + ' tipoID ' + $scope.tipoID + ' index ' + idx)
 
             $scope.tipoEditando = obj
 
@@ -2641,7 +2650,7 @@ angular.module('app.controllers', [])
             // $scope.loadprojTipos();
 
             // $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
-            // $scope.barrForm = false;
+            $scope.showMainform = false;
 
         }
         $scope.deleteTipo = function(index) {
@@ -2705,14 +2714,14 @@ angular.module('app.controllers', [])
             var tipos = $scope.tipos;
             var subperfo = $scope.subperf_u || $scope.subperf;
             var tipodecarga = $scope.tipodecarga_u;
-            var tipo = $scope.tipoBarrNam_u || $scope.tipoID;
+            var tipo = $scope.tipoID || $scope.tipoBarrNam;
             var id = $scope.projID;
             $scope.tiposUpdate = [];
             $scope.projTiposUpdate = [];
 
             console.log('Actualizando Tipo ' + tipo)
 
-            $scope.removeChoice(tipo, $scope.projTipos);
+            $scope.removeChoice(tipo, $scope.projTipos, $scope.tipoIndex);
             var newTipo = {
                 id: tipo,
                 carga: $scope.prods,
@@ -2756,6 +2765,9 @@ angular.module('app.controllers', [])
                 });
 
             });
+            $scope.tipoID = '';
+            $scope.showMainform = false;
+
             console.log('Se actualizo el Tipo ' + tipo)
             localprojDB.sync(remoteprojDB).on('complete', function() {
                 // yay, we're in sync!
@@ -2765,12 +2777,15 @@ angular.module('app.controllers', [])
             });
             // $scope.loadprojTipos();
             //  $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, });
-            $scope.tipoID = '';
+
+
 
         }
 
 
-
+        $scope.showtipoEditthing = function() {
+            console.log('editBarreno.status ' + $scope.editBarrenoStatus + ' tipoID ' + $scope.tipoID)
+        }
 
         //suma total Largo
         $scope.getLargoTotal = function() {
@@ -3581,8 +3596,9 @@ angular.module('app.controllers', [])
             console.log(obj)
             console.log($scope.newBarrnam)
 
-            $scope.newBarrnam = obj;
+            $scope.newBarrnam = 'N-' + obj;
             $scope.message = 'Seleccione el Barreno más cercano para copiar parámetros';
+            $scope.showCoord = true;
             $scope.calc();
         };
 
@@ -3605,7 +3621,7 @@ angular.module('app.controllers', [])
                         val.peso += carga.peso / 1;
                         val.largo += carga.largo / 1;
 
-                        val.cantidad == carga.cantidad_gra;
+                        val.cantidad = carga.cantidad_gra;
                         val.prod = carga.prod;
                         val.tipo = carga.tipo;
                     }
@@ -3692,7 +3708,7 @@ angular.module('app.controllers', [])
                 s: s,
                 Lc: Lc,
                 Cm: Cm,
-                Ct: Ct.toFixed(2),
+                Ct: +(Ct).toFixed(2),
                 V: V,
                 Pt: Pt,
                 Fc: Fc
@@ -3738,10 +3754,10 @@ angular.module('app.controllers', [])
 
                 angular.forEach(rows, function(carga) {
                     if (carga.tipo !== 'Iniciadores') {
-                        val.peso += carga.peso / 1;
-                        val.largo += carga.largo / 1;
+                        val.peso += carga.peso;
+                        val.largo += carga.largo;
 
-                        val.cantidad == carga.cantidad_gra;
+                        val.cantidad = carga.cantidad_gra;
                         val.prod = carga.prod;
                         val.tipo = carga.tipo;
                     }
@@ -3817,7 +3833,7 @@ angular.module('app.controllers', [])
                 Lv: Lv,
                 Pe: Pe,
                 V: V,
-                Ct: Ct.toFixed(2),
+                Ct: +(Ct).toFixed(2),
                 Pt: Pt,
                 Fc: Fc
             }
@@ -4467,35 +4483,42 @@ angular.module('app.controllers', [])
         $scope.showAddNewBarr = true;
         //create a new Barreno
         $scope.addNewBarr = function() {
-            //$scope.showCoord = true;
             $scope.showAddNewBarr = false;
             $scope.showBarrnam = true;
             $scope.message = '';
-            $scope.message2 = 'Confirme el Nombre y los Datos del Barreno. Seleccione las caracteristicas del barreno mas cercano y el tipo y presione Agregar Barreno.';
-            $scope.newBarrnam = new Date().toISOString();
-            console.log($scope.message);
+            $scope.message2 = 'Confirme o Ingrese el nombre del Barreno Nuevo';
+            // $scope.newBarrnam = new Date().toISOString();
+        }
+
+        $scope.addNewBarrS2 = function(nam, cx, cy) {
+            //$scope.showCoord = true;
+
+            console.log('coordenadas x ' + cx + ' y ' + cy)
+
+            $scope.showCoord = true;
+            console.log('actualizando barreno ' + nam);
 
             var newDataBarr = {
                 //'id': $scope.selectedbarr.id,
-                'barr': $scope.newBarrnam,
+                'barr': 'N-' + nam,
                 'prof': $scope.profDis,
                 'diam': $scope.selectedbarr.diam,
-                'tipo': $scope.selectedTipo_u,
+                //'tipo': $scope.selectedTipo_u,
                 'profreal': $scope.profreal_u,
-                'coordx': $scope.coordx_u,
-                'coordy': $scope.coordy_u,
-                'taco': $scope.taco_u,
-                'tacoini': $scope.tacoini_u,
-                'aire': $scope.aire_u,
-                'bordo': $scope.bordo_u,
-                'espaciamiento': $scope.espaciamiento_u,
-                'diametro': $scope.diametro_u,
-                'densidad': $scope.densidad_u,
+                'coordx': cx,
+                'coordy': cy,
+                // 'taco': $scope.taco_u,
+                //'tacoini': $scope.tacoini_u,
+                // 'aire': $scope.aire_u,
+                // 'bordo': $scope.bordo_u,
+                // 'espaciamiento': $scope.espaciamiento_u,
+                // 'diametro': $scope.diametro_u,
+                // 'densidad': $scope.densidad_u,
                 'status': "Pending",
-                'calcs': $scope.calcVals,
-                'cargas ': $scope.cargas,
-                'iniciadores ': $scope.iniciadores,
-                'tacofinal ': $scope.tacofinal,
+                //  'calcs': $scope.calcVals,
+                //   'cargas ': $scope.cargas,
+                //  'iniciadores ': $scope.iniciadores,
+                // 'tacofinal ': $scope.tacofinal,
             }
             $scope.Barrenos.push(newDataBarr);
             console.log(newDataBarr)
@@ -4520,7 +4543,11 @@ angular.module('app.controllers', [])
                 console.log(err);
             });
 
-            $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'id': $scope.newBarrnam });
+            // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID});
+            $scope.showAddNewBarr = true;
+            $scope.showBarrnam = false;
+            $scope.showCoord = false;
+
         }
 
         $scope.createBarr = function() {

@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="x in Barrenos |orderBy: 'barr/1' ">
+                        <tr ng-repeat="x in Barrenos track by $index ">
                             <td style="text-align:center">{{x.barr}}</td>
                             <td style="text-align:center">{{x.prof}}</td>
                             <td style="text-align:center">{{x.profreal}}</td>
