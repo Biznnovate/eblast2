@@ -3630,7 +3630,7 @@ angular.module('app.controllers', [])
                     if (carga.tipo === 'Iniciadores') {
                         val.peso += carga.peso / 1 * carga.cantidad_ini / 1;
                         val.largo += carga.largo / 1 * carga.cantidad_ini / 1;
-                        val.cantidad == carga.cantidad_ini;
+                        val.cantidad += carga.cantidad_ini;
                         val.prod = carga.prod;
                         val.tipo = carga.tipo;
                     }
@@ -3691,7 +3691,7 @@ angular.module('app.controllers', [])
                 s: s,
                 Lc: Lc,
                 Cm: Cm,
-                Ct: Ct,
+                Ct: Ct.toFixed(2),
                 V: V,
                 Pt: Pt,
                 Fc: Fc
@@ -3766,7 +3766,7 @@ angular.module('app.controllers', [])
                     if (carga.tipo === 'Iniciadores') {
                         val.peso += carga.peso / 1 * carga.cantidad_ini / 1;
                         val.largo += carga.largo / 1 * carga.cantidad_ini / 1;
-                        val.cantidad == carga.cantidad_ini;
+                        val.cantidad += carga.cantidad_ini;
                         val.prod = carga.prod;
                         val.tipo = carga.tipo;
                     }
@@ -3816,7 +3816,7 @@ angular.module('app.controllers', [])
                 Lv: Lv,
                 Pe: Pe,
                 V: V,
-                Ct: Ct,
+                Ct: Ct.toFixed(2),
                 Pt: Pt,
                 Fc: Fc
             }
@@ -4314,7 +4314,7 @@ angular.module('app.controllers', [])
                     if (carga.tipo === 'Iniciadores') {
                         val.peso += carga.peso / 1 * carga.cantidad_ini / 1;
                         val.largo += carga.largo / 1 * carga.cantidad_ini / 1;
-                        val.cantidad == carga.cantidad_ini;
+                        val.cantidad += carga.cantidad_ini;
                         val.prod = carga.prod;
                         val.tipo = carga.tipo;
                     }
