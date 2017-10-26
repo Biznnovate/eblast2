@@ -5930,10 +5930,10 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$window', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', 'Excel', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, $state, pouchDB, Excel) {
+    function($scope, $stateParams, $state, pouchDB, $timeout, Excel) {
         $scope.projparam = {
             'id': $stateParams.id,
             'status': $stateParams.status,
@@ -6478,9 +6478,15 @@ angular.module('app.controllers', [])
                 }
             });
         }
+        $scope.exportToExcel = function(tableId, name) { // ex: '#my-table'
+            var data = tableId;
+
+            var exportHref = Excel.tableToExcel(data, name);
+            $timeout(function() { location.href = exportHref; }, 100); // trigger download
+        };
+
+
     }
-
-
 ])
 
 .controller('agregarBarrenoCtrl', ['$scope', '$stateParams', 'Survey', '$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

@@ -30,7 +30,9 @@
                 <div class="btn-group">
                     <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                     <ul class="dropdown-menu " role="menu">
-                        <li><button class="btn btn-link" ng-click="exportToExcel('#portada')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+
+
+                        <li><button class="btn btn-link" ng-click="exportToExcel('#portada-print')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
 
                         <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
                         <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
@@ -41,7 +43,7 @@
                     </ul>
                 </div>
             </div>
-            <div id="portada" print-section>
+            <div id="portada">
                 <strong>REPORTE DE VOLADURA</strong>
                 <table class="table table-bordered table-hover table-condensed">
                     <tr>
@@ -191,6 +193,7 @@
 
                 </table>
             </div>
+
             <!-- buttons -->
 
             <div class="btn-form" ng-show="tableform.$visible">
@@ -199,10 +202,157 @@
             </div>
 
         </form>
-        <!--ion-item class="assertive" id="ajustarCSV-list-item18" 
-              ng-repeat="barreno in BarrenosUpdated.docs"> {{barreno.pesototal}}
-                
-              </ion-item-->
+        <div id="portada-print" print-section ng-show="showPortadaPrint">
+            <strong>REPORTE DE VOLADURA</strong>
+            <table border="1">
+
+                <tr>
+                    <td><strong>Voladura No.</strong><span editable-text="proj.voladuranum"> {{proj.voladuranum}}</span></td>
+                    <td><strong>Hora de Voladura</strong> <span editable-time="proj.horavol"> {{proj.horavol}}</span></td>
+                    <td><strong>Fecha de Vol</strong> <span editable-date="proj.fechatiro"> {{proj.fechatiro}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Proyecto No.</strong> <span editable-tel="proj.stracon" e-title="x-xxxx-xxx">{{proj.stracon}}</td> 
+                     <td><strong>Hora Inicio Cargado</strong>  <span editable-time="proj.horaini" >{{proj.horaini}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Ubicacion </strong><span editable-text="proj.ubica">{{proj.ubica}}</span></td>
+                    <td><strong>Fecha de Inicio Cargado</strong> <span editable-date="proj.fechacarga">{{proj.fechacarga}}</span></td>
+
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Tipo de Tiro</strong> <span editable-text="proj.tipotiro">{{proj.tipotiro}}</span></td>
+                    <td><strong>Tipo de Material</strong> <span editable-text="proj.material">{{proj.material}}</span></td>
+                    <td><strong>ML Perforados</strong> <span editable-number="proj.mlperf">{{Barrenos.length}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Barrenos de Prod. Cargados</strong> <span editable-number="proj.barcarg">{{proj.barcarg}}</span></span>
+                    </td>
+                    <td><strong>Diametro </strong> <span editable-number="proj.diam">{{proj.diam}}</span></td>
+                    <td><strong>Prof. Agua Prom. </strong> <span editable-number="proj.profagua">{{proj.profagua}}</span></td>
+
+                </tr>
+                <tr>
+                    <td><strong>No. Filas </strong> <span editable-number="proj.filas">{{proj.filas}}</span></td>
+                    <td><strong>Bordo </strong> <span editable-number="proj.bordo">{{proj.tipotiro}}</span></td>
+                    <td><strong>Espaciamiento </strong> <span editable-number="proj.esp">{{proj.esp}}</span></td>
+
+                </tr>
+                <tr>
+                    <td><strong>Profundidad Promedio </strong> <span editable-number="proj.profprom">{{getProfRealTotal()/BarrenosUpdated.length | number: 2}}</span></td>
+                    <td><strong>Altura Cara Libre </strong> <span editable-number="proj.caralibre">{{proj.caralibre}}</span></td>
+                    <td><strong>Sub Perforacion </strong> <span editable-number="proj.subperf">{{proj.subperf}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Tipo de Taco </strong> <span editable-text="proj.tipotaco">{{proj.tipotaco}}</span></td>
+                    <td><strong>Altura de Taco </strong> <span editable-number="proj.alttaco">{{proj.alttaco}}</span></td>
+                    <td><strong>ML Cargados </strong> <span editable-number="proj.mlcarg">{{BarrenosUpdated.length}}</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Barrenos de Precorte Cargados </strong> <span editable-text="proj.precortecarg">{{proj.precortecarg}}</span></td>
+                    <td><strong>ML de Precorte </strong> <span editable-number="proj.mlprecorte">{{proj.mlprecorte}}</span></td>
+                </tr>
+                <tr style="font-weight: bold">
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Explosivos </strong> </span>
+                    </td>
+                    <td><strong>Cantidad Total </strong></td>
+                    <td><strong>Producido Por </strong></td>
+                </tr>
+                <tr ng-repeat="producto in prodlist | filter:filterByType ">
+                    <td>{{producto.prod}}</td>
+                    <td>{{producto.used}}</td>
+                    <td>{{producto.fab}}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Iniciadores </strong> </span>
+                    </td>
+                    <td><strong>Cantidad Total </strong></td>
+                    <td><strong>Producido Por </strong></td>
+                </tr>
+                <tr ng-repeat="producto in prodlist | filter:producto.tipo='Booster (Iniciador)' ">
+                    <td>{{producto.prod}}</td>
+                    <td>{{producto.used}}</td>
+                    <td>{{producto.fab}}</td>
+                </tr>
+                <tr style="font-weight: bold">
+                    <td>
+                        <strong>Peso Total de Explosivos Incluyendo Iniciadores</strong>
+                        <span editable-number="proj.pesotot">{{getPesoTotal() | number: 2}} kg</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Tipo de Detonadores (Longitud y Retardos)</td>
+                                 </tr>
+                                 <td><strong>Producto </strong> </span>
+                    </td>
+                    <td><strong>Cantidad Total </strong></td>
+                    <td><strong>Producido Por </strong></td>
+                    <tr ng-repeat="producto in prodlist | filter:filterByTypeDet ">
+                        <td>{{producto.prod}}</td>
+                        <td>{{producto.used}}</td>
+                        <td>Austin Powder</td>
+                    </tr>
+
+
+                    <tr style="font-weight: bold">
+                        <td>
+                            <strong>Peso de Explosivo por Barreno</strong>
+                            <span editable-number="proj.pesoexpbar">{{getPesoTotal()/BarrenosUpdated.length | number: 2}} kg</span>
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <strong>Peso Maximo de Explosivo por Barreno</strong> <span editable-number="proj.pesomaxbar">{{proj.pesomaxbar}} kg</span>
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <strong>Material Producido</strong> <span editable-number="proj.matprod">{{getVolumenTotal() | number: 2}} m3</span>
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <strong>Factor de Carga</strong> <span editable-number="proj.fc">{{getCt()/getVolumenTotal() | number: 2}} kg/m3</span>
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <strong>Commentario</strong>
+                        </td>
+                        <td>
+                            <strong><span editable-text="proj.comment" >{{proj.comment}}</span>
+                                               </td>
+                                           </tr>
+                                         <!--tr style="font-weight: bold">
+                                            <td> 
+                                             <strong>Fragmentacion</strong> <span editable-text="proj.frag" e-name="frag" e-ng-options="s as s for s in fragoptions">{{front.frag}}</span>
+                        </td>
+                        </tr-->
+                        <tr>
+                            <td><strong>Responsable</td>
+                                              <td><strong>Explosivista</strong> {{proj.explo}}</span>
+                            </td>
+                            <td> <strong>Licencia</strong> {{proj.expllic}}</span>
+                            </td>
+                        </tr>
+
+
+            </table>
+        </div>
 
         <label class="item item-select" id="generarReporteDatosGenerales-select20">
                   <span class="input-label">Explosivista</span>

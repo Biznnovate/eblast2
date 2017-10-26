@@ -62,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="x in Barrenos track by $index">
+                    <tr ng-repeat="x in Barrenos | orderBy:'x.barr' track by $index">
 
                         <td>{{x.barr}}</td>
                         <td>{{x.prof}}</td>
