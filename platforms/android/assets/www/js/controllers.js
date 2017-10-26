@@ -261,10 +261,12 @@ angular.module('app.controllers', [])
 
                                     var data2 = {
                                         barr: barr,
+                                        status: val.status,
                                         // id: valtip.carga.id,
                                         tipoid: valtip.tipoid || '',
                                         tipo: valtip.tipo || '',
                                         prod: valtip.prod || '',
+
                                     }
                                     $scope.cargasBarr.push(data2);
 
@@ -3999,6 +4001,7 @@ angular.module('app.controllers', [])
                 Pe: Pe,
                 Lc: Lc,
                 Pt: Pt,
+                Ct: +(Ct).toFixed(2),
                 V: V,
                 Fc: Fc
             }
@@ -4150,8 +4153,10 @@ angular.module('app.controllers', [])
                     Pe: Pe,
                     Lc: Lc,
                     Pt: Pt,
+                    Ct: +(Ct).toFixed(2),
                     V: V,
                     Fc: Fc
+
                 }
                 //console.log('Paso1 Cálculo del volumen de un cilindro en 1 metro' +
                 //   ' Vc ' + Vc
@@ -5925,10 +5930,10 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$window', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$window', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, $state, pouchDB) {
+    function($scope, $stateParams, $state, pouchDB, Excel) {
         $scope.projparam = {
             'id': $stateParams.id,
             'status': $stateParams.status,
