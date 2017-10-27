@@ -226,7 +226,7 @@
 
             <label class="item item-input" id="editarVoladuraMapa-input25">
         <span class="input-label">Profundidad Real (mts)</span>
-        <input type="number" placeholder="" ng-model="selectedBarreno.prof" ng-change="updateProfReal(selectedBarreno.prof)">
+        <input type="number" placeholder="" ng-model="selectedBarreno.prof" ng-change="updateProfReal(selectedBarreno.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
 
             <!--label class="item item-input" id="editarVoladuraMapa-inputlongcarga" ng-show="tipodecarga=='Fija'">
@@ -237,17 +237,17 @@
 
             <label class="item item-input" id="editarVoladuraMapa-inputtaco">
         <span class="input-label">Taco (mts)</span>
-        <input type="number" placeholder="" ng-model="taco" ng-change="updateTaco(taco)">
+        <input type="number" placeholder="" ng-model="taco" ng-change="updateTaco(taco)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputaire ">
         <span class="input-label">Aire (mts)</span>
-        <input type="number" placeholder="" ng-model="aire" ng-change="updateAire(aire)">
+        <input type="number" placeholder="" ng-model="aire" ng-change="updateAire(aire)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
         
       </label>
             <div ng-show="tipodecarga=='Variable'" class="text-center">
                 <label class="item item-input" id="editarVoladuraMapa-inputaire ">
             <span class="input-label">Carga Total (kg)</span>
-            <input type="number" placeholder="" ng-model="calcVals.Ct" ng-change="updateCt(calcVals.Ct)">
+            <input type="number" placeholder="" ng-model="calcVals.Ct" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
           </label>
 
                 <br>
@@ -269,23 +269,23 @@
 
             <label class="item item-input" id="editarVoladuraMapa-inputbordo" ng-show="barrDetails">
         <span class="input-label">Bordo (mts)</span>
-        <input type="number" placeholder=" " ng-model="bordo" ng-change="updateBordo(bordo)">
+        <input type="number" placeholder=" " ng-model="bordo" ng-change="updateBordo(bordo)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputespaciamiento" ng-show="barrDetails">
         <span class="input-label">Espaciamiento (mts)</span>
-        <input type="number" placeholder=" " ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)">
+        <input type="number" placeholder=" " ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputtaco" ng-show="barrDetails">
         <span class="input-label">Taco Inicial (mts)</span>
-        <input type="number" placeholder="" ng-model="tacoini" ng-change="updateTacoIni(tacoini)">
+        <input type="number" placeholder="" ng-model="tacoini" ng-change="updateTacoIni(tacoini)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputdiametro" ng-show="barrDetails">
         <span class="input-label">Diametro (mm) </span>
-        <input type="number" placeholder=" " ng-model="diametro" ng-change="updateDiametro(diametro)">
+        <input type="number" placeholder=" " ng-model="diametro" ng-change="updateDiametro(diametro)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputsubperf" ng-show="barrDetails">
         <span class="input-label">Sub-perforación </span>
-        <input type="number" placeholder=" " ng-model="subperf" ng-change="updateSubperf(subperf)">
+        <input type="number" placeholder=" " ng-model="subperf" ng-change="updateSubperf(subperf)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
  </label>
 
         </form>
