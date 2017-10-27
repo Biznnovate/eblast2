@@ -65,27 +65,27 @@
 
             <label class="item item-input" id="editarVoladuraMapa-inputtaco">
         <span class="input-label">Taco Inicial</span>
-        <input type="number" placeholder=" mts" ng-model="tacoini" ng-change="updateTacoIni(tacoini)">
+        <input type="number" placeholder=" mts" ng-model="tacoini" ng-change="updateTacoIni(tacoini)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputtaco">
         <span class="input-label">Taco</span>
-        <input type="number" placeholder=" mts" ng-model="taco" ng-change="updateTaco(taco)">
+        <input type="number" placeholder=" mts" ng-model="taco" ng-change="updateTaco(taco)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputaire">
         <span class="input-label">Aire</span>
-        <input type="number" placeholder=" mts" ng-model="aire" ng-change="updateAire(aire)">
+        <input type="number" placeholder=" mts" ng-model="aire" ng-change="updateAire(aire)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputbordo">
         <span class="input-label">Bordo</span>
-        <input ng-pattern="onlyNumbers" type="number" placeholder=" mts" ng-model="bordo" ng-change="updateBordo(bordo)">
+        <input ng-pattern="onlyNumbers" type="number" placeholder=" mts" ng-model="bordo" ng-change="updateBordo(bordo)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputespaciamiento">
         <span class="input-label">Espaciamiento</span>
-        <input type="number" placeholder=" mts" ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)">
+        <input type="number" placeholder=" mts" ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputdiametro">
         <span class="input-label">Diametro</span>
-        <input type="number" placeholder=" mm" ng-model="diametro" ng-change="updateDiametro(diametro)">
+        <input type="number" placeholder=" mm" ng-model="diametro" ng-change="updateDiametro(diametro)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
             <label class="item item-input" id="editarVoladuraMapa-inputdiametro">
         <span class="input-label">Sub-Perforación</span>
