@@ -42,7 +42,7 @@ angular.module('app.controllers', [])
             'status': $stateParams.status,
             'proj': $stateParams.proj,
         }
-
+        $scope.showAll = false;
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
         let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
@@ -69,6 +69,8 @@ angular.module('app.controllers', [])
 
         $scope.projID = $scope.projparam.proj || '';
         $scope.selectProjFunc = function() {
+
+
             if ($scope.projID != '') {
                 var proj = $scope.projID;
                 localprojDB.get(proj).then(function(doc) {
@@ -80,6 +82,7 @@ angular.module('app.controllers', [])
                     $scope.Muesrow = doc.muestras;
                     console.log(doc.tipos)
                     console.log('se encontro el proyecto:' + proj)
+
                 }).catch(function(err) {
                     console.log(err);
                 });
@@ -87,21 +90,44 @@ angular.module('app.controllers', [])
                 $scope.selectedProj = ''
                 console.log('no se ha seleccionado un proyecto')
             };
+            $showAll = false;
+            console.log($scope.showAll)
         }
         $scope.selectProjFunc();
         $scope.selectProj = function(obj) {
             console.log(obj)
             $scope.selectedproj_u = obj;
             $scope.projID = obj.doc._id;
+            $scope.projNam = obj.doc.proj;
             $scope.selectProjFunc();
+            console.log('Tipo seleccionado para editar: ' + obj.doc._id)
 
 
         }
         $scope.changeProjID = function() {
             $scope.projID = '';
+            $scope.projNam = '';
+        }
+        $scope.selectProjList = function(obj, idx) {
+
+
+            $scope.projIndex = idx;
+            $scope.projID = obj._id;
+
+            console.log('Tipo seleccionado para editar: ' + obj._id + ' index ' + idx)
+
+
         }
 
-
+        $scope.gotoParam = function() {
+            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+        }
+        $scope.gotoCapt = function() {
+            $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID });
+        }
+        $scope.gotoMapa = function() {
+            $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
+        }
         $scope.gotoProductos = function() {
             $state.go('menu.generarReporteProductos', { 'proj': $scope.projID });
         }
@@ -2095,67 +2121,135 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('mapaVoladura1Ctrl', ['$scope', '$stateParams', 'pouchdbserv', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('mapaVoladura1Ctrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, pouchdbserv, pouchDB) {
-        let db = pouchDB('dbtest');
-        let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast', { skipSetup: true });
-        remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-            console.log("I'm Batman.");
-            return remoteDB.getSession();
-        })
-        var doc = { name: 'David' };
+    function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout) {
+        //tipo as tipo.tipo for tipo in newTipoBars
+        //$scope.Math = window.Math;
 
-        db.sync(remoteDB).on('complete', function() {
-            // yay, we're in sync!
-        }).on('error', function(err) {
-            // boo, we hit an error!
+        //eblast 95e8e3fcb47664acac7c204ccc23ad7ff774deab
+        //barrenos 8061ba7e4cd3b34bd5d3f7ab8b0c36b77eec6400    otedgeorthatenisestreent
+        //Load BD de de Proyectos y sus caracteristicas
+
+        $scope.projparam = {
+                'id': $stateParams.id,
+                'status': $stateParams.status,
+                'proj': $stateParams.proj,
+            }
+            //Declara y Sincroniza base de datos de Tipo
+        let localprojDB = new pouchDB('projects');
+        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            console.log("I'm Batman.");
+            return remoteprojDB.getSession();
+        }).then('complete', function() {
+            localprojDB.sync(remoteprojDB).on('complete', function() {
+                // yay, we're in sync!
+            }).on('error', function(err) {
+                // boo, we hit an error!
+            });
+        })
+        $scope.dataChartBarrs = function(obj) {
+
+            var barrenosforchart = $scope.Barrenos;
+            var radio = obj || 5;
+            $scope.dataChart = [];
+            angular.forEach(barrenosforchart, function(value, key) {
+
+                var data = {
+                    //'Barreno': value.barr,
+                    'x': value.coordx,
+                    'y': value.coordy,
+                    'r': radio
+                }
+
+
+                $scope.dataChart.push(data);
+
+
+            })
+            $scope.ctx = document.getElementById("mapaBarrenos");
+
+            $scope.mapaBarrenos = new Chart($scope.ctx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: 'Info de Barreno',
+                        data: $scope.dataChart,
+
+                    }]
+                },
+
+            });
+            $scope.showmap = true;
+        }
+        localprojDB.allDocs({
+            include_docs: true,
+            attachments: true
+        }).then(function(result) {
+            // handle result
+            $scope.projInfo = result;
+
+
+        }).catch(function(err) {
+            console.log(err);
+        });
+        $scope.changeProjID = function() {
+            $scope.projID = '';
+        }
+        $scope.projID = $scope.projparam.proj || '';
+        var proj = $scope.projparam.proj;
+
+
+        localprojDB.get(proj).then(function(doc) {
+
+            $scope.proj = doc;
+            console.log(doc)
+            $scope.tipos = doc.tipos;
+            console.log(doc.tipos)
+
+        }).catch(function(err) {
+            console.log(err);
+            // alert('no');
+            $scope.showForm2 = true;
+            $scope.projExists = false;
+
+        });
+        var proj = $scope.projID;
+
+        localprojDB.get(proj).then(function(doc) {
+
+            $scope.proj = doc;
+            console.log(doc)
+            $scope.tipobarr = doc.tipos;
+            $scope.Barrenos = [];
+            $scope.Barrenos = doc.barrenos;
+            $scope.dataChartBarrs();
+            console.log(doc.tipos)
+        }).catch(function(err) {
+            console.log(err);
+
         });
 
-        function error(err) {
-            $log.error(err);
+        $scope.selectProj = function(obj) {
+            console.log(obj)
+            $scope.selectedproj_u = obj;
+            $scope.projID = obj.doc._id;
+            var proj = $scope.projID;
+            localprojDB.get(proj).then(function(doc) {
+
+                $scope.proj = doc;
+                console.log(doc)
+                $scope.tipobarr = doc.tipos;
+                $scope.Barrenos = doc.barrenos;
+                console.log(doc.tipos)
+            }).catch(function(err) {
+                console.log(err);
+
+            });
         }
 
-        function get(res) {
-            if (!res.ok) {
-                return error(res);
-            }
-            return db.get(res.id);
-        }
-
-        function bind(res) {
-            $scope.doc = res;
-        }
-
-        db.post(doc)
-            .then(get)
-            .then(bind)
-            .catch(error);
-
-        $scope.a = '1';
-        $scope.b = '5';
-
-        $scope.list = [{ 'val': '1' }, { 'val': '2' }, { 'val': '3' }]
-        $scope.itemList = [];
-
-        //selectiona y remplaza item seleccionado
-        $scope.selectValue = function(item) {
-            $scope.itemList = [];
-
-            $scope.itemList.push(item.val);
-            $scope.a = $scope.itemList;
-        }
-
-
-        //calcula el valor de lo seleccionado
-        //$scope.calcVal = function() {
-        var c = parseFloat($scope.a);
-        var d = parseFloat($scope.b);
-        $scope.result = (d - c);
-
-
-        // };
 
     }
 ])
@@ -6633,28 +6727,97 @@ angular.module('app.controllers', [])
 ])
 
 .controller('buscarBarrenoCtrl', ['$scope', '$stateParams', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, $state) {
+        // You can include any angular dependencies as parameters for this function
+        // TIP: Access Route Parameters for your page via $stateParams.parameterName
+        function($scope, $stateParams, $state) {
 
-        $scope.fields = {
-            id: '',
-            status: 'Any Status'
-        }
-        $scope.search = function() {
-            var params = {
-                Col1: $scope.fields.id
+            $scope.fields = {
+                id: '',
+                status: 'Any Status'
+            }
+            $scope.search = function() {
+                var params = {
+                    Col1: $scope.fields.id
+                }
+
+                if ($scope.fields.status != 'Any Status') {
+                    params.status = $scope.fields.status;
+                }
+
+
+                $state.go('menu.verBarrenos', params);
+
             }
 
-            if ($scope.fields.status != 'Any Status') {
-                params.status = $scope.fields.status;
-            }
-
-
-            $state.go('menu.verBarrenos', params);
 
         }
+    ])
+    .controller('verProyectosCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+        // You can include any angular dependencies as parameters for this function
+        // TIP: Access Route Parameters for your page via $stateParams.parameterName
+        function($scope, $stateParams, $state, pouchDB) {
+            $scope.projparam = {
+                'id': $stateParams.id,
+                'status': $stateParams.status,
+                'proj': $stateParams.proj,
+            }
+
+            //Declara y Sincroniza base de datos de Tipo
+            let localprojDB = new pouchDB('projects');
+            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprojDB.getSession();
+            });
+            localprojDB.sync(remoteprojDB).on('complete', function() {
+                // yay, we're in sync!
+            }).on('error', function(err) {
+                // boo, we hit an error!
+            });
+            localprojDB.allDocs({
+                include_docs: true,
+                attachments: true
+            }).then(function(result) {
+                // handle result
+                $scope.projInfo = result;
 
 
-    }
-])
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+            $scope.projID = $scope.projparam.proj || '';
+            $scope.selectProjFunc = function() {
+                if ($scope.projID != '') {
+                    var proj = $scope.projID;
+                    localprojDB.get(proj).then(function(doc) {
+                        $scope.selectedProj = doc;
+                        console.log(doc)
+                        $scope.tipobarr = doc.tipos;
+                        $scope.Barrenos = doc.barrenos;
+                        $scope.muestraData = doc.muestras;
+                        $scope.Muesrow = doc.muestras;
+                        console.log(doc.tipos)
+                        console.log('se encontro el proyecto:' + proj)
+                    }).catch(function(err) {
+                        console.log(err);
+                    });
+                } else {
+                    $scope.selectedProj = ''
+                    console.log('no se ha seleccionado un proyecto')
+                };
+            }
+            $scope.selectProjFunc();
+            $scope.selectProj = function(obj) {
+                console.log(obj)
+                $scope.selectedproj_u = obj;
+                $scope.projID = obj.doc._id;
+                $scope.selectProjFunc();
+
+
+            }
+            $scope.changeProjID = function() {
+                $scope.projID = '';
+            }
+        }
+    ])
