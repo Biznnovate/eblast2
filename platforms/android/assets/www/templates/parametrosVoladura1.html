@@ -1,10 +1,16 @@
 <ion-view title="Crear Tipo de Barreno" id="page8">
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
+                                               
+                                                </button>
+    </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
-        {{showtipoEditthing()}}
+        <strong><h3>Proyecto: {{projNam}}</h3></strong>
+        <!-- {{showtipoEditthing()}}
         <!--ion-item id="parametrosVoladura1-list-itemupd11" ng-repeat="tipo in projTipos | filter: tipo._id=tipoBarrNam_u" ng-model="projTipos">{{tipo._id}}</ion-item-->
-        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+        <!--<table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
             <tr>
-                <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
+                <td><strong><h3>Proyecto: {{projNam}}</h3></strong></td>
                 <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
           Otros Proyectos</button>
                 </td>
@@ -17,7 +23,7 @@
           <span class="input-label">Seleccione el Proyecto</span>
           <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
            ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
-        </label>
+        </label>-->
         <div ng-if="projTipos.length!=0">
 
 
