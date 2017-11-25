@@ -1,13 +1,24 @@
 <ion-view title="Editar - Voladura Mapa" id="page12">
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
+                               
+                                </button>
+    </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
-        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+
+        <strong><h3>Proyecto: {{projNam}}</h3></strong>
+
+
+        <!--table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
             <tr>
                 <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
                 <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
             Otros Proyectos</button>
                 </td>
             </tr>
-        </table>
+        </table-->
+
+
 
         <canvas ng-show="showmap" id="mapaBarrenos"></canvas>
 
@@ -71,7 +82,7 @@
                     <td> <label class="item item-select" id="editarVoladuraMapa-select19">
                         <span class="input-label">ID de Barreno</span>
                         <select ng-options="barreno as barreno.barr for barreno in Barrenos | orderBy: 'barr/1' | filter : statusFilter  | filter : searchedbarr " 
-                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[0]"></select>
+                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[1]"></select>
                             </label>
 
                         <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showselectbarrchar">
@@ -109,7 +120,7 @@
         </form>
         <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
                 <span class="input-label">Seleccione el Tipo</span>
-                <select ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
+                <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
                 ng-change="updateSelectedTipo(selectedTipo)"></select>
               </label>
 
@@ -292,6 +303,7 @@
         <form ng-show="enableaddNew" class="list">
 
         </form>
+
 
 
         <div id="editarVoladuraMapa-button-bar5" class="button-bar">

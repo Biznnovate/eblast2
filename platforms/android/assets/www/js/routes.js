@@ -321,7 +321,7 @@ angular.module('app.routes', [])
                 }
             }
         })
-        .state('menu.verProyectos', {
+        .state('menu.admincons', {
             url: '/page26',
             params: {
                 id: "",
@@ -330,8 +330,8 @@ angular.module('app.routes', [])
             },
             views: {
                 'side-menu21': {
-                    templateUrl: 'templates/verProyectos.html',
-                    controller: 'verProyectosCtrl'
+                    templateUrl: 'templates/admincons.html',
+                    controller: 'adminconsCtrl'
                 }
             }
         })
