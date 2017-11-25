@@ -4954,7 +4954,7 @@ angular.module('app.controllers', [])
             }
 
             $scope.updateSelectedBarr(result);
-
+            $scope.hideMap();
 
         }
         $scope.canvasMap = document.getElementById('mapaBarrenos');
