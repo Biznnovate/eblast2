@@ -2284,6 +2284,7 @@ angular.module('app.controllers', [])
             });
             $scope.showmap = true;
         }
+
         localprojDB.allDocs({
             include_docs: true,
             attachments: true
@@ -3512,10 +3513,12 @@ angular.module('app.controllers', [])
 
         $scope.updateSelectedBarr = function(obj) {
             console.log(obj)
+            $scope.selectedBarreno = obj;
             console.log($scope.selectedBarreno)
                 //alert($scope.selectedBarreno.doc)
                 // $scope.selectedbarr_id = obj.id;
             $scope.selectedbarr = obj;
+
             $scope.profDis = obj.prof;
             $scope.profreal = obj.prof;
             $scope.profreal_u = $scope.profreal;
@@ -4879,21 +4882,28 @@ angular.module('app.controllers', [])
             $scope.showmap = true;
         }
         $scope.dataChartBarrs = function(obj) {
+            $scope.show();
 
             var barrenosforchart = $scope.Barrenos;
             var radio = obj || 5;
             $scope.dataChart = [];
+            $scope.labelChart = [];
             angular.forEach(barrenosforchart, function(value, key) {
 
                 var data = {
-                    //'Barreno': value.barr,
+
                     'x': value.coordx,
                     'y': value.coordy,
-                    'r': radio
+                    'r': radio,
+                    'barr': value.barr
+
+                }
+                var label = {
+                    'barr': value.barr,
                 }
 
-
                 $scope.dataChart.push(data);
+                $scope.labelChart.push(label);
 
 
             })
@@ -4902,16 +4912,69 @@ angular.module('app.controllers', [])
             $scope.mapaBarrenos = new Chart($scope.ctx, {
                 type: 'bubble',
                 data: {
+                    labels: $scope.labelChart,
                     datasets: [{
-                        label: 'Info de Barreno',
+                        label: 'i',
                         data: $scope.dataChart,
 
                     }]
                 },
-
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                },
             });
             $scope.showmap = true;
+            $scope.hide();
         }
+        $scope.findIndexBarr = function(prop, value) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i][prop] === value) {
+                    return i;
+                }
+            }
+        }
+
+        $scope.selectedMapDataFunc = function(obj) {
+            console.log('Selected Map Object ' + obj);
+            var prop = 'barr';
+            var value = obj;
+            //var i = $scope.findIndexBarr(prop, value);
+            var result = $filter('filter')($scope.Barrenos, { barr: obj })[0];
+            console.log('selected barreno ' + result)
+            $scope.searchedbarr = {
+                barr: obj,
+            }
+
+            $scope.updateSelectedBarr(result);
+
+
+        }
+        $scope.canvasMap = document.getElementById('mapaBarrenos');
+
+        $scope.canvasMap.onclick = function(evt) {
+            $scope.searchedbarr = {};
+
+            var activePoint = $scope.mapaBarrenos.getElementAtEvent(evt)[0];
+            var data = activePoint._chart.data;
+            var datasetIndex = activePoint._datasetIndex;
+            var label = data.datasets[datasetIndex].data[activePoint._index].barr;
+            var value = data.datasets[datasetIndex].data[activePoint._index];
+            $scope.selectedMapData = data.datasets[datasetIndex].data[activePoint._index].barr;
+
+            $scope.selectedMapDataFunc($scope.selectedMapData);
+            console.log('datasetindex ' + datasetIndex + ' data ' + $scope.selectedMapData);
+        };
+        $scope.mapDataFunc = function(points, evt) {
+            console.log(points, evt);
+        };
 
         $scope.showselectbarrchar = false;
         $scope.editBarr = function() {
@@ -4919,6 +4982,7 @@ angular.module('app.controllers', [])
             $scope.barrDetails = true;
             $scope.showCoord = true;
         }
+
 
     }
 ])

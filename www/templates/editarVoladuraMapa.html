@@ -5,7 +5,10 @@
                                 </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
+
         <strong><h3>Proyecto: {{projNam}}</h3></strong>
+
+
         <!--table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
             <tr>
                 <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
@@ -14,6 +17,8 @@
                 </td>
             </tr>
         </table-->
+
+
 
         <canvas ng-show="showmap" id="mapaBarrenos"></canvas>
 
@@ -71,13 +76,13 @@
 
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Buscar barreno por ID" ng-model = "searchedbarr.barr">
-      </label>
+      </label> Barreno{{selectedBarreno}} barr {{selectedbarr}}
             <table class="table table-bordered table-hover table-condensed">
                 <tr>
                     <td> <label class="item item-select" id="editarVoladuraMapa-select19">
                         <span class="input-label">ID de Barreno</span>
                         <select ng-options="barreno as barreno.barr for barreno in Barrenos | orderBy: 'barr/1' | filter : statusFilter  | filter : searchedbarr " 
-                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[0]"></select>
+                        ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[1]"></select>
                             </label>
 
                         <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showselectbarrchar">
@@ -298,6 +303,7 @@
         <form ng-show="enableaddNew" class="list">
 
         </form>
+
 
 
         <div id="editarVoladuraMapa-button-bar5" class="button-bar">
