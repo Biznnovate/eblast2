@@ -61,6 +61,7 @@ angular.module('app.controllers', [])
             'proj': $stateParams.proj,
         }
         $scope.showAll = false;
+        // $scope.show();
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
         let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
@@ -72,35 +73,59 @@ angular.module('app.controllers', [])
 
 
 
-
         $scope.syncFunc = function() {
             $scope.show();
+            let localprojDB = new pouchDB('projects');
+            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprojDB.getSession();
+            });
             localprojDB.sync(remoteprojDB).on('complete', function() {
-                // yay, we're in sync!
+                //  yay, we're in sync!
+                console.log('pretty sync')
             }).on('error', function(err) {
                 // boo, we hit an error!
+                console.log(err)
             });
+
+            localprojDB.allDocs({
+                include_docs: true,
+                attachments: true
+            }).then(function(result) {
+                // handle result
+                $scope.projInfo = result.rows;
+                $scope.selectedproj = $scope.projInfo[0];
+
+            }).catch(function(err) {
+                // console.log(err);
+            });
+
+
+
             $scope.hide();
 
         }
         $scope.syncFunc();
 
         $scope.loadProjDBFunc = function() {
-            $scope.show();
-            localprojDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.projInfo = result;
+                $scope.show();
+                localprojDB.allDocs({
+                    include_docs: true,
+                    attachments: true
+                }).then(function(result) {
+                    // handle result
+                    $scope.projInfo = result.rows;
+                    $scope.selectedproj = $scope.projInfo[0];
 
 
-            }).catch(function(err) {
-                console.log(err);
-            });
-            $scope.hide();
-        }
-        $scope.loadProjDBFunc();
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                $scope.hide();
+            }
+            //  $scope.loadProjDBFunc();
+            //$scope.hide();
 
         $scope.projID = $scope.projparam.proj || '';
         $scope.selectProjFunc = function() {
@@ -131,6 +156,7 @@ angular.module('app.controllers', [])
         $scope.selectProjFunc();
         $scope.selectProj = function(obj) {
             console.log(obj)
+
             $scope.selectedproj_u = obj;
             $scope.projID = obj.doc._id;
             $scope.projNam = obj.doc.proj;
@@ -151,6 +177,23 @@ angular.module('app.controllers', [])
 
             console.log('Tipo seleccionado para editar: ' + obj._id + ' index ' + idx)
 
+
+        }
+        $scope.deleteProj = function(index) {
+            console.log('se esta borrando el proyecto ' + index)
+            $scope.show();
+            //$scope.selectedproj_u = obj;
+            var id = obj.doc._id;
+            //$scope.projNam = obj.doc.proj;
+            localprojDB.get(id).then(function(doc) {
+                return localprojDB.remove(doc);
+            });
+
+            $scope.loadProjDBFunc();
+            //$scope.projInfo.splice(index, 1);
+
+            console.log('Proyecto Borrado');
+            $scope.hide();
 
         }
 
@@ -4919,6 +4962,7 @@ angular.module('app.controllers', [])
 
                     }]
                 },
+
                 options: {
                     responsive: true,
                     tooltips: {
@@ -4929,10 +4973,12 @@ angular.module('app.controllers', [])
                         mode: 'nearest',
                         intersect: true
                     },
-                },
+
+                }
             });
             $scope.showmap = true;
             $scope.hide();
+
         }
         $scope.findIndexBarr = function(prop, value) {
             for (var i = 0; i < this.length; i++) {
@@ -4954,7 +5000,7 @@ angular.module('app.controllers', [])
             }
 
             $scope.updateSelectedBarr(result);
-            $scope.hideMap();
+
 
         }
         $scope.canvasMap = document.getElementById('mapaBarrenos');
@@ -4969,7 +5015,13 @@ angular.module('app.controllers', [])
             var value = data.datasets[datasetIndex].data[activePoint._index];
             $scope.selectedMapData = data.datasets[datasetIndex].data[activePoint._index].barr;
 
+
+
             $scope.selectedMapDataFunc($scope.selectedMapData);
+            $scope.hideMap();
+
+
+            // $scope.hideMap();
             console.log('datasetindex ' + datasetIndex + ' data ' + $scope.selectedMapData);
         };
         $scope.mapDataFunc = function(points, evt) {

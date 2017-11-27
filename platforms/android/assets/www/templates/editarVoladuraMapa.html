@@ -40,11 +40,11 @@
 
 
 
-        <label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
+        <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
             <span class="input-label">Seleccione el Proyecto</span>
             <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
              ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
-  </label>
+  </label-->
         <button id="editarVoladuraMapa-button33" ng-show="showmap==true" ng-click="hideMap()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropup-circle">Ocultar Mapa</button>
         <button id="editarVoladuraMapa-button33" ng-show="showmap==false" ng-click="dataChartBarrs()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropdown-circle">Desplegar Mapa</button>
         <strong>{{message}}</strong>
