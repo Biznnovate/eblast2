@@ -28,8 +28,8 @@
             <div class="btn-group">
                 <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                 <ul class="dropdown-menu " role="menu">
-
-                    <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                    <li><button class="btn btn-link" ng-click="exportToExcel('#barrenos')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                    <!--li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li-->
                     <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
                     <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
                     <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
@@ -62,35 +62,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="x in Barrenos | orderBy: 'barr' ">
+                    <tr ng-repeat="x in Barrenos | orderBy:'x.barr' track by $index">
 
                         <td>{{x.barr}}</td>
                         <td>{{x.prof}}</td>
                         <td>{{x.profreal}}</td>
-                        <td>{{x.subperf}}</td>
+                        <td>{{x.calcs.s | number:2}}</td>
                         <td>{{x.tacoini}}</td>
                         <td>{{x.taco}}</td>
                         <td>{{x.diametro}}</td>
                         <td>
                             <table>
-                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ini' | filter:y.barr=x.barr ">
-                                    <td>{{y.prod}}</td>
+                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ini' | filter:y.status='Updated'">
+                                    <td ng-if="x.barr==y.barr">{{y.prod}}</td>
+
                                 </tr>
                             </table>
                         </td>
                         <td>{{x.calcs.Ci| number:2}}</td>
                         <td>
                             <table>
-                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='cg' | filter:y.barr=x.barr">
-                                    <td ng-show="y.tipoid=='cg'">{{y.prod}}</td>
+                                <tr ng-repeat="y in cargasBarr |  filter:y.tipoid='cg' | filter: y.status='Updated'">
+                                    <td ng-if="x.barr==y.barr">{{y.prod}}</td>
                                 </tr>
-                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ce' | filter:y.barr=x.barr">
-                                    <td ng-show="y.tipoid=='ce'">{{y.prod}}</td>
+                                <tr ng-repeat="y in cargasBarr | filter:y.tipoid='ce'| filter: y.status='Updated'">
+                                    <td ng-if="x.barr==y.barr">{{y.prod}}</td>
                                 </tr>
                             </table>
                         </td>
-                        <td>{{x.calcs.Pt | number:2}}</td>
-                        <td>{{x.calcs.Pt+x.calcs.Ci | number:2}}</td>
+                        <td>{{x.calcs.Ct | number:2}}</td>
+                        <td>{{x.calcs.Ct+x.calcs.Ci | number:2}}</td>
                         <td>{{x.bordo}}</td>
                         <td>{{x.espaciamiento}}</td>
                         <td>{{x.calcs.V}}</td>
