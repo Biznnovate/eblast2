@@ -19,9 +19,6 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.ionicframework.eblast506119"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.eblast506119"
-        },
         "ionic-plugin-deploy": {
             "PACKAGE_NAME": "com.ionicframework.eblast506119"
         },
@@ -29,6 +26,9 @@
             "PACKAGE_NAME": "com.ionicframework.eblast506119"
         },
         "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.eblast506119"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.eblast506119"
         }
     },

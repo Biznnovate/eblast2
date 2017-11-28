@@ -273,9 +273,9 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
-    "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-deploy": "0.6.7",
-    "ionic-plugin-keyboard": "2.2.1"
+    "ionic-plugin-keyboard": "2.2.1",
+    "cordova-plugin-whitelist": "1.3.3"
 }
 // BOTTOM OF METADATA
 });

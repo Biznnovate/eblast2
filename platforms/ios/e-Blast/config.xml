@@ -43,8 +43,8 @@
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
     <name>e-Blast</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>Austin Blast Dispersion by Biznnovate</description>
+    <author email="contact@biznnovate.com" href="http://biznnovate.com/">Biznnovate</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />

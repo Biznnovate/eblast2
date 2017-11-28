@@ -1,68 +1,32 @@
 <ion-view title="Mapa - Voladura 1" id="page7">
-  <ion-content padding="true" class="has-header">
-    <div style="margin-left: -10px; width: calc(100% + 20px);">
-      <img src="img/57A7wM4YQsCYZXIqY5Z4_ScreenShot2017-03-14at5.01.08PM.png" style="display: block; width: 100%; height: 200%; margin-left: auto; margin-right: auto;">
-    </div>
-    <form id="mapaVoladura1-form7" class="list">
-      <label class="item item-input" id="mapaVoladura1-search2">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Buscar por ID">
-      </label>
-    </form>
-    <div id="mapaVoladura1-markdown14" class="show-list-numbers-and-dots">
-      <p style="color:#000000;">a: {{a}} b: {{b}}</p>
+    <ion-content padding="true" class="has-header">
+        <div class="btn-group">
+            <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+            <ul class="dropdown-menu " role="menu">
+                <li><button class="btn btn-link" ng-click="exportToExcel('#barrenos')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                <!--li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li-->
+                <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+            </ul>
+        </div>
+        <div id="barrenos" print-section>
+            <canvas id="mapaBarrenos"></canvas>
+        </div>
 
-      <p style="color:#000000;">result: {{result}}</p>
+        <table class="table table-bordered table-hover table-condensed" ng-show="showmap">
+            <tr>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(10)">Grande
+                      </button>
+                </td>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(5)">Mediano
+                      </button>
+                </td>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(3)">Pequeño
+                      </button>
+                </td>
+            </tr>
+        </table>
 
-      <p style="color:#000000;">selected val: {{itemList}} {{b-a}}
-      </p>
-    </div>
-    <div>
-      <div class="row">
-        <div class="col">Columna1</div>
-        <div class="col">Columna2</div>
-        <div class="col">Columna3</div>
-        <div class="col">Columna4</div>
-      </div>
-      <div class="row">
-        <div class="col">1</div>
-        <div class="col">977596.29</div>
-        <div class="col">538423.37</div>
-        <div class="col">129.5</div>
-      </div>
-      <div class="row">
-        <div class="col">2</div>
-        <div class="col">977589.03</div>
-        <div class="col">538421.58</div>
-        <div class="col">129.5</div>
-      </div>
-      <div class="row">
-        <div class="col">3</div>
-        <div class="col">977581.42</div>
-        <div class="col">538418.58</div>
-        <div class="col">129.5</div>
-      </div>
-      <div class="row">
-        <div class="col">4</div>
-        <div class="col">977574.63</div>
-        <div class="col">538416.15</div>
-        <div class="col">129.5</div>
-      </div>
-      <div class="row">
-        <div class="col">5</div>
-        <div class="col">977566.53</div>
-        <div class="col">538414.4</div>
-        <div class="col">129.5</div>
-      </div>
-    </div>
-    <form id="mapaVoladura1-form21" class="list">
-      <label class="item item-select" id="mapaVoladura1-select31">
-        <span class="input-label">Select</span>
-        <select ng-model="testSelect" ng-options="val as val.val for val in list" ng-change="selectValue(testSelect)"></select>
-      </label>
-    </form>
-    <a ui-sref="menu.parametrosVoladura1()" id="mapaVoladura1-button12" class="button button-positive button-block icon-right ion-android-checkmark-circle">Iniciar</a>
-    <a ui-sref="menu.parametrosVoladura1()" id="mapaVoladura1-button52" class="button button-positive button-block icon-left ion-android-arrow-back">Atras</a>
-    <button id="mapaVoladura1-button16" ng-click="calcVal()" class="button button-positive button-block">Tap me!</button>
-  </ion-content>
+    </ion-content>
 </ion-view>

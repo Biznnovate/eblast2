@@ -106,6 +106,11 @@ angular.module('app.routes', [])
 
     .state('menu.mapaVoladura1', {
         url: '/page7',
+        params: {
+            id: "",
+            status: "",
+            proj: ""
+        },
         views: {
             'side-menu21': {
                 templateUrl: 'templates/mapaVoladura1.html',
@@ -316,9 +321,22 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.admincons', {
+            url: '/page26',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/admincons.html',
+                    controller: 'adminconsCtrl'
+                }
+            }
+        })
 
-
-    $urlRouterProvider.otherwise('/side-menu21/page1')
+    $urlRouterProvider.otherwise('/side-menu21/page13')
 
 
 
