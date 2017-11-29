@@ -24,7 +24,7 @@
                 <td>{{proj.doc.proj}}</td>
                 <td>{{proj.doc.date}}</td>
                 <td ng-show="showEditProd"><button ng-click="selectProj(proj)" class="button button-positive button-full button-clear icon ion-android-checkbox-outline"></button></td>
-                <td ng-show="showEditProd"><button ng-click="deleteProj($index)" class="button button-positive button-full button-clear icon ion-android-delete"></button></td>
+                <td ng-show="showEditProd"><button ng-click="deleteProj(proj)" class="button button-positive button-full button-clear icon ion-android-delete"></button></td>
             </tr>
         </table>
         <table class="table table-bordered table-hover table-condensed" ng-hide="showAll">
