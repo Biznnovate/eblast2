@@ -242,8 +242,8 @@ angular.module('app.controllers', [])
 
 
         }
-        $scope.deleteProj = function(index) {
-            console.log('se esta borrando el proyecto ' + index)
+        $scope.deleteProj = function(obj) {
+            console.log('se esta borrando el proyecto ' + obj)
             $scope.show();
             //$scope.selectedproj_u = obj;
             var id = obj.doc._id;
