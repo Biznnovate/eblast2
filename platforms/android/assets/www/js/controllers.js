@@ -60,6 +60,7 @@ angular.module('app.controllers', [])
             'status': $stateParams.status,
             'proj': $stateParams.proj,
         }
+        $scope.projID = $scope.projparam.proj || '';
         $scope.showAll = false;
         // $scope.show();
         //Declara y Sincroniza base de datos de Tipo
@@ -216,6 +217,7 @@ angular.module('app.controllers', [])
 
 
         }
+
         $scope.selectProjT5 = function(obj) {
             console.log(obj)
 
@@ -228,6 +230,38 @@ angular.module('app.controllers', [])
 
 
         }
+        $scope.selectProjParam = function() {
+            $scope.show();
+            if ($scope.projID != '') {
+
+                var id = $scope.projID;
+                let localprojDB = new pouchDB('projects');
+                localprojDB.get(id).then(function(doc) {
+
+                    $scope.projNam = doc.proj
+
+                    console.log('proj loaded' + doc.proj)
+
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                var data = {
+                    _id: id,
+                    proj: $scope.projNam
+
+                }
+                console.log('selected proj is ' + data)
+                $scope.selectProjT5(data)
+
+            } else {
+                console.log('no project selected')
+            }
+            $scope.hide();
+            console.log('finished selectprojparamfunc')
+        }
+        $scope.selectProjParam();
+
         $scope.changeProjID = function() {
             $scope.projID = '';
             $scope.projNam = '';
@@ -2301,10 +2335,10 @@ angular.module('app.controllers', [])
             }).on('error', function(err) {
                 // boo, we hit an error!
             });
-
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+            $scope.hide();
+            $state.go('menu.vistaDeProyecto', { 'proj': $scope.projID });
         }
-        $scope.hide();
+
 
     }
 ])
