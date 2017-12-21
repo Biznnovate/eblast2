@@ -156,4 +156,12 @@ angular.module('app.services', [])
 
 .controller('Two', function($scope, dataService) {
     $scope.data = dataService.dataObj;
+})
+
+.factory('Page', function() {
+    var title = 'default';
+    return {
+        title: function() { return title; },
+        setTitle: function(newTitle) { title = newTitle }
+    };
 });

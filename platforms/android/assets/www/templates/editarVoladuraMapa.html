@@ -1,26 +1,96 @@
-<ion-view title="Editar - Voladura Mapa" id="page12">
+<ion-view id="page12">
+    <ion-nav-title>
+        Proyecto: {{projNam}} Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}
+    </ion-nav-title>
     <ion-nav-buttons side="right">
         <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
                                
                                 </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
+        <!--div class="text-center">
+            <h3>Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}</h3>
+        </div-->
+        <table class="table table-bordered table-hover table-condensed">
+            <tr style="font-weight: bold">
+                <td style="width:70%">Mapa</td>
+                <td style="width:30%">Info</td>
 
-        <strong><h3>Proyecto: {{projNam}}</h3></strong>
-
-
-        <!--table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+            </tr>
             <tr>
-                <td><strong><h3>Proyecto: {{projID}}</h3></strong></td>
-                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
-            Otros Proyectos</button>
+
+                <td style="width:70%">
+                    <div class="myChartDiv"> <canvas id="mapaBarrenos" height="500" width="800"></canvas></div>
+                </td>
+
+                <td style="width:30%">
+                    <table>
+                        <tr>
+                            <td><strong>ID {{selectedbarr.barr}}</strong></td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
+                                    <label class="item" id="editarVoladuraMapa-input25">
+                                                <span class="input-label">Prof. Diseño (mts) </span>
+                                                <input type="number" style="text-align: right;" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
+                                        </label>
+                                </form>
+
+                                <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
+
+                                    <label class="item item-input" id="editarVoladuraMapa-input25">
+                                <span class="input-label">Prof. Real (mts)</span>
+                                <input type="number" placeholder="" style="text-align: right;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                              </label></td>
+                        </tr>
+
+
+                        <tr>
+                            <td> <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
+                                <span class="input-label">Seleccione el Tipo</span>
+                                <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
+                                ng-change="updateSelectedTipo(selectedTipo)"></select>
+                              </label></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div ng-show="tipodecarga=='Variable'" class="text-center">
+                                    <label class="item item-input" id="editarVoladuraMapa-inputaire ">
+                            <span class="input-label">Carga Total (kg)</span>
+                            <input type="number" placeholder="" ng-model="calcVals.Ct" style="text-align: right;" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                          </label>
+
+                                    <br>
+
+
+                                    <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+
+                                </div>
+                                <div ng-show="tipodecarga=='Fija'" class="text-center">
+
+
+                                    <br>
+
+
+                                    <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;"
+                                    class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+                                <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button></td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
-        </table-->
+        </table>
 
 
-
-        <canvas ng-show="showmap" id="mapaBarrenos"></canvas>
 
         <table class="table table-bordered table-hover table-condensed" ng-show="showmap">
             <tr>
@@ -45,19 +115,9 @@
             <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
              ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
   </label-->
-        <button id="editarVoladuraMapa-button33" ng-show="showmap==true" ng-click="hideMap()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropup-circle">Ocultar Mapa</button>
-        <button id="editarVoladuraMapa-button33" ng-show="showmap==false" ng-click="dataChartBarrs()" class="button button-calm button-positive button-block icon-right ion-android-arrow-dropdown-circle">Desplegar Mapa</button>
         <strong>{{message}}</strong>
 
-        <form id="editarVoladuraMapa-form11" class="list" ng-model="tempTiposBarr">
 
-
-            <div class="text-center">
-                <h3>Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}</h3>
-            </div>
-
-
-        </form>
         <form id="editarVoladuraMapa-form1">
             <div class="row" ng-show="showBarrnam">
 
