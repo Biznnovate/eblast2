@@ -3532,7 +3532,11 @@ angular.module('app.controllers', [])
             $scope.labelChart = [];
             $scope.seriesChart = [];
             angular.forEach(barrenosforchart, function(value, key) {
-
+                if (value.status == "Pending") {
+                    var colorbarr = "#d42827"
+                } else {
+                    var colorbarr = "#a6a6a6"
+                }
                 var data1 = {
                     'x': value.coordx,
                     'y': value.coordy,
@@ -3541,18 +3545,18 @@ angular.module('app.controllers', [])
 
                 };
                 // }
-                // var label = {
-                //    'barr': value.barr,
-                // }
+                var label = value.barr;
+
                 var data = {
-                    label: value.barr,
-                    title: value.barr,
+                    barr: value.barr,
+                    label: 'i',
+                    // title: value.barr,
                     data: [{
                         'x': value.coordx,
                         'y': value.coordy,
                         'r': radio,
-
                     }],
+                    backgroundColor: colorbarr,
                     //  series: value.barr,
                 };
 
@@ -3561,7 +3565,7 @@ angular.module('app.controllers', [])
 
 
                 // $scope.dataChart1.push(data1);
-                //$scope.labelChart.push(label);
+                $scope.labelChart.push(label);
                 $scope.dataChart.push(data);
 
             })
@@ -3577,10 +3581,9 @@ angular.module('app.controllers', [])
             $scope.mapaBarrenos = new Chart($scope.ctx, {
                 type: 'bubble',
                 data: {
-                    labels: "i",
+                    labels: $scope.labelChart,
 
                     datasets: $scope.dataChart
-
 
                 },
 
@@ -3945,7 +3948,7 @@ angular.module('app.controllers', [])
             var datasetIndex = activePoint._datasetIndex;
             var label = data.datasets[datasetIndex].data[activePoint._index].label;
             var value = data.datasets[datasetIndex].data[activePoint._index];
-            $scope.selectedMapData = data.datasets[datasetIndex].label;
+            $scope.selectedMapData = data.datasets[datasetIndex].barr;
             $scope.selectedBarr_idx = $scope.dataChart[datasetIndex].label
             console.log('label ' + label)
             console.log("selected barr" + $scope.dataChart[datasetIndex])
@@ -5052,6 +5055,7 @@ angular.module('app.controllers', [])
             console.log($scope.message);
             // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
             $scope.hide();
+            $scope.$applyAsync();
 
         }
 

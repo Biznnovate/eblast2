@@ -20,13 +20,15 @@
             <tr>
 
                 <td style="width:70%">
-                    <div class="myChartDiv"> <canvas id="mapaBarrenos" height="500" width="800"></canvas></div>
+                    <div class="myChartDiv"> <canvas id="mapaBarrenos" height="500" width="768"></canvas></div>
                 </td>
 
                 <td style="width:30%">
                     <table>
                         <tr>
-                            <td><strong>ID {{selectedbarr.barr}}</strong></td>
+                            <td>
+                                <h3><strong>ID {{selectedbarr.barr}}</strong></h3>
+                            </td>
                         </tr>
 
 
@@ -35,7 +37,7 @@
                                 <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
                                     <label class="item" id="editarVoladuraMapa-input25">
                                                 <span class="input-label">Prof. Diseño (mts) </span>
-                                                <input type="number" style="text-align: right;" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
+                                                <input type="number" style="text-align: center;" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
                                         </label>
                                 </form>
 
@@ -43,14 +45,14 @@
 
                                     <label class="item item-input" id="editarVoladuraMapa-input25">
                                 <span class="input-label">Prof. Real (mts)</span>
-                                <input type="number" placeholder="" style="text-align: right;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                <input type="number" placeholder="" style="text-align: center;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                               </label></td>
                         </tr>
 
 
                         <tr>
                             <td> <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
-                                <span class="input-label">Seleccione el Tipo</span>
+                                <span class="input-label">Tipo</span>
                                 <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
                                 ng-change="updateSelectedTipo(selectedTipo)"></select>
                               </label></td>
@@ -60,7 +62,7 @@
                                 <div ng-show="tipodecarga=='Variable'" class="text-center">
                                     <label class="item item-input" id="editarVoladuraMapa-inputaire ">
                             <span class="input-label">Carga Total (kg)</span>
-                            <input type="number" placeholder="" ng-model="calcVals.Ct" style="text-align: right;" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                            <input type="number" placeholder="" ng-model="calcVals.Ct" style="text-align: center;" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                           </label>
 
                                     <br>
