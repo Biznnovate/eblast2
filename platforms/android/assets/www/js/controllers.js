@@ -4008,40 +4008,50 @@ angular.module('app.controllers', [])
             $scope.carga_u = $scope.carga;
             $scope.tacofinal = $scope.taco;
 
-            if ($scope.tipodecarga_u == 'Variable') {
+            if ($scope.precorte = '') {
+                if ($scope.tipodecarga_u == 'Variable') {
 
-                if ($scope.tipoExplo == 'ce') {
+                    if ($scope.tipoExplo == 'ce') {
 
-                    $scope.calc = function() {
-                        $scope.calcVarEmp();
+                        $scope.calc = function() {
+                            $scope.calcVarEmp();
 
-                        console.log('Se calculo Carga Variable con Explosivo Empacado ')
+                            console.log('Se calculo Carga Variable con Explosivo Empacado ')
+                        }
+                    } else if ($scope.tipoExplo == 'cg') {
+
+                        $scope.calc = function() {
+                            $scope.calcVarGra();
+                            console.log('Se calculo Carga Variable con Explosivo a Granel ')
+                        }
+                    } else {
+                        $scope.tempTipoExplo = 'N/A'
                     }
-                } else if ($scope.tipoExplo == 'cg') {
 
-                    $scope.calc = function() {
-                        $scope.calcVarGra();
-                        console.log('Se calculo Carga Variable con Explosivo a Granel ')
+                } else if ($scope.tipodecarga_u == 'Fija') {
+                    if ($scope.tipoExplo == 'ce') {
+                        $scope.calc = function() {
+                            $scope.calcFijEmp();
+                            console.log('Se calculo Carga Fija con Explosivo Empacado ')
+                        }
+                    } else if ($scope.tipoExplo == 'cg') {
+                        $scope.calc = function() {
+                            $scope.calcFijGra();
+                            console.log('Se calculo Carga Fija con Explosivo a Granel ')
+                        }
+                    } else {
+                        $scope.tempTipoExplo = 'N/A'
                     }
-                } else {
-                    $scope.tempTipoExplo = 'N/A'
+                }
+            } else {
+                $scope.calc = function() {
+                    $scope.calcVarEmpPrec();
+
+                    console.log('Se calculo Carga Precorte Variable con Explosivo Empacado ')
                 }
 
-            } else if ($scope.tipodecarga_u == 'Fija') {
-                if ($scope.tipoExplo == 'ce') {
-                    $scope.calc = function() {
-                        $scope.calcFijEmp();
-                        console.log('Se calculo Carga Fija con Explosivo Empacado ')
-                    }
-                } else if ($scope.tipoExplo == 'cg') {
-                    $scope.calc = function() {
-                        $scope.calcFijGra();
-                        console.log('Se calculo Carga Fija con Explosivo a Granel ')
-                    }
-                } else {
-                    $scope.tempTipoExplo = 'N/A'
-                }
             }
+
             $scope.enableCalc = true;
             $scope.enableResults = true;
             $scope.calc();
@@ -4317,7 +4327,6 @@ angular.module('app.controllers', [])
                 ' Fc ' + Fc
             );
         }
-
         $scope.calcVarEmp = function() {
             var calcCargasVar = function() {
 
@@ -4394,6 +4403,143 @@ angular.module('app.controllers', [])
             var Cm = (1 / (Lv)) * Pe;
             var Ct = Cm * Lc;
             var V = B * Es * (L - s);
+            var Pt = Ct + (Ci * ci);
+            var Fc = Ct / V;
+            $scope.calcVals = {
+                L: L,
+                D: D,
+                Tf: Tf,
+                Ta: Ta,
+                Li: Li,
+                Ci: Ci,
+                ci: ci,
+                d: d,
+                B: B,
+                Es: Es,
+                s: s,
+                Lv: Lv,
+                Pe: Pe,
+                V: V,
+                Ct: +(Ct).toFixed(2),
+                Pt: Pt,
+                Fc: Fc
+            }
+            console.log('Valores a Calcular ' +
+                'L ' + L +
+                ' D ' + D +
+                ' Tf ' + Tf +
+                ' Ta ' + Ta +
+                ' Li ' + Li +
+                ' Ci ' + Ci +
+                ' ci ' + ci +
+                ' d ' + d +
+                ' B ' + B +
+                ' Es ' + Es +
+                ' s ' + s +
+                ' Lv ' + Lv +
+                ' Pe ' + Pe);
+
+
+            console.log('Paso1 Cálculo del largo de la carga' +
+                ' Lc ' + Lc
+            );
+
+            // console.log('Paso2 Cálculo del volumen de un cilindro en 1 metro' +
+            //  ' Vc ' + Vc
+            //);
+
+            console.log('Paso 2 Cálculo de Carga x metro' +
+                ' Cm ' + Cm
+            );
+            console.log('Paso 3 - Carga total de la carga variable' +
+                ' Ct ' + Ct
+            );
+            console.log('Paso 4 - Cálculo del volumen del barreno' +
+                ' V ' + V
+            );
+            console.log('Paso 5 - Peso total de la carga' +
+                ' Pt ' + Pt
+            );
+            console.log('Paso 6 - Factor de carga' +
+                ' Fc ' + Fc
+            );
+        }
+        $scope.calcVarEmpPrec = function() {
+            var calcCargasVar = function() {
+
+                var rows = $scope.carga_u;
+                var val = {
+                    'peso': 0,
+                    'largo': 0,
+                    'cantidad': 0,
+                    'prod': '',
+                    'tipo': '',
+                }
+
+                angular.forEach(rows, function(carga) {
+                    if (carga.tipo !== 'Iniciadores') {
+                        val.peso += carga.peso;
+                        val.largo += carga.largo;
+
+                        val.cantidad = carga.cantidad_gra;
+                        val.prod = carga.prod;
+                        val.tipo = carga.tipo;
+                    }
+                });
+                return val;
+                $scope.cargasVal = val;
+
+            }
+
+
+            var calcCargasIni = function() {
+
+                var rows = $scope.carga_u;
+                var val = {
+                    'peso': 0,
+                    'largo': 0,
+                    'cantidad': 0,
+                    'prod': '',
+                    'tipo': '',
+                }
+
+                angular.forEach(rows, function(carga) {
+                    if (carga.tipo === 'Iniciadores') {
+                        val.peso += carga.peso / 1 * carga.cantidad_ini / 1;
+                        val.largo += carga.largo / 1 * carga.cantidad_ini / 1;
+                        val.cantidad += carga.cantidad_ini;
+                        val.prod = carga.prod;
+                        val.tipo = carga.tipo;
+                    }
+                });
+                return val;
+                $scope.iniVal = val;
+
+            }
+            $scope.cargasVar = calcCargasVar();
+            $scope.iniciadores = calcCargasIni();
+            //definicion de variables
+
+            var L = $scope.profreal_u; //Largo real (L) 
+            var D = $scope.diametro_u || $scope.diametro; //Diámetro (D) =
+            var Tf = 0; //Taco final (Tf) = 
+            var Ta = $scope.aire; //Taco aire (Ta) =
+            //Iniciador 
+            var Li = $scope.iniciadores.largo //Largo iniciador (Li) =
+            var Ci = $scope.iniciadores.peso //Peso del iniciador (Ci) =
+            var ci = $scope.iniciadores.cantidad //Cant de iniciadores (ci) =
+                //Carga Variable
+            var d = $scope.densidad_u //Densidad Carga Var (d) =
+            var B = $scope.bordo_u //Bordo (B) =
+            var Es = $scope.espaciamiento_u //Espaciamiento (Es) =
+            var s = $scope.subperf_u //Sub-excavación (s) =
+            var Lv = $scope.cargasVar.largo //Largo Carga Var
+            var Pe = $scope.cargasVar.peso // Peso UN empacado
+            var Lc = L - Tf - Ta - ((ci * Li));
+            var Vc = 3.1416 * ((D / 2) * (D / 2)) //* L * 1000;
+            var Cm = (1 / (Lv)) * Pe;
+            var Ct = Cm * Lc;
+            var V = 0;
             var Pt = Ct + (Ci * ci);
             var Fc = Ct / V;
             $scope.calcVals = {
