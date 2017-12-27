@@ -10,6 +10,7 @@
         "angular-ui-grid": "^4.0.6",
         "angular2-csv": "^0.2.3",
         "chart.js": "^2.7.1",
+        "chartjs-plugin-datalabels": "^0.1.0",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.4.0",

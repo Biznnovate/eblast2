@@ -291,7 +291,7 @@ angular.module('app.controllers', [])
 
             console.log('Proyecto Borrado');
             $scope.hide();
-
+            $scope.$applyAsync();
         }
 
         $scope.gotoParam = function() {
@@ -3530,65 +3530,137 @@ angular.module('app.controllers', [])
             $scope.dataChart = [];
             // $scope.dataChart1 = [];
             $scope.labelChart = [];
-            $scope.seriesChart = [];
+            $scope.pendingChart = [];
             angular.forEach(barrenosforchart, function(value, key) {
                 if (value.status == "Pending") {
                     var colorbarr = "#d42827"
+                    var pending = {
+                        x: value.coordx,
+                        y: value.coordy,
+                        v: value.barr,
+
+
+                    }
+                    $scope.pendingChart.push(pending);
+
                 } else {
                     var colorbarr = "#a6a6a6"
+                    var data = {
+                        x: value.coordx,
+                        y: value.coordy,
+                        v: value.barr,
+
+
+                    }
+                    $scope.dataChart.push(data);
+
                 }
-                var data1 = {
-                    'x': value.coordx,
-                    'y': value.coordy,
-                    'r': radio,
-                    'title': value.barr
 
-                };
                 // }
-                var label = value.barr;
+                //var label = value.barr;
 
-                var data = {
-                    barr: value.barr,
-                    label: 'i',
-                    // title: value.barr,
-                    data: [{
-                        'x': value.coordx,
-                        'y': value.coordy,
-                        'r': radio,
-                    }],
+
+                var coords = {
+                    x: value.coordx,
+                    y: value.coordy,
+                    v: value.barr,
+                    c: colorbarr,
+
+                }
+
+
+                var color = {
                     backgroundColor: colorbarr,
-                    //  series: value.barr,
-                };
+                }
+
 
 
                 //console.log('se ingreso a data ' + data.label)
 
 
-                // $scope.dataChart1.push(data1);
-                $scope.labelChart.push(label);
-                $scope.dataChart.push(data);
+
+                //$scope.labelChart.push(label);
+
 
             })
             $scope.testData = [
 
-                { label: ['1'], title: 'title1', data: [{ x: 1, y: 2, r: 5 }] },
-                { label: ['2'], title: 'title2', data: [{ x: 1.1, y: 2.1, r: 5 }] },
-                { label: ['3'], title: 'title3', data: [{ x: 1.3, y: 2.4, r: 5 }] },
+                { "x": 1, "y": 2, "v": 5 }, { x: 1.1, y: 2.1, v: 6 }, { x: 1.3, y: 2.4, v: 7 },
             ]
 
             $scope.ctx = document.getElementById("mapaBarrenos");
+            $scope.selectColor = function(obj) {
+
+            }
 
             $scope.mapaBarrenos = new Chart($scope.ctx, {
                 type: 'bubble',
                 data: {
-                    labels: $scope.labelChart,
+                    // labels: $scope.labelChart,
 
-                    datasets: $scope.dataChart
+                    datasets: [{
+                            data: $scope.pendingChart,
+                            backgroundColor: "#d42827",
+
+                        },
+                        {
+                            data: $scope.dataChart,
+                            backgroundColor: "#a6a6a6",
+
+                        }
+                    ]
 
                 },
 
-
                 options: {
+                    aspectRatio: 1,
+                    tooltips: false,
+                    layout: {
+                        padding: {
+                            top: 42,
+                            right: 16,
+                            bottom: 32,
+                            left: 8
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                var size = context.chart.width;
+                                var base = 0.3;
+                                return (size / 24) * base;
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: false,
+                        title: false,
+                        datalabels: {
+                            anchor: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? 'end' : 'center';
+                            },
+                            align: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? 'end' : 'center';
+                            },
+                            color: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? context.dataset.backgroundColor : 'white';
+                            },
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function(value) {
+                                return (value.v);
+                            },
+                            offset: 2,
+                            padding: 0
+                        }
+                    }
+                },
+                optionsa: {
                     title: {
                         display: true,
                         text: 'Mapa de Barrenos'
@@ -3643,6 +3715,40 @@ angular.module('app.controllers', [])
                         // Eg. 'y' would only allow zooming in the y direction
                         mode: 'xy',
                     },
+                    elements: {
+                        point: {
+                            radius: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                var size = context.chart.width;
+                                var base = 0.3;
+                                return (size / 24) * base;
+                            }
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? 'end' : 'center';
+                            },
+                            align: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? 'end' : 'center';
+                            },
+                            color: function(context) {
+                                var value = context.dataset.data[context.dataIndex];
+                                return value.v < 50 ? context.dataset.backgroundColor : 'white';
+                            },
+                            font: {
+                                weight: 'bold'
+                            },
+                            // formatter: function(value) {
+                            //     return Math.round(value.v);
+                            // },
+                            offset: 2,
+                            padding: 0
+                        }
+                    }
 
 
                 }
@@ -3798,8 +3904,8 @@ angular.module('app.controllers', [])
                 // $scope.selectedbarr_id = obj.id;
             $scope.selectedbarr = obj;
 
-            $scope.profDis = obj.prof;
-            $scope.profreal = obj.prof;
+            $scope.profDis = +(obj.prof).toFixed(1);
+            $scope.profreal = +(obj.prof).toFixed(1);
             $scope.profreal_u = $scope.profreal;
             $scope.diametro = obj.diam;
             $scope.diametro_u = $scope.diametro;
@@ -3933,10 +4039,101 @@ angular.module('app.controllers', [])
             }
 
             $scope.updateSelectedBarr(result);
-            $scope.dataChartBarrs();
+            // $scope.dataChartBarrs();
 
 
         }
+        var SAMPLE_INFO = {
+            group: 'Charts',
+            name: 'Line',
+        };
+        var DATA_COUNT = 8;
+        var labels = [];
+
+        Samples.srand(18);
+
+        $scope.generatePoint = function() {
+            return {
+                x: Samples.rand(-100, 100),
+                y: Samples.rand(-50, 50),
+                v: 3, //Samples.rand(15, 100),
+            };
+        }
+
+        $scope.generateData = function() {
+            var data = [];
+            for (var i = 0; i < DATA_COUNT; ++i) {
+                data.push($scope.generatePoint());
+            }
+            return data;
+        }
+
+        Chart.helpers.merge(Chart.defaults.global, {
+            aspectRatio: 1,
+            tooltips: false,
+            layout: {
+                padding: {
+                    top: 42,
+                    right: 16,
+                    bottom: 32,
+                    left: 8
+                }
+            },
+            elements: {
+                point: {
+                    radius: function(context) {
+                        var value = context.dataset.data[context.dataIndex];
+                        var size = context.chart.width;
+                        var base = Math.abs(value.v) / 100;
+                        return (size / 24) * base;
+                    }
+                }
+            },
+            plugins: {
+                legend: false,
+                title: false
+            }
+        });
+        var chart = new Chart('chart-0', {
+            type: 'bubble',
+            data: {
+                datasets: [{
+                    backgroundColor: Samples.color(0),
+                    borderColor: Samples.color(0),
+                    data: $scope.generateData()
+                }, {
+                    backgroundColor: Samples.color(1),
+                    borderColor: Samples.color(1),
+                    data: $scope.generateData()
+                }]
+            },
+            options: {
+                plugins: {
+                    datalabels: {
+                        anchor: function(context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            return value.v < 50 ? 'end' : 'center';
+                        },
+                        align: function(context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            return value.v < 50 ? 'end' : 'center';
+                        },
+                        color: function(context) {
+                            var value = context.dataset.data[context.dataIndex];
+                            return value.v < 50 ? context.dataset.backgroundColor : 'white';
+                        },
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: function(value) {
+                            return Math.round(value.v);
+                        },
+                        offset: 2,
+                        padding: 0
+                    }
+                }
+            }
+        });
         $scope.canvasMap = document.getElementById('mapaBarrenos');
 
         $scope.canvasMap.onclick = function(evt) {
@@ -3946,12 +4143,12 @@ angular.module('app.controllers', [])
             console.log('activePoint' + activePoint)
             var data = activePoint._chart.data;
             var datasetIndex = activePoint._datasetIndex;
-            var label = data.datasets[datasetIndex].data[activePoint._index].label;
+            var label = data.datasets[datasetIndex].data[activePoint._index].v;
             var value = data.datasets[datasetIndex].data[activePoint._index];
-            $scope.selectedMapData = data.datasets[datasetIndex].barr;
-            $scope.selectedBarr_idx = $scope.dataChart[datasetIndex].label
+            $scope.selectedMapData = data.datasets[datasetIndex].data[activePoint._index].v;
+            $scope.selectedBarr_idx = $scope.dataChart[datasetIndex]
             console.log('label ' + label)
-            console.log("selected barr" + $scope.dataChart[datasetIndex])
+            console.log("selected barr index" + $scope.dataChart[datasetIndex])
 
             $scope.selectedMapDataFunc($scope.selectedMapData);
             //  $scope.hideMap();
@@ -4101,7 +4298,15 @@ angular.module('app.controllers', [])
             $scope.profreal = obj;
             $scope.profreal_u = obj;
 
-            $scope.showProfDis = true;
+            if ($scope.profDis === obj) {
+                console.log($scope.profDis)
+                $scope.showProfDis = false;
+            } else {
+                $scope.showProfDis = true;
+
+            }
+
+
             $scope.calc();
 
         };

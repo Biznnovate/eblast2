@@ -7,10 +7,10 @@
                                
                                 </button>
     </ion-nav-buttons>
+
     <ion-content padding="true" class="has-header">
-        <!--div class="text-center">
-            <h3>Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}</h3>
-        </div-->
+
+
         <table class="table table-bordered table-hover table-condensed">
             <tr style="font-weight: bold">
                 <td style="width:70%">Mapa</td>
@@ -34,18 +34,18 @@
 
                         <tr>
                             <td>
-                                <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
+                                <form id="editarVoladuraMapa-form11" ng-show="showProfDis==true" ng-hide="showProfDis==false">
                                     <label class="item" id="editarVoladuraMapa-input25">
                                                 <span class="input-label">Prof. Diseño (mts) </span>
                                                 <input type="number" style="text-align: center;" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
                                         </label>
                                 </form>
 
-                                <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
 
-                                    <label class="item item-input" id="editarVoladuraMapa-input25">
+
+                                <label class="item item-input" id="editarVoladuraMapa-input25">
                                 <span class="input-label">Prof. Real (mts)</span>
-                                <input type="number" placeholder="" style="text-align: center;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                <input type="number" placeholder="" style="text-align: center;" ng-model="profreal_u" ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
                               </label></td>
                         </tr>
 
