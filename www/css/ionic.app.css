@@ -13146,6 +13146,8 @@ a.dark {
 }
 
 .myChartDiv {
-    max-width: 1024x;
-    max-height: 600px;
+    position: relative;
+    margin: auto;
+    height: 90vh;
+    width: 65vw;
 }

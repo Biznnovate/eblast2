@@ -3613,7 +3613,8 @@ angular.module('app.controllers', [])
                 },
 
                 options: {
-                    aspectRatio: 1,
+                    //aspectRatio: 1,
+                    maintainAspectRatio: false,
                     tooltips: false,
                     layout: {
                         padding: {
@@ -3637,18 +3638,22 @@ angular.module('app.controllers', [])
                         legend: false,
                         title: false,
                         datalabels: {
-                            anchor: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? 'end' : 'center';
-                            },
-                            align: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? 'end' : 'center';
-                            },
-                            color: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? context.dataset.backgroundColor : 'white';
-                            },
+                            // anchor: function(context) {
+                            //    var value = context.dataset.data[context.dataIndex];
+                            //    return value.v < 50 ? 'end' : 'center';
+                            // },
+                            // align: function(context) {
+                            //     var value = context.dataset.data[context.dataIndex];
+                            //     return value.v < 50 ? 'end' : 'center';
+                            // },
+                            // color: function(context) {
+                            //    var value = context.dataset.data[context.dataIndex];
+                            //    return value.v < 50 ? context.dataset.backgroundColor : 'white';
+                            //},
+                            anchor: 'center',
+                            align: 'center',
+                            color: 'white',
+
                             font: {
                                 weight: 'bold'
                             },
@@ -3660,7 +3665,7 @@ angular.module('app.controllers', [])
                         }
                     },
 
-                    responsive: true,
+                    // responsive: true,
                     scales: {
                         yAxes: [{
                             scaleLabel: {
@@ -3681,17 +3686,8 @@ angular.module('app.controllers', [])
 
                         // Panning directions. Remove the appropriate direction to disable 
                         // Eg. 'y' would only allow panning in the y direction
-                        mode: 'xy',
-                        rangeMin: {
-                            // Format of min pan range depends on scale type
-                            x: null,
-                            y: null
-                        },
-                        rangeMax: {
-                            // Format of max pan range depends on scale type
-                            x: null,
-                            y: null
-                        }
+                        mode: 'x',
+
                     },
 
                     // Container for zoom options
@@ -3699,117 +3695,26 @@ angular.module('app.controllers', [])
                         // Boolean to enable zooming
                         enabled: true,
                         // Enable drag-to-zoom behavior
-                        drag: true,
+                        drag: false,
 
                         // Zooming directions. Remove the appropriate direction to disable 
                         // Eg. 'y' would only allow zooming in the y direction
-                        mode: 'xy',
-                        rangeMin: {
-                            // Format of min zoom range depends on scale type
-                            x: null,
-                            y: null
-                        },
-                        rangeMax: {
-                            // Format of max zoom range depends on scale type
-                            x: null,
-                            y: null
-                        }
+                        mode: 'x',
+                        //  rangeMin: {
+                        // Format of min zoom range depends on scale type
+                        //      x: null,
+                        //      y: null
+                        //  },
+                        //  rangeMax: {
+                        // Format of max zoom range depends on scale type
+                        //     x: null,
+                        //     y: null
+                        // }
                     },
 
                 },
 
-                optionsa: {
-                    title: {
-                        display: true,
-                        text: 'Mapa de Barrenos'
-                    },
-                    responsive: true,
-                    //tooltips: {
-                    //    mode: 'index',
-                    //    intersect: false,
-                    //  },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: "Norte"
-                            }
-                        }],
-                        xAxes: [{
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "Este"
-                                }
-                            }]
-                            // yAxes: [{
-                            //     ticks: {
-                            //       beginAtZero: false,
-                            // callback: function(value, index, values) {
-                            // return '$' + value;
 
-                        //    }
-                        // }]
-                    },
-                    // Container for pan options
-                    pan: {
-                        // Boolean to enable panning
-                        enabled: true,
-
-                        // Panning directions. Remove the appropriate direction to disable 
-                        // Eg. 'y' would only allow panning in the y direction
-                        mode: 'xy'
-                    },
-
-                    // Container for zoom options
-                    zoom: {
-                        // Boolean to enable zooming
-                        enabled: true,
-
-                        // Zooming directions. Remove the appropriate direction to disable 
-                        // Eg. 'y' would only allow zooming in the y direction
-                        mode: 'xy',
-                    },
-                    elements: {
-                        point: {
-                            radius: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                var size = context.chart.width;
-                                var base = 0.3;
-                                return (size / 24) * base;
-                            }
-                        }
-                    },
-                    plugins: {
-                        datalabels: {
-                            anchor: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? 'end' : 'center';
-                            },
-                            align: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? 'end' : 'center';
-                            },
-                            color: function(context) {
-                                var value = context.dataset.data[context.dataIndex];
-                                return value.v < 50 ? context.dataset.backgroundColor : 'white';
-                            },
-                            font: {
-                                weight: 'bold'
-                            },
-                            // formatter: function(value) {
-                            //     return Math.round(value.v);
-                            // },
-                            offset: 2,
-                            padding: 0
-                        }
-                    }
-
-
-                }
             });
             // $scope.showmap = true;
             // $scope.hide();
@@ -3973,9 +3878,10 @@ angular.module('app.controllers', [])
             $scope.coordy_u = $scope.coordy;
 
             //count barrenos
-            $scope.message = "Presione Agregar Barreno"
+            $scope.message = "Barreno Seleccionado"
             $scope.shownewBarrForm = true;
             $scope.calc();
+            // $scope.dataChartBarrs();
             $scope.$applyAsync();
 
         };
@@ -4101,97 +4007,7 @@ angular.module('app.controllers', [])
 
 
         }
-        var SAMPLE_INFO = {
-            group: 'Charts',
-            name: 'Line',
-        };
-        var DATA_COUNT = 8;
-        var labels = [];
 
-        Samples.srand(18);
-
-        $scope.generatePoint = function() {
-            return {
-                x: Samples.rand(-100, 100),
-                y: Samples.rand(-50, 50),
-                v: 3, //Samples.rand(15, 100),
-            };
-        }
-
-        $scope.generateData = function() {
-            var data = [];
-            for (var i = 0; i < DATA_COUNT; ++i) {
-                data.push($scope.generatePoint());
-            }
-            return data;
-        }
-
-        Chart.helpers.merge(Chart.defaults.global, {
-            aspectRatio: 1,
-            tooltips: false,
-            layout: {
-                padding: {
-                    top: 42,
-                    right: 16,
-                    bottom: 32,
-                    left: 8
-                }
-            },
-            elements: {
-                point: {
-                    radius: function(context) {
-                        var value = context.dataset.data[context.dataIndex];
-                        var size = context.chart.width;
-                        var base = Math.abs(value.v) / 100;
-                        return (size / 24) * base;
-                    }
-                }
-            },
-            plugins: {
-                legend: false,
-                title: false
-            }
-        });
-        var chart = new Chart('chart-0', {
-            type: 'bubble',
-            data: {
-                datasets: [{
-                    backgroundColor: Samples.color(0),
-                    borderColor: Samples.color(0),
-                    data: $scope.generateData()
-                }, {
-                    backgroundColor: Samples.color(1),
-                    borderColor: Samples.color(1),
-                    data: $scope.generateData()
-                }]
-            },
-            options: {
-                plugins: {
-                    datalabels: {
-                        anchor: function(context) {
-                            var value = context.dataset.data[context.dataIndex];
-                            return value.v < 50 ? 'end' : 'center';
-                        },
-                        align: function(context) {
-                            var value = context.dataset.data[context.dataIndex];
-                            return value.v < 50 ? 'end' : 'center';
-                        },
-                        color: function(context) {
-                            var value = context.dataset.data[context.dataIndex];
-                            return value.v < 50 ? context.dataset.backgroundColor : 'white';
-                        },
-                        font: {
-                            weight: 'bold'
-                        },
-                        formatter: function(value) {
-                            return Math.round(value.v);
-                        },
-                        offset: 2,
-                        padding: 0
-                    }
-                }
-            }
-        });
         $scope.canvasMap = document.getElementById('mapaBarrenos');
 
         $scope.canvasMap.onclick = function(evt) {
@@ -5464,6 +5280,7 @@ angular.module('app.controllers', [])
             console.log($scope.message);
             // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
             $scope.hide();
+            $scope.dataChartBarrs();
             $scope.$applyAsync();
 
         }
