@@ -3480,10 +3480,10 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page) {
+    function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate) {
 
         $scope.show = function() {
             $ionicLoading.show({
@@ -3600,12 +3600,12 @@ angular.module('app.controllers', [])
 
                     datasets: [{
                             data: $scope.pendingChart,
-                            backgroundColor: "#d42827",
+                            backgroundColor: "#a6a6a6",
 
                         },
                         {
                             data: $scope.dataChart,
-                            backgroundColor: "#a6a6a6",
+                            backgroundColor: "#d42827",
 
                         }
                     ]
@@ -3665,7 +3665,7 @@ angular.module('app.controllers', [])
                         }
                     },
 
-                    // responsive: true,
+                    responsive: true,
                     scales: {
                         yAxes: [{
                             scaleLabel: {
@@ -3682,7 +3682,7 @@ angular.module('app.controllers', [])
                     },
                     pan: {
                         // Boolean to enable panning
-                        enabled: true,
+                        enabled: false,
 
                         // Panning directions. Remove the appropriate direction to disable 
                         // Eg. 'y' would only allow panning in the y direction
@@ -3693,7 +3693,7 @@ angular.module('app.controllers', [])
                     // Container for zoom options
                     zoom: {
                         // Boolean to enable zooming
-                        enabled: true,
+                        enabled: false,
                         // Enable drag-to-zoom behavior
                         drag: false,
 
@@ -3718,6 +3718,8 @@ angular.module('app.controllers', [])
             });
             // $scope.showmap = true;
             // $scope.hide();
+            // $ionicScrollDelegate.zoomTo(0, false, 0, 0);
+            // $ionicScrollDelegate.resize();
             console.log("datachartbarrs ended " + $scope.dataChart)
         }
         $scope.sync = function() {
@@ -5281,7 +5283,10 @@ angular.module('app.controllers', [])
             // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
             $scope.hide();
             $scope.dataChartBarrs();
+
+            $scope.selectedbarr.barr = "";
             $scope.$applyAsync();
+
 
         }
 
