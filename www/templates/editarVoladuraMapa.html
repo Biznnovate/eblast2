@@ -9,18 +9,18 @@
     </ion-nav-buttons>
 
     <ion-content padding="true" class="has-header">
-
+        <div class="myChartDiv">
+            <ion-scroll zooming="true" direction="xy" delegate-handle="zoom-pane" min-zoom="1" scrollbar-x="true" scrollbar-y="true" overflow-scroll="false">
+                <canvas id="mapaBarrenos"></canvas>
+            </ion-scroll>
+        </div>
 
         <table class="table table-bordered table-hover table-condensed">
 
             <tr>
 
                 <td style="width:70%">
-                    <div class="myChartDiv">
-                        <ion-scroll zooming="true" direction="xy" delegate-handle="zoom-pane" min-zoom="1" scrollbar-x="true" scrollbar-y="true" overflow-scroll="false">
-                            <canvas id="mapaBarrenos"></canvas>
-                        </ion-scroll>
-                    </div>
+
 
                 </td>
 
