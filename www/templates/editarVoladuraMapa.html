@@ -52,7 +52,7 @@
 
                                     <label class="item item-input" id="editarVoladuraMapa-input25">
                                 <span class="input-label">Prof. Real (mts)</span>
-                                <input type="number" placeholder="" style="text-align: center;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                <input type="number" placeholder="" style="text-align: center;" ng-model="profreal" ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                               </label></td>
                         </tr>
 
@@ -93,6 +93,9 @@
                                     class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
                                 <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button></td>
                         </tr>
+                        <tr>
+                            <td> <strong>{{message}}</strong></td>
+                        </tr>
                     </table>
                 </td>
             </tr>
@@ -109,7 +112,7 @@
             <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
              ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
   </label-->
-            <strong>{{message}}</strong>
+
 
 
             <form id="editarVoladuraMapa-form1">
@@ -283,15 +286,15 @@
             <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
                 <label class="item" id="editarVoladuraMapa-input25">
                         <span class="input-label">Profundidad Diseño (mts)</span>
-                        <input type="number" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
+                        <input type="number" placeholder="" ng-model="profDis" ng-disabled="showProfDis" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                 </label>
             </form>
 
             <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
 
                 <label class="item item-input" id="editarVoladuraMapa-input25">
-        <span class="input-label">Profundidad Real (mts)</span>
-        <input type="number" placeholder="" ng-model="selectedBarreno.prof" ng-change="updateProfReal(selectedBarreno.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+        <span class="input-label">Profundidad {{profName}} (mts)</span>
+        <input type="number" placeholder="" ng-model="profreal" ng-change="updateProfReal(selectedBarreno.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
       </label>
 
                 <!--label class="item item-input" id="editarVoladuraMapa-inputlongcarga" ng-show="tipodecarga=='Fija'">
