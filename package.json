@@ -1,7 +1,7 @@
 {
     "name": "e-blast",
     "version": "1.1.1",
-    "description": "e-Blast: An Ionic project",
+    "description": "e-Blast",
     "dependencies": {
         "@ionic-native/core": "^4.2.0",
         "@ionic-native/file-transfer": "^4.2.0",
@@ -10,11 +10,8 @@
         "angular-ui-grid": "^4.0.6",
         "angular2-csv": "^0.2.3",
         "chart.js": "^2.7.1",
-<<<<<<< HEAD
         "chartjs-plugin-datalabels": "^0.1.0",
         "chartjs-plugin-zoom": "^0.5.0",
-=======
->>>>>>> 27f8512d83ef962d6c1b84a91c1a08f787467cbd
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.4.0",
