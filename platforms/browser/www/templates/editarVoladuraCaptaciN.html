@@ -1,57 +1,54 @@
-<ion-view title="Editar - Voladura Captación" id="page17">
-  <ion-content padding="true" class="has-header">
-    <form id="editarVoladuraCaptaciN-form17" class="list">
-      <label class="item item-input" id="editarVoladuraCaptaciN-search6">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Buscar agujero por ID">
-      </label>
-      <ion-item class="item-icon-right" id="editarVoladuraCaptaciN-list-item15">ID de Barreno
-        <span class="item-note">1-001</span>
-        <i class="icon ion-information-circled"></i>
-      </ion-item>
-      <ion-toggle toggle-class="toggle-positive" id="editarVoladuraCaptaciN-toggle9">Tapado</ion-toggle>
-      <label class="item item-select" id="editarVoladuraCaptaciN-select22">
-        <span class="input-label">Valores Predeterminados</span>
-        <select>
-          <option>Tipo 1</option>
-          <option>Tipo 2</option>
-          <option>Tipo 3</option>
-        </select>
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input68">
-        <span class="input-label">Profundidad Diseñada (m)</span>
-        <input type="number" placeholder="10">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input69">
-        <span class="input-label">Profundidad Real (m)</span>
-        <input type="number" placeholder="">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input70">
-        <span class="input-label">Taco (m)</span>
-        <input type="number" placeholder="5">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input71">
-        <span class="input-label">Carga a Granel (kg)</span>
-        <input type="number" placeholder="100">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input72">
-        <span class="input-label">Bordo (m)</span>
-        <input type="number" placeholder="5">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input73">
-        <span class="input-label">Espaciamiento (m)</span>
-        <input type="number" placeholder="5">
-      </label>
-      <label class="item item-input" id="editarVoladuraCaptaciN-input74">
-        <span class="input-label">Volumen</span>
-        <input type="number" placeholder="5">
-      </label>
-    </form>
-    <a ui-sref="menu.vistaDeProyecto()" id="editarVoladuraCaptaciN-button57" class="button button-positive button-block icon-left ion-android-checkmark-circle">Guardar</a>
-    <button id="editarVoladuraCaptaciN-button53" class="button button-positive icon-left ion-android-arrow-back">Barreno Anterior</button>
-    <button id="editarVoladuraCaptaciN-button54" class="button button-positive icon-right ion-android-add-circle">Agregar Barreno</button>
-    <button id="editarVoladuraCaptaciN-button55" class="button button-positive icon-right ion-android-arrow-forward">Siguiente Barreno</button>
-    <button id="editarVoladuraCaptaciN-button56" class="button button-positive icon-left ion-android-done-all">Aplicar a Todos</button>
-    <a ui-sref="menu.editarVoladuraMapa({})" id="editarVoladuraCaptaciN-button59" class="button button-positive button-block icon-left ion-map">Ver Mapa</a>
-  </ion-content>
-</ion-view>
+<h3>
+    <strong>ID {{selectedbarr.barr}}</strong></h3>
+
+<label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
+                                  <span class="input-label h3">Tipo</span>
+                                  <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
+                                  ng-change="updateSelectedTipo(selectedTipo)"></select>
+                                </label>
+
+<form id="editarVoladuraMapa-form11" ng-show="showProfDis">
+    <label class="item" id="editarVoladuraMapa-input25">
+                                              <span class="input-label">Prof. Diseño (mts) </span>
+                                              <input type="number" style="text-align: center;" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
+                                      </label>
+</form>
+
+<form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
+
+    <label class="item item-input" id="editarVoladuraMapa-input25">
+                              <span class="input-label">Prof. Real (mts)</span>
+                              <input type="number" placeholder="" style="text-align: center;" ng-model="profreal" ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
+                            </label>
+
+
+
+
+
+    <div ng-show="tipodecarga=='Variable'" class="text-center">
+        <label class="item item-input" id="editarVoladuraMapa-inputaire ">
+                          <span class="input-label">Carga Total (kg)</span>
+                          <input type="number" placeholder="" ng-model="calcVals.Ct" style="text-align: center;" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                        </label>
+
+        <br>
+
+
+        <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+
+    </div>
+    <div ng-show="tipodecarga=='Fija'" class="text-center">
+
+
+        <br>
+
+
+        <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+
+    </div>
+
+    <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+
+    <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+    <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+    <strong>{{message}}</strong>

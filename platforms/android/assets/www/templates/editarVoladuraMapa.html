@@ -7,20 +7,31 @@
                                
                                 </button>
     </ion-nav-buttons>
-    <ion-content padding="true" class="has-header">
-        <!--div class="text-center">
+    <ion-content class="has-header">
+        <ion-item style="height:100%">
+            <ion-scroll direction="xy" zooming="true" overflow-scroll="false">
+                <canvas id="mapaBarrenos" style="height:auto"></canvas>
+            </ion-scroll>
+        </ion-item>
+
+        <!--ion-scroll zooming="true" direction="xy" overflow-scroll="false" style="width: 100%; height: 100%">
+
+        </ion-scroll>
+
+        <div class="text-center">
             <h3>Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}</h3>
         </div-->
-        <table class="table table-bordered table-hover table-condensed">
-            <tr style="font-weight: bold">
-                <td style="width:70%">Mapa</td>
-                <td style="width:30%">Info</td>
+        <!-- <table class="table table-bordered table-hover table-condensed">
 
-            </tr>
             <tr>
 
                 <td style="width:70%">
-                    <div class="myChartDiv"> <canvas id="mapaBarrenos" height="500" width="768"></canvas></div>
+                    <div class="myChartDiv">
+                        <ion-scroll direction="xy">
+                            <canvas id="mapaBarrenos"></canvas>
+                        </ion-scroll>
+                    </div>
+
                 </td>
 
                 <td style="width:30%">
@@ -30,7 +41,13 @@
                                 <h3><strong>ID {{selectedbarr.barr}}</strong></h3>
                             </td>
                         </tr>
-
+                        <tr>
+                            <td> <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
+                                    <span class="input-label h3">Tipo</span>
+                                    <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
+                                    ng-change="updateSelectedTipo(selectedTipo)"></select>
+                                  </label></td>
+                        </tr>
 
                         <tr>
                             <td>
@@ -45,18 +62,12 @@
 
                                     <label class="item item-input" id="editarVoladuraMapa-input25">
                                 <span class="input-label">Prof. Real (mts)</span>
-                                <input type="number" placeholder="" style="text-align: center;" ng-model="selectedbarr.prof" ng-change="updateProfReal(selectedbarr.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                <input type="number" placeholder="" style="text-align: center;" ng-model="profreal" ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                               </label></td>
                         </tr>
 
 
-                        <tr>
-                            <td> <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
-                                <span class="input-label">Tipo</span>
-                                <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
-                                ng-change="updateSelectedTipo(selectedTipo)"></select>
-                              </label></td>
-                        </tr>
+
                         <tr>
                             <td>
                                 <div ng-show="tipodecarga=='Variable'" class="text-center">
@@ -83,400 +94,395 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;"
                                     class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
                                 <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button></td>
                         </tr>
+                        <tr>
+                            <td> <strong>{{message}}</strong></td>
+                        </tr>
                     </table>
                 </td>
             </tr>
-        </table>
-
-
-
-        <table class="table table-bordered table-hover table-condensed" ng-show="showmap">
-            <tr>
-                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(10)">Grande
-                </button>
-                </td>
-                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(5)">Mediano
-                </button>
-                </td>
-                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block" ng-click="dataChartBarrs(3)">Pequeño
-                </button>
-                </td>
-            </tr>
-        </table>
+        </table-->
 
 
 
 
 
-        <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
+        <div ng-show="barrDetails">
+
+            <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="projID==''">
             <span class="input-label">Seleccione el Proyecto</span>
             <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
              ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
   </label-->
-        <strong>{{message}}</strong>
 
 
-        <form id="editarVoladuraMapa-form1">
-            <div class="row" ng-show="showBarrnam">
 
-                <label class="item item-input" id="editarVoladuraMapa-input25">
+            <form id="editarVoladuraMapa-form1">
+                <div class="row" ng-show="showBarrnam">
+
+                    <label class="item item-input" id="editarVoladuraMapa-input25">
         <span class="input-label">Nuevo ID de Barreno:  N-</span>
         <input type="text" placeholder="" ng-model="newBarrnam" ng-change="updateBarrid(newBarrnam)">
       </label>
 
-                <strong>{{message2}}</strong>
+                    <strong>{{message2}}</strong>
 
-            </div>
+                </div>
 
 
 
-            <label class="item item-input" id="editarVoladuraMapa-search4">
+                <label class="item item-input" id="editarVoladuraMapa-search4">
 
         <i class="icon ion-search placeholder-icon"></i>
         <input type="text" placeholder="Buscar barreno por ID" ng-model = "searchedbarr.barr">
       </label>
-            <table class="table table-bordered table-hover table-condensed">
-                <tr>
-                    <td> <label class="item item-select" id="editarVoladuraMapa-select19">
+                <table class="table table-bordered table-hover table-condensed">
+                    <tr>
+                        <td> <label class="item item-select" id="editarVoladuraMapa-select19">
                         <span class="input-label">ID de Barreno</span>
                         <select ng-options="barreno as barreno.barr for barreno in Barrenos | orderBy: 'barr/1' | filter : statusFilter  | filter : searchedbarr " 
                         ng-model="selectedBarreno" ng-change="updateSelectedBarr(selectedBarreno)" ng-init="selectedBarreno=Barrenos[1]"></select>
                             </label>
 
-                        <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showselectbarrchar">
+                            <!--label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showselectbarrchar">
                                     <select ng-options="barreno as barreno.barr for barreno in Barrenos | filter : searchedbarr " ng-model="selectedBarrchar" ></select>
                             </label-->
-                    </td>
+                        </td>
 
-                    <td>
-                        <ion-toggle ng-model="includeUpdated" ng-change="complexFilter(includeUpdated)">{{incluirName}}</ion-toggle>
+                        <td>
+                            <ion-toggle ng-model="includeUpdated" ng-change="complexFilter(includeUpdated)">{{incluirName}}</ion-toggle>
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
-            </table>
+                </table>
 
 
 
-            <p>{{names}}</p>
-            <span class="input-label"> <h4> {{selectedbarr.status}}</h4></span>
-            <div class="row" ng-show="showCoord">
-                <div class="col">
-                    <label class="item item-input" id="editarVoladuraMapa-inputcoordx">
+                <p>{{names}}</p>
+                <span class="input-label"> <h4> {{selectedbarr.status}}</h4></span>
+                <div class="row" ng-show="showCoord">
+                    <div class="col">
+                        <label class="item item-input" id="editarVoladuraMapa-inputcoordx">
             <span class="input-label">X</span>
             <input type="number" placeholder="" ng-model="coordx" *step="0.01"*  ng-change="updateCoordx(coordx,selectedBarrchar)">
           </label>
-                </div>
-                <div class="col">
-                    <label class="item item-input" id="editarVoladuraMapa-inputcoordy">
+                    </div>
+                    <div class="col">
+                        <label class="item item-input" id="editarVoladuraMapa-inputcoordy">
             <span class="input-label">Y</span>
             <input type="number" placeholder="" ng-model="coordy" ng-change="updateCoordy(coordy)">
           </label>
+                    </div>
                 </div>
-            </div>
 
-        </form>
-        <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
+            </form>
+            <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
                 <span class="input-label">Seleccione el Tipo</span>
                 <select ng-init="selectedTipo = tipobarr[1]" ng-options="tipo as tipo.id for tipo in tipobarr| orderBy: 'id'" ng-model="selectedTipo" 
                 ng-change="updateSelectedTipo(selectedTipo)"></select>
               </label>
 
-        <form id="editarVoladuraMapa-form2" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
+            <form id="editarVoladuraMapa-form2" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
 
 
-            <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
-        </form>
-        <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Fija'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
-            <!--div class="btn-edit">
+                <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+            </form>
+            <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Fija'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+                <!--div class="btn-edit">
                 <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
                   Editar
                 </button>
 
             </div-->
-            <div id="productTable">
-                <table class="table table-bordered table-hover table-condensed">
-                    <tr style="font-weight: bold">
-                        <td style="width:30%">Producto</td>
-                        <td style="width:20%">Tipo</td>
-                        <td style="width:20%">Cantidad</td>
-                        <td style="width:30%">Valores</td>
+                <div id="productTable">
+                    <table class="table table-bordered table-hover table-condensed">
+                        <tr style="font-weight: bold">
+                            <td style="width:30%">Producto</td>
+                            <td style="width:20%">Tipo</td>
+                            <td style="width:20%">Cantidad</td>
+                            <td style="width:30%">Valores</td>
 
 
-                    </tr>
+                        </tr>
 
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga a Granel' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad">{{prod.cantidad}}</span></td>
-                        <td>Peso: <span>{{prod.cantidad/1*prod.peso/1}}</span></td>
-                    </tr>
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga Empacada' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad">{{prod.cantidad}}</span></td>
-                        <td> Largo: <span>{{prod.cantidad/1*prod.largo/1}}</span>Peso:<span> {{prod.cantidad/1*prod.peso/1}} </span></td>
-                    </tr>
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Iniciadores' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad_ini">{{prod.cantidad_ini}}</span></td>
-                        <td> Largo: <span>{{prod.cantidad_ini/1*prod.largo/1}}</span> Peso:
-                            <span>{{prod.cantidad_ini/1*prod.peso/1}} </span></td>
-                    </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga a Granel' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad">{{prod.cantidad}}</span></td>
+                            <td>Peso: <span>{{prod.cantidad/1*prod.peso/1}}</span></td>
+                        </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga Empacada' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad">{{prod.cantidad}}</span></td>
+                            <td> Largo: <span>{{prod.cantidad/1*prod.largo/1}}</span>Peso:<span> {{prod.cantidad/1*prod.peso/1}} </span></td>
+                        </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Iniciadores' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad_ini">{{prod.cantidad_ini}}</span></td>
+                            <td> Largo: <span>{{prod.cantidad_ini/1*prod.largo/1}}</span> Peso:
+                                <span>{{prod.cantidad_ini/1*prod.peso/1}} </span></td>
+                        </tr>
 
-                </table>
-            </div>
-            <!-- buttons -->
+                    </table>
+                </div>
+                <!-- buttons -->
 
-            <div class="btn-form" ng-show="tableform.$visible">
-                <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
-                <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
-            </div>
+                <div class="btn-form" ng-show="tableform.$visible">
+                    <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+                    <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+                </div>
 
-        </form>
-        {{largoIni}} {{largoEmp}}
-        <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Variable'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
-            <div class="btn-edit">
-                <!--button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+            </form>
+            {{largoIni}} {{largoEmp}}
+            <form id="generarReporteProductos-form13" ng-show="tipodecarga=='Variable'" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+                <div class="btn-edit">
+                    <!--button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
                   Editar
                 </button-->
 
-            </div>
-            <div id="productTable">
-                <table class="table table-bordered table-hover table-condensed">
-                    <tr style="font-weight: bold">
-                        <td style="width:30%">Producto</td>
-                        <td style="width:20%">Tipo</td>
-                        <td style="width:20%">Cantidad</td>
-                        <!--td style="width:30%">Valores</td-->
+                </div>
+                <div id="productTable">
+                    <table class="table table-bordered table-hover table-condensed">
+                        <tr style="font-weight: bold">
+                            <td style="width:30%">Producto</td>
+                            <td style="width:20%">Tipo</td>
+                            <td style="width:20%">Cantidad</td>
+                            <!--td style="width:30%">Valores</td-->
 
 
-                    </tr>
+                        </tr>
 
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga a Granel' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad_gra">{{prod.cantidad_gra}}</span></td>
-                        <!--td> <span>Peso:{{prod.cantidad_gra/1*prod.peso/1}}</span></td-->
-                    </tr>
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga Empacada' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad_gra">{{prod.cantidad_gra}}</span></td>
-                        <!--td> <span>Largo:{{prod.cantidad_gra/1*prod.largo/1}} Peso:{{prod.cantidad_gra/1*prod.peso/1}} </span></td-->
-                    </tr>
-                    <tr ng-repeat="prod in carga_u | filter:prod.tipo='Iniciadores' ">
-                        <td>{{prod.prod}}</td>
-                        <td> <span>{{prod.tipo}}</span></td>
-                        <td> <span editable-text="prod.cantidad_ini">{{prod.cantidad_ini}}</span></td>
-                        <!--td> <span>Largo:{{prod.cantidad_ini/1*prod.largo/1}} Peso:{{prod.cantidad_ini/1*prod.peso/1}}  </span></td-->
-                    </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga a Granel' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad_gra">{{prod.cantidad_gra}}</span></td>
+                            <!--td> <span>Peso:{{prod.cantidad_gra/1*prod.peso/1}}</span></td-->
+                        </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Carga Empacada' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad_gra">{{prod.cantidad_gra}}</span></td>
+                            <!--td> <span>Largo:{{prod.cantidad_gra/1*prod.largo/1}} Peso:{{prod.cantidad_gra/1*prod.peso/1}} </span></td-->
+                        </tr>
+                        <tr ng-repeat="prod in carga_u | filter:prod.tipo='Iniciadores' ">
+                            <td>{{prod.prod}}</td>
+                            <td> <span>{{prod.tipo}}</span></td>
+                            <td> <span editable-text="prod.cantidad_ini">{{prod.cantidad_ini}}</span></td>
+                            <!--td> <span>Largo:{{prod.cantidad_ini/1*prod.largo/1}} Peso:{{prod.cantidad_ini/1*prod.peso/1}}  </span></td-->
+                        </tr>
 
-                </table>
-            </div>
-            <!-- buttons -->
+                    </table>
+                </div>
+                <!-- buttons -->
 
-            <div class="btn-form" ng-show="tableform.$visible">
-                <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
-                <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
-            </div>
+                <div class="btn-form" ng-show="tableform.$visible">
+                    <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+                    <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+                </div>
 
-        </form>
-        {{cargasVal}}
-        <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
-            <label class="item" id="editarVoladuraMapa-input25">
+            </form>
+            {{cargasVal}}
+            <form id="editarVoladuraMapa-form11" ng-show="showProfDis">
+                <label class="item" id="editarVoladuraMapa-input25">
                         <span class="input-label">Profundidad Diseño (mts)</span>
-                        <input type="number" placeholder="" ng-model="profDis" ng-disabled="showProfDis">
+                        <input type="number" placeholder="" ng-model="profDis" ng-disabled="showProfDis" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                 </label>
-        </form>
+            </form>
 
-        <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
+            <form id="editarVoladuraMapa-form11" ng-show="showAddNewBarr" class="list" ng-model="tempTiposBarr">
 
-            <label class="item item-input" id="editarVoladuraMapa-input25">
-        <span class="input-label">Profundidad Real (mts)</span>
-        <input type="number" placeholder="" ng-model="selectedBarreno.prof" ng-change="updateProfReal(selectedBarreno.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                <label class="item item-input" id="editarVoladuraMapa-input25">
+        <span class="input-label">Profundidad {{profName}} (mts)</span>
+        <input type="number" placeholder="" ng-model="profreal" ng-change="updateProfReal(selectedBarreno.prof)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
       </label>
 
-            <!--label class="item item-input" id="editarVoladuraMapa-inputlongcarga" ng-show="tipodecarga=='Fija'">
+                <!--label class="item item-input" id="editarVoladuraMapa-inputlongcarga" ng-show="tipodecarga=='Fija'">
         <span class="input-label">Longitud de Carga (mts)</span>
         <input type="number" placeholder="" ng-model="ldecarga" 
               ng-change="updateLdecarga(ldecarga)" >
       </label-->
 
-            <label class="item item-input" id="editarVoladuraMapa-inputtaco">
+                <label class="item item-input" id="editarVoladuraMapa-inputtaco">
         <span class="input-label">Taco (mts)</span>
         <input type="number" placeholder="" ng-model="taco" ng-change="updateTaco(taco)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
-            <label class="item item-input" id="editarVoladuraMapa-inputaire ">
+                <label class="item item-input" id="editarVoladuraMapa-inputaire ">
         <span class="input-label">Aire (mts)</span>
         <input type="number" placeholder="" ng-model="aire" ng-change="updateAire(aire)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
         
       </label>
-            <div ng-show="tipodecarga=='Variable'" class="text-center">
-                <label class="item item-input" id="editarVoladuraMapa-inputaire ">
+                <div ng-show="tipodecarga=='Variable'" class="text-center">
+                    <label class="item item-input" id="editarVoladuraMapa-inputaire ">
             <span class="input-label">Carga Total (kg)</span>
             <input type="number" placeholder="" ng-model="calcVals.Ct" ng-change="updateCt(calcVals.Ct)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
           </label>
 
-                <br>
+                    <br>
 
 
-                <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+                    <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
 
-            </div>
-            <div ng-show="tipodecarga=='Fija'" class="text-center">
-
-
-                <br>
+                </div>
+                <div ng-show="tipodecarga=='Fija'" class="text-center">
 
 
-                <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
-
-            </div>
+                    <br>
 
 
-            <label class="item item-input" id="editarVoladuraMapa-inputbordo" ng-show="barrDetails">
+                    <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+
+                </div>
+
+
+                <label class="item item-input" id="editarVoladuraMapa-inputbordo" ng-show="barrDetails">
         <span class="input-label">Bordo (mts)</span>
         <input type="number" placeholder=" " ng-model="bordo" ng-change="updateBordo(bordo)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
-            <label class="item item-input" id="editarVoladuraMapa-inputespaciamiento" ng-show="barrDetails">
+                <label class="item item-input" id="editarVoladuraMapa-inputespaciamiento" ng-show="barrDetails">
         <span class="input-label">Espaciamiento (mts)</span>
         <input type="number" placeholder=" " ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
-            <label class="item item-input" id="editarVoladuraMapa-inputtaco" ng-show="barrDetails">
+                <label class="item item-input" id="editarVoladuraMapa-inputtaco" ng-show="barrDetails">
         <span class="input-label">Taco Inicial (mts)</span>
         <input type="number" placeholder="" ng-model="tacoini" ng-change="updateTacoIni(tacoini)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
-            <label class="item item-input" id="editarVoladuraMapa-inputdiametro" ng-show="barrDetails">
+                <label class="item item-input" id="editarVoladuraMapa-inputdiametro" ng-show="barrDetails">
         <span class="input-label">Diametro (mm) </span>
         <input type="number" placeholder=" " ng-model="diametro" ng-change="updateDiametro(diametro)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
       </label>
-            <label class="item item-input" id="editarVoladuraMapa-inputsubperf" ng-show="barrDetails">
+                <label class="item item-input" id="editarVoladuraMapa-inputsubperf" ng-show="barrDetails">
         <span class="input-label">Sub-perforación </span>
         <input type="number" placeholder=" " ng-model="subperf" ng-change="updateSubperf(subperf)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
  </label>
 
-        </form>
-        <form ng-show="enableaddNew" class="list">
+            </form>
+            <form ng-show="enableaddNew" class="list">
 
-        </form>
+            </form>
 
 
 
-        <div id="editarVoladuraMapa-button-bar5" class="button-bar">
-            <!--button id="editarVoladuraMapa-button34" ng-click="editBarr()" id="editarVoladuraMapa-button25" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-edit"></button-->
-            <button id="editarVoladuraMapa-button31" ng-click="addNewBarr();disableAddNewBarr=true" ng-disable="disableAddNewBarr" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
+            <div id="editarVoladuraMapa-button-bar5" class="button-bar">
+                <!--button id="editarVoladuraMapa-button34" ng-click="editBarr()" id="editarVoladuraMapa-button25" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-edit"></button-->
+                <button id="editarVoladuraMapa-button31" ng-click="addNewBarr();disableAddNewBarr=true" ng-disable="disableAddNewBarr" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-add-circle"></button>
 
-            <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
-            <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
-        </div>
+                <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+                <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+            </div>
 
-        <button id="editarVoladuraMapa-button34" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Finalizar</button>
+            <button id="editarVoladuraMapa-button34" ng-click="gotoMenu()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ios-arrow-dropright">Finalizar</button>
 
-        <!--div id="editarVoladuraMapa-button-bar6" class="button-bar" ng-show="showBarrnam">
+            <!--div id="editarVoladuraMapa-button-bar6" class="button-bar" ng-show="showBarrnam">
             <button id="editarVoladuraMapa-button31" ng-click="updateSelectedNewBarr(selectedBarreno,newBarrnam)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-left ion-android-checkmark-circle">Agregar Barreno</button>
         </div-->
 
 
-        <form ng-show="enableResults" class="list">
-            <button id="editarVoladuraMapa-button34" ng-click="hideCalcs=true" ng-hide="hideCalcs" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-arrow-dropdown-circle">Mostrar Resultados</button>
-            <button id="editarVoladuraMapa-button34" ng-click="hideCalcs=false" ng-show="hideCalcs" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-arrow-dropup-circle">Ocultar Resultados</button>
-            <table class="table table-bordered table-hover table-condensed" ng-show="hideCalcs">
-                <tr>
-                    <td>Valor</td>
-                    <td>Resultados</td>
+            <form ng-show="enableResults" class="list">
+                <button id="editarVoladuraMapa-button34" ng-click="hideCalcs=true" ng-hide="hideCalcs" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-arrow-dropdown-circle">Mostrar Resultados</button>
+                <button id="editarVoladuraMapa-button34" ng-click="hideCalcs=false" ng-show="hideCalcs" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-arrow-dropup-circle">Ocultar Resultados</button>
+                <table class="table table-bordered table-hover table-condensed" ng-show="hideCalcs">
+                    <tr>
+                        <td>Valor</td>
+                        <td>Resultados</td>
 
-                </tr>
-                <tr>
-                    <td>L</td>
-                    <td>{{calcVals.L}}</td>
-                </tr>
-                <tr>
-                    <td>D</td>
-                    <td>{{calcVals.D}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Tf</td>
-                    <td>{{calcVals.Tf}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Ta</td>
-                    <td>{{calcVals.Ta}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Li</td>
-                    <td>{{calcVals.Li}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Ci</td>
-                    <td>{{calcVals.Ci}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        ci</td>
-                    <td>{{calcVals.ci}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        d</td>
-                    <td>{{calcVals.d}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        B</td>
-                    <td>{{calcVals.B}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Es</td>
-                    <td>{{calcVals.Es}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        s</td>
-                    <td>{{calcVals.s}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Lv</td>
-                    <td>{{calcVals.Lv}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Pe</td>
-                    <td>{{calcVals.Pe}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        V</td>
-                    <td>{{calcVals.V}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Pt</td>
-                    <td>{{calcVals.Pt}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Ct</td>
-                    <td>{{calcVals.Ct}}</td>
-                </tr>
-                <tr>
-                    <td>
-                        Fc</td>
-                    <td>{{calcVals.Fc}}</td>
-                </tr>
-            </table>
+                    </tr>
+                    <tr>
+                        <td>L</td>
+                        <td>{{calcVals.L}}</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>{{calcVals.D}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Tf</td>
+                        <td>{{calcVals.Tf}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ta</td>
+                        <td>{{calcVals.Ta}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Li</td>
+                        <td>{{calcVals.Li}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ci</td>
+                        <td>{{calcVals.Ci}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ci</td>
+                        <td>{{calcVals.ci}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            d</td>
+                        <td>{{calcVals.d}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            B</td>
+                        <td>{{calcVals.B}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Es</td>
+                        <td>{{calcVals.Es}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            s</td>
+                        <td>{{calcVals.s}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Lv</td>
+                        <td>{{calcVals.Lv}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pe</td>
+                        <td>{{calcVals.Pe}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            V</td>
+                        <td>{{calcVals.V}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pt</td>
+                        <td>{{calcVals.Pt}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Ct</td>
+                        <td>{{calcVals.Ct}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fc</td>
+                        <td>{{calcVals.Fc}}</td>
+                    </tr>
+                </table>
 
-        </form>
+            </form>
+        </div>
     </ion-content>
 </ion-view>

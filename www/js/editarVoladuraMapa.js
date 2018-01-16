@@ -1,8 +1,8 @@
 angular.module('app.editarVoladuraMapa', [])
-    .controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate) {
+        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup) {
 
             $scope.show = function() {
                 $ionicLoading.show({
@@ -105,6 +105,8 @@ angular.module('app.editarVoladuraMapa', [])
 
                     },
                     options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
                         aspectRatio: 1,
                         tooltips: false,
                         layout: {
@@ -112,7 +114,7 @@ angular.module('app.editarVoladuraMapa', [])
                                 top: 42,
                                 right: 16,
                                 bottom: 32,
-                                left: 8
+                                left: 16
                             }
                         },
                         elements: {
@@ -123,6 +125,44 @@ angular.module('app.editarVoladuraMapa', [])
                                     var base = 0.3;
                                     return (size / 24) * base;
                                 }
+                            }
+                        },
+                        pan: {
+                            // Boolean to enable panning
+                            enabled: true,
+
+                            // Panning directions. Remove the appropriate direction to disable 
+                            // Eg. 'y' would only allow panning in the y direction
+                            mode: 'xy',
+                            rangeMin: {
+                                // Format of min pan range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            rangeMax: {
+                                // Format of max pan range depends on scale type
+                                x: null,
+                                y: null
+                            }
+                        },
+
+                        // Container for zoom options
+                        zoom: {
+                            // Boolean to enable zooming
+                            enabled: true,
+
+                            // Zooming directions. Remove the appropriate direction to disable 
+                            // Eg. 'y' would only allow zooming in the y direction
+                            mode: 'xy',
+                            rangeMin: {
+                                // Format of min pan range depends on scale type
+                                x: null,
+                                y: null
+                            },
+                            rangeMax: {
+                                // Format of max pan range depends on scale type
+                                x: null,
+                                y: null
                             }
                         },
                         plugins: {
@@ -143,7 +183,7 @@ angular.module('app.editarVoladuraMapa', [])
                                     return value.v;
 
                                 },
-                                offset: 2,
+                                offset: 0,
                                 padding: 0
                             }
                         }
@@ -545,8 +585,33 @@ angular.module('app.editarVoladuraMapa', [])
 
             }
             $scope.canvasMap = document.getElementById('mapaBarrenos');
+            $scope.showPopup = function() {
+                $scope.datapop = {};
+                var mapTitle = 'ID ';
+
+                // An elaborate, custom popup
+                var myPopup = $ionicPopup.show({
+                    templateUrl: 'templates/editarVoladuraCaptaciN.html',
+                    title: mapTitle,
+                    // subTitle: 'Please use normal things',
+                    scope: $scope,
+                    buttons: [
+                        { text: 'Cerrar' },
+
+                    ]
+                });
+
+                myPopup.then(function(res) {
+                    console.log('Tapped!', res);
+                });
+
+                $timeout(function() {
+                    myPopup.close(); //close the popup after 3 seconds for some reason
+                }, 180000);
+            };
 
             $scope.canvasMap.onclick = function(evt) {
+                $scope.showPopup();
                 $scope.searchedbarr = {};
 
                 var activePoint = $scope.mapaBarrenos.getElementAtEvent(evt)[0];

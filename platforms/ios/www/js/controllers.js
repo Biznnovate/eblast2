@@ -1,70 +1,100 @@
 angular.module('app.controllers', [])
 
 .controller('inicioCtrl', ['$scope', '$stateParams', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-        // You can include any angular dependencies as parameters for this function
-        // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, pouchDB) {
-            //Declara y Sincroniza base de datos de Tipo
-            let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-                console.log("I'm Batman.");
-                return remoteprojDB.getSession();
+    // You can include any angular dependencies as parameters for this function
+    // TIP: Access Route Parameters for your page via $stateParams.parameterName
+    function($scope, $stateParams, pouchDB) {
+        //Declara y Sincroniza base de datos de Tipo
+        let localprojDB = new pouchDB('projects');
+        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            console.log("I'm Batman.");
+            return remoteprojDB.getSession();
+        });
+        localprojDB.sync(remoteprojDB).on('complete', function() {
+            // yay, we're in sync!
+        }).on('error', function(err) {
+            // boo, we hit an error!
+        });
+        localprojDB.allDocs({
+            include_docs: true,
+            attachments: true
+        }).then(function(result) {
+            // handle result
+            $scope.projInfo = result;
+
+
+        }).catch(function(err) {
+            console.log(err);
+        });
+
+
+
+    }
+])
+
+.controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
+    // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    // You can include any angular dependencies as parameters for this function
+    // TIP: Access Route Parameters for your page via $stateParams.parameterName
+    function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
+        // Show loader from service
+        $scope.show = function() {
+            $ionicLoading.show({
+                template: 'Loading...',
+                duration: 3000
+            }).then(function() {
+                console.log("The loading indicator is now displayed");
             });
-            localprojDB.sync(remoteprojDB).on('complete', function() {
-                // yay, we're in sync!
-            }).on('error', function(err) {
-                // boo, we hit an error!
+        };
+
+        $scope.hide = function() {
+            $ionicLoading.hide().then(function() {
+                console.log("The loading indicator is now hidden");
             });
-            localprojDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.projInfo = result;
+        };
 
 
-            }).catch(function(err) {
-                console.log(err);
-            });
-
-
-
+        $scope.projparam = {
+            'id': $stateParams.id,
+            'status': $stateParams.status,
+            'proj': $stateParams.proj,
         }
-    ])
-    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
-        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-        // You can include any angular dependencies as parameters for this function
-        // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
-            // Show loader from service
-            $scope.show = function() {
-                $ionicLoading.show({
-                    template: 'Loading...',
-                    duration: 3000
-                }).then(function() {
-                    console.log("The loading indicator is now displayed");
-                });
-            };
+        $scope.projID = $scope.projparam.proj || '';
+        $scope.showAll = false;
+        // $scope.show();
+        //Declara y Sincroniza base de datos de Tipo
 
-            $scope.hide = function() {
-                $ionicLoading.hide().then(function() {
-                    console.log("The loading indicator is now hidden");
-                });
-            };
+        let localprojDB = new pouchDB('projects');
+        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            console.log("I'm Batman.");
+            return remoteprojDB.getSession();
+        });
+        var currDate = new Date().toISOString();
+        localprojDB.createIndex({
+            index: {
+                fields: ['date', 'proj', '_id'],
+                ddoc: "last-5-Index"
+            }
+        }).then(function() {
+            return localprojDB.find({
+                selector: {
+                    date: { $lt: currDate }
 
+                },
 
-            //  $scope.projparam = {
-            //      'id': $stateParams.id,
-            //      'status': $stateParams.status,
-            //      'proj': $stateParams.proj,
-            //  }
-            $scope.showAll = false;
-            // $scope.show();
-            //Declara y Sincroniza base de datos de Tipo
-
-            let localprojDB = new pouchDB('projects');
-
+                use_index: 'last-5-Index',
+                sort: [{ 'date': 'desc' }],
+                limit: 5
+            }).then(function(result) {
+                $scope.projInfoT5 = result.docs;
+                console.log(result.docs);
+            });
+        });
+        console.log('loaded top 5')
+        $scope.loadT5Proj = function() {
+            $scope.show();
             var currDate = new Date().toISOString();
             localprojDB.createIndex({
                 index: {
@@ -87,10 +117,13 @@ angular.module('app.controllers', [])
                 });
             });
             console.log('loaded top 5')
+            $scope.hide();
+        }
+
+        $scope.loadT5Proj();
 
 
-
-            $scope.syncFunc = function() {
+        $scope.syncFunc = function() {
                 $scope.show();
                 let localprojDB = new pouchDB('projects');
                 let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
@@ -124,385 +157,177 @@ angular.module('app.controllers', [])
                 $scope.hide();
 
             }
+            //   $scope.syncFunc();
 
-
-            $scope.selectProjFunc = function() {
-
-
-                    if ($scope.projID != '') {
-                        var proj = $scope.projID;
-                        localprojDB.get(proj).then(function(doc) {
-                            $scope.selectedProj = doc;
-                            console.log(doc)
-                                // $scope.tipobarr = doc.tipos;
-                                //   $scope.Barrenos = doc.barrenos;
-                                // $scope.muestraData = doc.muestras;
-                                // $scope.Muesrow = doc.muestras;
-                                // console.log(doc.tipos)
-                            console.log('se encontro el proyecto:' + proj)
-
-                        }).catch(function(err) {
-                            console.log(err);
-                        });
-                    } else {
-                        $scope.selectedProj = ''
-                        console.log('no se ha seleccionado un proyecto')
-                    };
-                    $showAll = false;
-                    console.log($scope.showAll)
-                }
-                // $scope.selectProjFunc();
-            $scope.selectProj = function(obj) {
-                console.log(obj)
-
-
-                $scope.selectedproj_u = obj;
-                $scope.projID = obj.doc._id;
-                $scope.projNam = obj.doc.proj;
-                $scope.selectProjFunc();
-                console.log('Tipo seleccionado para editar: ' + obj.doc._id)
-
-
-            }
-            $scope.selectProjT5 = function(obj) {
-                console.log(obj)
-
-
-                $scope.selectedproj_u = obj;
-                $scope.projID = obj._id;
-                $scope.projNam = obj.proj;
-                $scope.selectProjFunc();
-                console.log('Tipo seleccionado para editar: ' + obj._id)
-
-
-            }
-            $scope.changeProjID = function() {
-                $scope.projID = '';
-                $scope.projNam = '';
-            }
-            $scope.selectProjList = function(obj, idx) {
-
-
-                $scope.projIndex = idx;
-                $scope.projID = obj._id;
-
-                console.log('Tipo seleccionado para editar: ' + obj._id + ' index ' + idx)
-
-
-            }
-            $scope.deleteProj = function(index) {
-                console.log('se esta borrando el proyecto ' + index)
+        $scope.loadProjDBFunc = function() {
                 $scope.show();
-                //$scope.selectedproj_u = obj;
-                var id = obj.doc._id;
-                //$scope.projNam = obj.doc.proj;
-                localprojDB.get(id).then(function(doc) {
-                    return localprojDB.remove(doc);
-                });
-
-                $scope.loadProjDBFunc();
-                //$scope.projInfo.splice(index, 1);
-
-                console.log('Proyecto Borrado');
-                $scope.hide();
-
-            }
-
-            $scope.gotoParam = function() {
-                $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
-            }
-            $scope.gotoCapt = function() {
-                $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID });
-            }
-            $scope.gotoMapa = function() {
-                $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
-            }
-            $scope.gotoProductos = function() {
-                $state.go('menu.generarReporteProductos', { 'proj': $scope.projID });
-            }
-            $scope.gotoMuestra = function() {
-                $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
-            }
-            $scope.gotoSismo = function() {
-                $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
-            }
-            $scope.gotoDataGral = function() {
-                $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
-            }
-            $scope.gotoCarga = function() {
-                $state.go('menu.reporteCarga1', { 'proj': $scope.projID });
-            }
-            $scope.gotoReporte = function() {
-                $state.go('menu.vistaDeReporte', { 'proj': $scope.projID });
-            }
-            $scope.gotoAdmin = function() {
-                $state.go('menu.admincons', { 'proj': $scope.projID });
-            }
-
-
-        }
-    ])
-    .controller('vistaDeProyectoCtrl2', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
-        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-        // You can include any angular dependencies as parameters for this function
-        // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
-            // Show loader from service
-            $scope.show = function() {
-                $ionicLoading.show({
-                    template: 'Loading...',
-                    duration: 3000
-                }).then(function() {
-                    console.log("The loading indicator is now displayed");
-                });
-            };
-
-            $scope.hide = function() {
-                $ionicLoading.hide().then(function() {
-                    console.log("The loading indicator is now hidden");
-                });
-            };
-
-
-            //  $scope.projparam = {
-            //      'id': $stateParams.id,
-            //      'status': $stateParams.status,
-            //      'proj': $stateParams.proj,
-            //  }
-            $scope.showAll = false;
-            // $scope.show();
-            //Declara y Sincroniza base de datos de Tipo
-
-            let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-                console.log("I'm Batman.");
-                return remoteprojDB.getSession();
-            });
-            var currDate = new Date().toISOString();
-            localprojDB.createIndex({
-                index: {
-                    fields: ['date', 'proj', '_id'],
-                    ddoc: "last-5-Index"
-                }
-            }).then(function() {
-                return localprojDB.find({
-                    selector: {
-                        date: { $lt: currDate }
-
-                    },
-
-                    use_index: 'last-5-Index',
-                    sort: [{ 'date': 'desc' }],
-                    limit: 5
+                localprojDB.allDocs({
+                    include_docs: true,
+                    attachments: true
                 }).then(function(result) {
-                    $scope.projInfoT5 = result.docs;
-                    console.log(result.docs);
-                });
-            });
-            console.log('loaded top 5')
-            $scope.loadT5Proj = function() {
-                $scope.show();
-                var currDate = new Date().toISOString();
-                localprojDB.createIndex({
-                    index: {
-                        fields: ['date', 'proj', '_id'],
-                        ddoc: "last-5-Index"
-                    }
-                }).then(function() {
-                    return localprojDB.find({
-                        selector: {
-                            date: { $lt: currDate }
+                    // handle result
+                    $scope.projInfo = result;
+                    //   $scope.selectedproj = $scope.projInfo[0];
+                    console.log('projloaded')
 
-                        },
-
-                        use_index: 'last-5-Index',
-                        sort: [{ 'date': 'desc' }],
-                        limit: 5
-                    }).then(function(result) {
-                        $scope.projInfoT5 = result.docs;
-                        console.log(result.docs);
-                    });
+                }).catch(function(err) {
+                    console.log(err);
                 });
-                console.log('loaded top 5')
                 $scope.hide();
             }
+            // $scope.loadProjDBFunc();
+            //$scope.hide();
 
-            $scope.loadT5Proj();
-
-
-            $scope.syncFunc = function() {
-                    $scope.show();
-                    let localprojDB = new pouchDB('projects');
-                    let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-                    remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-                        console.log("I'm Batman.");
-                        return remoteprojDB.getSession();
-                    });
-
-                    localprojDB.sync(remoteprojDB).on('complete', function() {
-                        //  yay, we're in sync!
-                        console.log('pretty sync')
-                    }).on('error', function(err) {
-                        // boo, we hit an error!
-                        console.log(err)
-                    });
-
-                    localprojDB.allDocs({
-                        include_docs: true,
-                        attachments: true
-                    }).then(function(result) {
-                        // handle result
-                        $scope.projInfo = result;
-                        // $scope.selectedproj = $scope.projInfo[0];
-                        console.log('projloaded')
-                    }).catch(function(err) {
-                        // console.log(err);
-                    });
+        // $scope.projID = $scope.projparam.proj || '';
+        $scope.selectProjFunc = function() {
 
 
-
-                    $scope.hide();
-
-                }
-                //   $scope.syncFunc();
-
-            $scope.loadProjDBFunc = function() {
-                    $scope.show();
-                    localprojDB.allDocs({
-                        include_docs: true,
-                        attachments: true
-                    }).then(function(result) {
-                        // handle result
-                        $scope.projInfo = result;
-                        //   $scope.selectedproj = $scope.projInfo[0];
-                        console.log('projloaded')
+                if ($scope.projID != '') {
+                    var proj = $scope.projID;
+                    localprojDB.get(proj).then(function(doc) {
+                        $scope.selectedProj = doc;
+                        console.log(doc)
+                            // $scope.tipobarr = doc.tipos;
+                            //   $scope.Barrenos = doc.barrenos;
+                            // $scope.muestraData = doc.muestras;
+                            // $scope.Muesrow = doc.muestras;
+                            // console.log(doc.tipos)
+                        console.log('se encontro el proyecto:' + proj)
 
                     }).catch(function(err) {
                         console.log(err);
                     });
-                    $scope.hide();
-                }
-                // $scope.loadProjDBFunc();
-                //$scope.hide();
-
-            // $scope.projID = $scope.projparam.proj || '';
-            $scope.selectProjFunc = function() {
-
-
-                    if ($scope.projID != '') {
-                        var proj = $scope.projID;
-                        localprojDB.get(proj).then(function(doc) {
-                            $scope.selectedProj = doc;
-                            console.log(doc)
-                                // $scope.tipobarr = doc.tipos;
-                                //   $scope.Barrenos = doc.barrenos;
-                                // $scope.muestraData = doc.muestras;
-                                // $scope.Muesrow = doc.muestras;
-                                // console.log(doc.tipos)
-                            console.log('se encontro el proyecto:' + proj)
-
-                        }).catch(function(err) {
-                            console.log(err);
-                        });
-                    } else {
-                        $scope.selectedProj = ''
-                        console.log('no se ha seleccionado un proyecto')
-                    };
-                    $showAll = false;
-                    console.log($scope.showAll)
-                }
-                // $scope.selectProjFunc();
-            $scope.selectProj = function(obj) {
-                console.log(obj)
-
-
-                $scope.selectedproj_u = obj;
-                $scope.projID = obj.doc._id;
-                $scope.projNam = obj.doc.proj;
-                $scope.selectProjFunc();
-                console.log('Tipo seleccionado para editar: ' + obj.doc._id)
-
-
+                } else {
+                    $scope.selectedProj = ''
+                    console.log('no se ha seleccionado un proyecto')
+                };
+                $showAll = false;
+                console.log($scope.showAll)
             }
-            $scope.selectProjT5 = function(obj) {
-                console.log(obj)
+            // $scope.selectProjFunc();
+        $scope.selectProj = function(obj) {
+            console.log(obj)
 
 
-                $scope.selectedproj_u = obj;
-                $scope.projID = obj._id;
-                $scope.projNam = obj.proj;
-                $scope.selectProjFunc();
-                console.log('Tipo seleccionado para editar: ' + obj._id)
-
-
-            }
-            $scope.changeProjID = function() {
-                $scope.projID = '';
-                $scope.projNam = '';
-            }
-            $scope.selectProjList = function(obj, idx) {
-
-
-                $scope.projIndex = idx;
-                $scope.projID = obj._id;
-
-                console.log('Tipo seleccionado para editar: ' + obj._id + ' index ' + idx)
-
-
-            }
-            $scope.deleteProj = function(index) {
-                console.log('se esta borrando el proyecto ' + index)
-                $scope.show();
-                //$scope.selectedproj_u = obj;
-                var id = obj.doc._id;
-                //$scope.projNam = obj.doc.proj;
-                localprojDB.get(id).then(function(doc) {
-                    return localprojDB.remove(doc);
-                });
-
-                $scope.loadProjDBFunc();
-                //$scope.projInfo.splice(index, 1);
-
-                console.log('Proyecto Borrado');
-                $scope.hide();
-
-            }
-
-            $scope.gotoParam = function() {
-                $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
-            }
-            $scope.gotoCapt = function() {
-                $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID });
-            }
-            $scope.gotoMapa = function() {
-                $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
-            }
-            $scope.gotoProductos = function() {
-                $state.go('menu.generarReporteProductos', { 'proj': $scope.projID });
-            }
-            $scope.gotoMuestra = function() {
-                $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
-            }
-            $scope.gotoSismo = function() {
-                $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
-            }
-            $scope.gotoDataGral = function() {
-                $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
-            }
-            $scope.gotoCarga = function() {
-                $state.go('menu.reporteCarga1', { 'proj': $scope.projID });
-            }
-            $scope.gotoReporte = function() {
-                $state.go('menu.vistaDeReporte', { 'proj': $scope.projID });
-            }
-            $scope.gotoAdmin = function() {
-                $state.go('menu.admincons', { 'proj': $scope.projID });
-            }
+            $scope.selectedproj_u = obj;
+            $scope.projID = obj.doc._id;
+            $scope.projNam = obj.doc.proj;
+            $scope.selectProjFunc();
+            console.log('Tipo seleccionado para editar: ' + obj.doc._id)
 
 
         }
-    ])
+
+        $scope.selectProjT5 = function(obj) {
+            console.log(obj)
+
+
+            $scope.selectedproj_u = obj;
+            $scope.projID = obj._id;
+            $scope.projNam = obj.proj;
+            $scope.selectProjFunc();
+            console.log('Tipo seleccionado para editar: ' + obj._id)
+
+
+        }
+        $scope.selectProjParam = function() {
+            $scope.show();
+            if ($scope.projID != '') {
+
+                var id = $scope.projID;
+                let localprojDB = new pouchDB('projects');
+                localprojDB.get(id).then(function(doc) {
+
+                    $scope.projNam = doc.proj
+
+                    console.log('proj loaded' + doc.proj)
+
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                var data = {
+                    _id: id,
+                    proj: $scope.projNam
+
+                }
+                console.log('selected proj is ' + data)
+                $scope.selectProjT5(data)
+
+            } else {
+                console.log('no project selected')
+            }
+            $scope.hide();
+            console.log('finished selectprojparamfunc')
+        }
+        $scope.selectProjParam();
+
+        $scope.changeProjID = function() {
+            $scope.projID = '';
+            $scope.projNam = '';
+        }
+        $scope.selectProjList = function(obj, idx) {
+
+
+            $scope.projIndex = idx;
+            $scope.projID = obj._id;
+
+            console.log('Tipo seleccionado para editar: ' + obj._id + ' index ' + idx)
+
+
+        }
+        $scope.deleteProj = function(obj) {
+            console.log('se esta borrando el proyecto ' + obj)
+            $scope.show();
+            //$scope.selectedproj_u = obj;
+            var id = obj.doc._id;
+            //$scope.projNam = obj.doc.proj;
+            localprojDB.get(id).then(function(doc) {
+                return localprojDB.remove(doc);
+            });
+
+            $scope.loadProjDBFunc();
+            //$scope.projInfo.splice(index, 1);
+
+            console.log('Proyecto Borrado');
+            $scope.hide();
+
+        }
+
+        $scope.gotoParam = function() {
+            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+        }
+        $scope.gotoCapt = function() {
+            $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID });
+        }
+        $scope.gotoMapa = function() {
+            $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
+        }
+        $scope.gotoProductos = function() {
+            $state.go('menu.generarReporteProductos', { 'proj': $scope.projID });
+        }
+        $scope.gotoMuestra = function() {
+            $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
+        }
+        $scope.gotoSismo = function() {
+            $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
+        }
+        $scope.gotoDataGral = function() {
+            $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
+        }
+        $scope.gotoCarga = function() {
+            $state.go('menu.reporteCarga1', { 'proj': $scope.projID });
+        }
+        $scope.gotoReporte = function() {
+            $state.go('menu.vistaDeReporte', { 'proj': $scope.projID });
+        }
+        $scope.gotoAdmin = function() {
+            $state.go('menu.admincons', { 'proj': $scope.projID });
+        }
+
+
+    }
+])
 
 .controller('vistaDeReporteCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
@@ -2510,10 +2335,10 @@ angular.module('app.controllers', [])
             }).on('error', function(err) {
                 // boo, we hit an error!
             });
-
-            $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+            $scope.hide();
+            $state.go('menu.vistaDeProyecto', { 'proj': $scope.projID });
         }
-        $scope.hide();
+
 
     }
 ])
@@ -3655,10 +3480,11 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('editarVoladuraMapaCtrl1', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading) {
+    function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page) {
+
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3674,6 +3500,10 @@ angular.module('app.controllers', [])
             });
         };
 
+        angular.element($window).bind('orientationchange', function() {
+
+        });
+
         //Load BD de de Proyectos y sus caracteristicas
 
         $scope.projparam = {
@@ -3681,7 +3511,7 @@ angular.module('app.controllers', [])
             'status': $stateParams.status,
             'proj': $stateParams.proj,
         }
-
+        Page.setTitle($stateParams.proj);
 
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
@@ -3692,6 +3522,135 @@ angular.module('app.controllers', [])
         }).then('complete', function() {
 
         })
+        $scope.dataChartBarrs = function(obj) {
+            //$scope.show();
+            console.log("datachartbarrs started")
+            var barrenosforchart = $scope.Barrenos;
+            var radio = obj || 5;
+            $scope.dataChart = [];
+            // $scope.dataChart1 = [];
+            $scope.labelChart = [];
+            $scope.seriesChart = [];
+            angular.forEach(barrenosforchart, function(value, key) {
+                if (value.status == "Pending") {
+                    var colorbarr = "#d42827"
+                } else {
+                    var colorbarr = "#a6a6a6"
+                }
+                var data1 = {
+                    'x': value.coordx,
+                    'y': value.coordy,
+                    'r': radio,
+                    'title': value.barr
+
+                };
+                // }
+                var label = value.barr;
+
+                var data = {
+                    barr: value.barr,
+                    label: 'i',
+                    // title: value.barr,
+                    data: [{
+                        'x': value.coordx,
+                        'y': value.coordy,
+                        'r': radio,
+                    }],
+                    backgroundColor: colorbarr,
+                    //  series: value.barr,
+                };
+
+
+                //console.log('se ingreso a data ' + data.label)
+
+
+                // $scope.dataChart1.push(data1);
+                $scope.labelChart.push(label);
+                $scope.dataChart.push(data);
+
+            })
+            $scope.testData = [
+
+                { label: ['1'], title: 'title1', data: [{ x: 1, y: 2, r: 5 }] },
+                { label: ['2'], title: 'title2', data: [{ x: 1.1, y: 2.1, r: 5 }] },
+                { label: ['3'], title: 'title3', data: [{ x: 1.3, y: 2.4, r: 5 }] },
+            ]
+
+            $scope.ctx = document.getElementById("mapaBarrenos");
+
+            $scope.mapaBarrenos = new Chart($scope.ctx, {
+                type: 'bubble',
+                data: {
+                    labels: $scope.labelChart,
+
+                    datasets: $scope.dataChart
+
+                },
+
+
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Mapa de Barrenos'
+                    },
+                    responsive: true,
+                    //tooltips: {
+                    //    mode: 'index',
+                    //    intersect: false,
+                    //  },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Norte"
+                            }
+                        }],
+                        xAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "Este"
+                                }
+                            }]
+                            // yAxes: [{
+                            //     ticks: {
+                            //       beginAtZero: false,
+                            // callback: function(value, index, values) {
+                            // return '$' + value;
+
+                        //    }
+                        // }]
+                    },
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'xy'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'xy',
+                    },
+
+
+                }
+            });
+            // $scope.showmap = true;
+            // $scope.hide();
+            console.log("datachartbarrs ended " + $scope.dataChart)
+        }
         $scope.sync = function() {
             $scope.show();
             localprojDB.sync(remoteprojDB).on('complete', function() {
@@ -3727,6 +3686,7 @@ angular.module('app.controllers', [])
             $scope.tipos = doc.tipos;
             $scope.projNam = doc.proj;
             console.log(doc.tipos)
+            $scope.dataChartBarrs();
 
         }).catch(function(err) {
             console.log(err);
@@ -3745,6 +3705,7 @@ angular.module('app.controllers', [])
             $scope.Barrenos = [];
             $scope.Barrenos = doc.barrenos;
             $scope.projNam = doc.proj;
+            $scope.dataChartBarrs();
             console.log(doc.tipos)
             $scope.hide();
         }).catch(function(err) {
@@ -3807,6 +3768,7 @@ angular.module('app.controllers', [])
 
 
         }
+
         $scope.statusFilter = {
             status: 'Pending',
         };
@@ -3824,12 +3786,14 @@ angular.module('app.controllers', [])
             }
         }
 
+        $scope.dataChartBarrs();
         $scope.shownewBarrForm = false;
 
         $scope.updateSelectedBarr = function(obj) {
             console.log(obj)
             $scope.selectedBarreno = obj;
-            console.log($scope.selectedBarreno)
+
+            console.log('updateSelectedBarr ' + $scope.selectedBarreno.barr)
                 //alert($scope.selectedBarreno.doc)
                 // $scope.selectedbarr_id = obj.id;
             $scope.selectedbarr = obj;
@@ -3848,6 +3812,7 @@ angular.module('app.controllers', [])
             $scope.message = "Presione Agregar Barreno"
             $scope.shownewBarrForm = true;
             $scope.calc();
+            $scope.$applyAsync();
 
         };
         $scope.updateSelectedBarr2 = function(obj) {
@@ -3948,6 +3913,63 @@ angular.module('app.controllers', [])
 
 
         }
+        $scope.findIndexBarr = function(prop, value) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i][prop] === value) {
+                    return i;
+                }
+            }
+        }
+
+        $scope.selectedMapDataFunc = function(obj) {
+            console.log('Selected Map Object ' + obj);
+            var prop = 'barr';
+            var value = obj;
+            //var i = $scope.findIndexBarr(prop, value);
+            var result = $filter('filter')($scope.Barrenos, { barr: obj })[0];
+            console.log('selected barreno ' + result)
+            $scope.searchedbarr = {
+                barr: obj,
+            }
+
+            $scope.updateSelectedBarr(result);
+            $scope.dataChartBarrs();
+
+
+        }
+        $scope.canvasMap = document.getElementById('mapaBarrenos');
+
+        $scope.canvasMap.onclick = function(evt) {
+            $scope.searchedbarr = {};
+
+            var activePoint = $scope.mapaBarrenos.getElementAtEvent(evt)[0];
+            console.log('activePoint' + activePoint)
+            var data = activePoint._chart.data;
+            var datasetIndex = activePoint._datasetIndex;
+            var label = data.datasets[datasetIndex].data[activePoint._index].label;
+            var value = data.datasets[datasetIndex].data[activePoint._index];
+            $scope.selectedMapData = data.datasets[datasetIndex].barr;
+            $scope.selectedBarr_idx = $scope.dataChart[datasetIndex].label
+            console.log('label ' + label)
+            console.log("selected barr" + $scope.dataChart[datasetIndex])
+
+            $scope.selectedMapDataFunc($scope.selectedMapData);
+            //  $scope.hideMap();
+
+
+            // $scope.hideMap();
+            console.log('datasetindex ' + datasetIndex + ' data ' + $scope.selectedMapData);
+        };
+        $scope.mapDataFunc = function(points, evt) {
+            console.log(points, evt);
+        };
+
+        $scope.showselectbarrchar = false;
+        $scope.editBarr = function() {
+            $scope.message = 'Edite los valores del Barreno';
+            $scope.barrDetails = true;
+            $scope.showCoord = true;
+        }
         $scope.enableResults = false;
         $scope.enableCalc = false;
         $scope.carga_u = [];
@@ -3986,40 +4008,50 @@ angular.module('app.controllers', [])
             $scope.carga_u = $scope.carga;
             $scope.tacofinal = $scope.taco;
 
-            if ($scope.tipodecarga_u == 'Variable') {
+            if ($scope.precorte = '') {
+                if ($scope.tipodecarga_u == 'Variable') {
 
-                if ($scope.tipoExplo == 'ce') {
+                    if ($scope.tipoExplo == 'ce') {
 
-                    $scope.calc = function() {
-                        $scope.calcVarEmp();
+                        $scope.calc = function() {
+                            $scope.calcVarEmp();
 
-                        console.log('Se calculo Carga Variable con Explosivo Empacado ')
+                            console.log('Se calculo Carga Variable con Explosivo Empacado ')
+                        }
+                    } else if ($scope.tipoExplo == 'cg') {
+
+                        $scope.calc = function() {
+                            $scope.calcVarGra();
+                            console.log('Se calculo Carga Variable con Explosivo a Granel ')
+                        }
+                    } else {
+                        $scope.tempTipoExplo = 'N/A'
                     }
-                } else if ($scope.tipoExplo == 'cg') {
 
-                    $scope.calc = function() {
-                        $scope.calcVarGra();
-                        console.log('Se calculo Carga Variable con Explosivo a Granel ')
+                } else if ($scope.tipodecarga_u == 'Fija') {
+                    if ($scope.tipoExplo == 'ce') {
+                        $scope.calc = function() {
+                            $scope.calcFijEmp();
+                            console.log('Se calculo Carga Fija con Explosivo Empacado ')
+                        }
+                    } else if ($scope.tipoExplo == 'cg') {
+                        $scope.calc = function() {
+                            $scope.calcFijGra();
+                            console.log('Se calculo Carga Fija con Explosivo a Granel ')
+                        }
+                    } else {
+                        $scope.tempTipoExplo = 'N/A'
                     }
-                } else {
-                    $scope.tempTipoExplo = 'N/A'
+                }
+            } else {
+                $scope.calc = function() {
+                    $scope.calcVarEmpPrec();
+
+                    console.log('Se calculo Carga Precorte Variable con Explosivo Empacado ')
                 }
 
-            } else if ($scope.tipodecarga_u == 'Fija') {
-                if ($scope.tipoExplo == 'ce') {
-                    $scope.calc = function() {
-                        $scope.calcFijEmp();
-                        console.log('Se calculo Carga Fija con Explosivo Empacado ')
-                    }
-                } else if ($scope.tipoExplo == 'cg') {
-                    $scope.calc = function() {
-                        $scope.calcFijGra();
-                        console.log('Se calculo Carga Fija con Explosivo a Granel ')
-                    }
-                } else {
-                    $scope.tempTipoExplo = 'N/A'
-                }
             }
+
             $scope.enableCalc = true;
             $scope.enableResults = true;
             $scope.calc();
@@ -4295,7 +4327,6 @@ angular.module('app.controllers', [])
                 ' Fc ' + Fc
             );
         }
-
         $scope.calcVarEmp = function() {
             var calcCargasVar = function() {
 
@@ -4372,6 +4403,143 @@ angular.module('app.controllers', [])
             var Cm = (1 / (Lv)) * Pe;
             var Ct = Cm * Lc;
             var V = B * Es * (L - s);
+            var Pt = Ct + (Ci * ci);
+            var Fc = Ct / V;
+            $scope.calcVals = {
+                L: L,
+                D: D,
+                Tf: Tf,
+                Ta: Ta,
+                Li: Li,
+                Ci: Ci,
+                ci: ci,
+                d: d,
+                B: B,
+                Es: Es,
+                s: s,
+                Lv: Lv,
+                Pe: Pe,
+                V: V,
+                Ct: +(Ct).toFixed(2),
+                Pt: Pt,
+                Fc: Fc
+            }
+            console.log('Valores a Calcular ' +
+                'L ' + L +
+                ' D ' + D +
+                ' Tf ' + Tf +
+                ' Ta ' + Ta +
+                ' Li ' + Li +
+                ' Ci ' + Ci +
+                ' ci ' + ci +
+                ' d ' + d +
+                ' B ' + B +
+                ' Es ' + Es +
+                ' s ' + s +
+                ' Lv ' + Lv +
+                ' Pe ' + Pe);
+
+
+            console.log('Paso1 Cálculo del largo de la carga' +
+                ' Lc ' + Lc
+            );
+
+            // console.log('Paso2 Cálculo del volumen de un cilindro en 1 metro' +
+            //  ' Vc ' + Vc
+            //);
+
+            console.log('Paso 2 Cálculo de Carga x metro' +
+                ' Cm ' + Cm
+            );
+            console.log('Paso 3 - Carga total de la carga variable' +
+                ' Ct ' + Ct
+            );
+            console.log('Paso 4 - Cálculo del volumen del barreno' +
+                ' V ' + V
+            );
+            console.log('Paso 5 - Peso total de la carga' +
+                ' Pt ' + Pt
+            );
+            console.log('Paso 6 - Factor de carga' +
+                ' Fc ' + Fc
+            );
+        }
+        $scope.calcVarEmpPrec = function() {
+            var calcCargasVar = function() {
+
+                var rows = $scope.carga_u;
+                var val = {
+                    'peso': 0,
+                    'largo': 0,
+                    'cantidad': 0,
+                    'prod': '',
+                    'tipo': '',
+                }
+
+                angular.forEach(rows, function(carga) {
+                    if (carga.tipo !== 'Iniciadores') {
+                        val.peso += carga.peso;
+                        val.largo += carga.largo;
+
+                        val.cantidad = carga.cantidad_gra;
+                        val.prod = carga.prod;
+                        val.tipo = carga.tipo;
+                    }
+                });
+                return val;
+                $scope.cargasVal = val;
+
+            }
+
+
+            var calcCargasIni = function() {
+
+                var rows = $scope.carga_u;
+                var val = {
+                    'peso': 0,
+                    'largo': 0,
+                    'cantidad': 0,
+                    'prod': '',
+                    'tipo': '',
+                }
+
+                angular.forEach(rows, function(carga) {
+                    if (carga.tipo === 'Iniciadores') {
+                        val.peso += carga.peso / 1 * carga.cantidad_ini / 1;
+                        val.largo += carga.largo / 1 * carga.cantidad_ini / 1;
+                        val.cantidad += carga.cantidad_ini;
+                        val.prod = carga.prod;
+                        val.tipo = carga.tipo;
+                    }
+                });
+                return val;
+                $scope.iniVal = val;
+
+            }
+            $scope.cargasVar = calcCargasVar();
+            $scope.iniciadores = calcCargasIni();
+            //definicion de variables
+
+            var L = $scope.profreal_u; //Largo real (L) 
+            var D = $scope.diametro_u || $scope.diametro; //Diámetro (D) =
+            var Tf = 0; //Taco final (Tf) = 
+            var Ta = $scope.aire; //Taco aire (Ta) =
+            //Iniciador 
+            var Li = $scope.iniciadores.largo //Largo iniciador (Li) =
+            var Ci = $scope.iniciadores.peso //Peso del iniciador (Ci) =
+            var ci = $scope.iniciadores.cantidad //Cant de iniciadores (ci) =
+                //Carga Variable
+            var d = $scope.densidad_u //Densidad Carga Var (d) =
+            var B = $scope.bordo_u //Bordo (B) =
+            var Es = $scope.espaciamiento_u //Espaciamiento (Es) =
+            var s = $scope.subperf_u //Sub-excavación (s) =
+            var Lv = $scope.cargasVar.largo //Largo Carga Var
+            var Pe = $scope.cargasVar.peso // Peso UN empacado
+            var Lc = L - Tf - Ta - ((ci * Li));
+            var Vc = 3.1416 * ((D / 2) * (D / 2)) //* L * 1000;
+            var Cm = (1 / (Lv)) * Pe;
+            var Ct = Cm * Lc;
+            var V = 0;
             var Pt = Ct + (Ci * ci);
             var Fc = Ct / V;
             $scope.calcVals = {
@@ -5033,6 +5201,7 @@ angular.module('app.controllers', [])
             console.log($scope.message);
             // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
             $scope.hide();
+            $scope.$applyAsync();
 
         }
 
@@ -5196,116 +5365,8 @@ angular.module('app.controllers', [])
             })
             $scope.showmap = true;
         }
-        $scope.dataChartBarrs = function(obj) {
-            $scope.show();
-
-            var barrenosforchart = $scope.Barrenos;
-            var radio = obj || 5;
-            $scope.dataChart = [];
-            $scope.labelChart = [];
-            angular.forEach(barrenosforchart, function(value, key) {
-
-                var data = {
-
-                    'x': value.coordx,
-                    'y': value.coordy,
-                    'r': radio,
-                    'barr': value.barr
-
-                }
-                var label = {
-                    'barr': value.barr,
-                }
-
-                $scope.dataChart.push(data);
-                $scope.labelChart.push(label);
 
 
-            })
-            $scope.ctx = document.getElementById("mapaBarrenos");
-
-            $scope.mapaBarrenos = new Chart($scope.ctx, {
-                type: 'bubble',
-                data: {
-                    labels: $scope.labelChart,
-                    datasets: [{
-                        label: 'i',
-                        data: $scope.dataChart,
-
-                    }]
-                },
-
-                options: {
-                    responsive: true,
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-
-                }
-            });
-            $scope.showmap = true;
-            $scope.hide();
-
-        }
-        $scope.findIndexBarr = function(prop, value) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i][prop] === value) {
-                    return i;
-                }
-            }
-        }
-
-        $scope.selectedMapDataFunc = function(obj) {
-            console.log('Selected Map Object ' + obj);
-            var prop = 'barr';
-            var value = obj;
-            //var i = $scope.findIndexBarr(prop, value);
-            var result = $filter('filter')($scope.Barrenos, { barr: obj })[0];
-            console.log('selected barreno ' + result)
-            $scope.searchedbarr = {
-                barr: obj,
-            }
-
-            $scope.updateSelectedBarr(result);
-
-
-        }
-        $scope.canvasMap = document.getElementById('mapaBarrenos');
-
-        $scope.canvasMap.onclick = function(evt) {
-            $scope.searchedbarr = {};
-
-            var activePoint = $scope.mapaBarrenos.getElementAtEvent(evt)[0];
-            var data = activePoint._chart.data;
-            var datasetIndex = activePoint._datasetIndex;
-            var label = data.datasets[datasetIndex].data[activePoint._index].barr;
-            var value = data.datasets[datasetIndex].data[activePoint._index];
-            $scope.selectedMapData = data.datasets[datasetIndex].data[activePoint._index].barr;
-
-
-
-            $scope.selectedMapDataFunc($scope.selectedMapData);
-            $scope.hideMap();
-
-
-            // $scope.hideMap();
-            console.log('datasetindex ' + datasetIndex + ' data ' + $scope.selectedMapData);
-        };
-        $scope.mapDataFunc = function(points, evt) {
-            console.log(points, evt);
-        };
-
-        $scope.showselectbarrchar = false;
-        $scope.editBarr = function() {
-            $scope.message = 'Edite los valores del Barreno';
-            $scope.barrDetails = true;
-            $scope.showCoord = true;
-        }
 
 
     }

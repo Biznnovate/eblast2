@@ -160,7 +160,7 @@ angular.module('app.routes', [])
         views: {
             'side-menu21': {
                 templateUrl: 'templates/editarVoladuraCaptaciN.html',
-                controller: 'editarVoladuraCaptaciNCtrl'
+                controller: 'editarVoladuraMapaCtrl'
             }
         }
     })
