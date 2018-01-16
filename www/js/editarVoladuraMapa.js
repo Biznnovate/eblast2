@@ -20,6 +20,7 @@ angular.module('app.editarVoladuraMapa', [])
             };
 
             angular.element($window).bind('orientationchange', function() {
+                $scope.dataChartBarrs();
 
             });
 
@@ -84,6 +85,7 @@ angular.module('app.editarVoladuraMapa', [])
                 ]
 
                 $scope.ctx = document.getElementById("mapaBarrenos");
+                $scope.ctx.height = 700;
 
                 $scope.mapaBarrenos = new Chart($scope.ctx, {
                     type: 'bubble',
@@ -190,7 +192,7 @@ angular.module('app.editarVoladuraMapa', [])
                     },
 
                     optionsa: {
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         title: {
                             display: true,
                             text: 'Mapa de Barrenos'
@@ -282,6 +284,11 @@ angular.module('app.editarVoladuraMapa', [])
                 // $scope.hide();
                 console.log("datachartbarrs ended " + $scope.dataChart)
             }
+            screen.orientation.onchange = function() {
+
+                // $scope.dataChartBarrs();
+                console.log(screen.orientation.type);
+            };
             $scope.sync = function() {
                 $scope.show();
                 localprojDB.sync(remoteprojDB).on('complete', function() {
@@ -611,7 +618,7 @@ angular.module('app.editarVoladuraMapa', [])
             };
 
             $scope.canvasMap.onclick = function(evt) {
-                $scope.showPopup();
+                //$scope.showPopup();
                 $scope.searchedbarr = {};
 
                 var activePoint = $scope.mapaBarrenos.getElementAtEvent(evt)[0];
