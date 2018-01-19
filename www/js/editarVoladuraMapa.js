@@ -664,7 +664,13 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.espaciamiento = obj.espaciamiento / 1;
                 $scope.subperf = obj.subperf / 1;
                 $scope.densidad = (+(obj.densidad / 1).toFixed(2));
-                $scope.diametro = (obj.diametro / 1) || $scope.diametro;
+                if ($scope.diametro >= 0) {
+                    $scope.diametro = obj.diametro
+
+                } else {
+                    $scope.diametro = obj.diametro || $scope.diametro;
+                }
+
                 $scope.tipodecarga = obj.tipodecarga;
                 $scope.carga = obj.carga;
                 $scope.tipoExplo = obj.tipoexplo;
@@ -684,7 +690,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.carga_u = $scope.carga;
                 $scope.tacofinal = $scope.taco;
 
-                if ($scope.precorte = '') {
+                if ($scope.precorte == '') {
                     if ($scope.tipodecarga_u == 'Variable') {
 
                         if ($scope.tipoExplo == 'ce') {

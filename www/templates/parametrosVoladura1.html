@@ -48,7 +48,7 @@
                         <td>{{prod.id}}</td>
                         <td>{{prod.peso}}</td>
                         <td>{{prod.prof}}</td>
-                        <td ng-show="showEditTipo"><button ng-click="editTipo(prod,$index)" class="button button-positive button-full button-clear icon ion-edit"></button></td>
+                        <td ng-show="showEditTipo"><button ng-click="editTipo(prod,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-edit"></button></td>
                         <td ng-show="showEditTipo"><button ng-click="deleteTipo($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
                     </tr>
                 </table>
@@ -206,11 +206,15 @@
 
             <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle" ng-disabled="enableCreate==false"
                 ng-hide="editBarrenoStatus">Crear Tipo</button>
-            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos(); newBarreno.nam=''; tipoID='';editBarrenoStatus=false " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle "
-                ng-show="tipoID!=''&&editBarrenoStatus">Actualizar Tipo</button>
+            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos();" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle " ng-show="tipoID!=''&&editBarrenoStatus">Actualizar Tipo</button>
+
+            <button id="parametrosVoladura1-button55" ng-click="gotovistaDeProj()" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-cancel " ng-show="tipoID!=''&&editBarrenoStatus">Cancelar</button>
 
             <button id="parametrosVoladura1-button56 " ng-click="gotoPage() " id="parametrosVoladura1-button60 " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-left ion-android-locate ">Captar Barrenos</button>
+
         </div>
+        tipoid {{tipoID}} editbarrenostatus {{editBarrenoStatus}}
+        <div ng-show="projID==''">tipoid {{tipoID}} editbarrenostatus {{editBarrenoStatus}}</div>
         <!--div id="parametrosVoladura1-markdown11 " class="show-list-numbers-and-dots ">
       <p style="color:#000000; ">{{newTipoBars.nam}} {{newTipoBars.carga}} tipolocal {{TipoLocal}} tipolocalload {{TipoLocalLoad}} new BArreno {{$scope.newBarreno}}</p>
     </div-->
