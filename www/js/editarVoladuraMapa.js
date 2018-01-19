@@ -3,7 +3,7 @@ angular.module('app.editarVoladuraMapa', [])
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup) {
-
+            $scope.$root.showMenuIcon = true;
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...',

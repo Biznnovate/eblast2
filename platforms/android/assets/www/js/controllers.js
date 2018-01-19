@@ -39,6 +39,8 @@ angular.module('app.controllers', [])
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
         // Show loader from service
+
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -1006,6 +1008,7 @@ angular.module('app.controllers', [])
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, $filter, $window, $timeout, $ionicLoading, Uploadcsv, CsvParser, pouchDB, ngCsvImport) {
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -1605,6 +1608,7 @@ angular.module('app.controllers', [])
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, $window, $timeout, $ionicLoading, $filter, pouchDB) {
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -2502,6 +2506,7 @@ angular.module('app.controllers', [])
         //option.name for option in data.availableOptions track by option.id
 
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3485,6 +3490,7 @@ angular.module('app.controllers', [])
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page) {
 
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -7349,6 +7355,7 @@ angular.module('app.controllers', [])
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
             // Show loader from service
+            $scope.$root.showMenuIcon = true;
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...',

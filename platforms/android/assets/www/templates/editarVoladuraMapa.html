@@ -1,12 +1,19 @@
-<ion-view id="page12">
+<ion-view id="page12" hide-back-button="true">
+
     <ion-nav-title>
         Proyecto: {{projNam}} Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}
     </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
     <ion-nav-buttons side="right">
         <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
                                
                                 </button>
+
     </ion-nav-buttons>
+
     <ion-content class="has-header">
 
         <div class="row responsive-sm">
