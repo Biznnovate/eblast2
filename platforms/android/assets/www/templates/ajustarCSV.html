@@ -30,7 +30,15 @@
 
 
         <div class="row">
-            <p>Cantidad Total de Barrenos: {{columns.length}}</p>
+            <div class="col">
+                <p>Cantidad Total de Barrenos: {{columns.length}}</p>
+            </div>
+            <div class="col">
+                <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle10" ng-true-value="'Si'" ng-false-value="'No'" ng-model="diamQ" ng-change="changeDiamQ(diamQ)">Incluye Diametro? <strong>{{diamQ}}</strong></ion-toggle>
+
+            </div>
+
+
         </div>
 
         <button id="editarVoladuraMapa-button32" ng-click="viewPreview=false" ng-show="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Vista Previa CSV</button>

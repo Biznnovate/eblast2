@@ -57,6 +57,11 @@ angular.module('app.routes', [])
 
     .state('menu', {
         url: '/side-menu21',
+        params: {
+            id: "",
+            status: "",
+            proj: ""
+        },
         templateUrl: 'templates/menu.html',
         controller: 'menuCtrl'
     })
