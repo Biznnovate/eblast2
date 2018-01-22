@@ -439,7 +439,12 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.profDis = +(obj.prof).toFixed(2)
                 $scope.profreal = +(obj.prof).toFixed(2);
                 $scope.profreal_u = +($scope.profreal).toFixed(2);
-                $scope.diametro = obj.diam;
+                if (obj.diam > 0) {
+                    $scope.diametro = obj.diam;
+                } else {
+                    $scope.diametro = $scope.diametro;
+                }
+                //$scope.diametro = obj.diam;
                 $scope.diametro_u = $scope.diametro;
                 $scope.coordx = obj.coordx / 1;
                 $scope.coordy = obj.coordy / 1;
@@ -664,7 +669,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.espaciamiento = obj.espaciamiento / 1;
                 $scope.subperf = obj.subperf / 1;
                 $scope.densidad = (+(obj.densidad / 1).toFixed(2));
-                if ($scope.diametro >= 0) {
+                if ($scope.diametro > 0) {
                     $scope.diametro = obj.diametro
 
                 } else {
