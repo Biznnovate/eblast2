@@ -124,7 +124,7 @@ angular.module('app.editarVoladuraMapa', [])
                                 radius: function(context) {
                                     var value = context.dataset.data[context.dataIndex];
                                     var size = context.chart.width;
-                                    var base = 0.3;
+                                    var base = 0.4;
                                     return (size / 24) * base;
                                 }
                             }
@@ -435,10 +435,15 @@ angular.module('app.editarVoladuraMapa', [])
                     //alert($scope.selectedBarreno.doc)
                     // $scope.selectedbarr_id = obj.id;
                 $scope.selectedbarr = obj;
-
+                //$scope.profreal = 0
                 $scope.profDis = +(obj.prof).toFixed(2)
+                if ($scope.profreal == obj.prof) {
+                    $scope.profreal = $scope.profreal
+                } else {
+                    $scope.profreal = obj.prof;
+                }
                 $scope.profreal = +(obj.prof).toFixed(2);
-                $scope.profreal_u = +($scope.profreal).toFixed(2);
+                $scope.profreal_u = $scope.profreal;
                 if (obj.diam > 0) {
                     $scope.diametro = obj.diam;
                 } else {
@@ -1892,6 +1897,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.$applyAsync();
                 $scope.dataChartBarrs();
                 $scope.profName = 'Diseño'
+                $scope.profreal = 0
                 $scope.showProfDis = false;
 
 
