@@ -133,13 +133,25 @@ angular.module('app.controllers', [])
                     console.log("I'm Batman.");
                     return remoteprojDB.getSession();
                 });
+                let localprodsDB = new pouchDB('prods');
+                let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
+                remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                    console.log("I'm Batman.");
+                    return remoteprodsDB.getSession();
 
+                })
                 localprojDB.sync(remoteprojDB).on('complete', function() {
                     //  yay, we're in sync!
                     console.log('pretty sync')
                 }).on('error', function(err) {
                     // boo, we hit an error!
                     console.log(err)
+                });
+                localprodsDB.sync(remoteprodsDB).on('complete', function() {
+                    // yay, we're in sync!
+
+                }).on('error', function(err) {
+                    // boo, we hit an error!
                 });
 
                 localprojDB.allDocs({
