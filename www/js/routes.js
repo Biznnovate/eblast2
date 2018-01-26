@@ -340,6 +340,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.editProds', {
+            url: '/page27',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/editProds.html',
+                    controller: 'editProdsCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 
