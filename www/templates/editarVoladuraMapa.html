@@ -34,17 +34,17 @@
                                                     </label>
 
                 <form id="editarVoladuraMapa-form11" class="list">
-                    <label class="item item-input" id="editarVoladuraMapa-input25" ng-show="showProfDis">
+                    <label class="item item-input" id="editarVoladuraMapa-input25">
                                                                   <span class="input-label">Prof. Diseño (mts) </span>
-                                                                  <input type="number" placeholder="" style="text-align: center;"  ng-model="profDis" ng-disabled="showProfDis"  ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
+                                                                  <input type="number" on-tap="showProfDis=true"placeholder="" style="text-align: center;"  ng-model="profDis" ng-disabled="showProfDis"  ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                                                           </label>
 
 
 
 
-                    <label class="item item-input" id="editarVoladuraMapa-input25">
-                                                  <span class="input-label">Prof. {{$parent.profName}} (mts)</span>
-                                                  <input type="number" placeholder="" style="text-align: center;" ng-model="$parent.profreal" ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
+                    <label class="item item-input" id="editarVoladuraMapa-input25" ng-show="showProfDis">
+                                                  <span class="input-label">Prof. Real (mts)</span>
+                                                  <input type="number" placeholder="" style="text-align: center;" ng-model="$parent.profreal"  ng-change="updateProfReal(profreal)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.1">
                                                 </label>
 
 

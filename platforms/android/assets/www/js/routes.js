@@ -354,6 +354,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.adminCrearTipos', {
+            url: '/page28',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminCrearTipos.html',
+                    controller: 'adminCrearTiposCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 
