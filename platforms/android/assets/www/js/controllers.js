@@ -140,6 +140,13 @@ angular.module('app.controllers', [])
                     return remoteprodsDB.getSession();
 
                 })
+                let localAdminDB = new pouchDB('admin');
+                let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
+                remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                    console.log("I'm Batman.");
+                    return remoteAdminDB.getSession();
+                });
+
                 localprojDB.sync(remoteprojDB).on('complete', function() {
                     //  yay, we're in sync!
                     console.log('pretty sync')
@@ -153,6 +160,12 @@ angular.module('app.controllers', [])
                 }).on('error', function(err) {
                     // boo, we hit an error!
                 });
+                localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                    // yay, we're in sync!
+                }).on('error', function(err) {
+                    // boo, we hit an error!
+                });
+
 
                 localprojDB.allDocs({
                     include_docs: true,

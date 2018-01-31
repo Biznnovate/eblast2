@@ -54,8 +54,39 @@
                 </table>
             </form>
         </div>
+        <div ng-if="globalTipos.length!=0">
+            <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle101" ng-true-value="'show'" ng-false-value="" ng-model="$parent.showGlobalTiposVal" ng-change="showGlobalTiposFunc(showGlobalTiposVal)">Tipos Globales ( {{countglobalTipos}} )</ion-toggle>
+        </div>
+
+        <form ng-show="showGlobalTiposForm==true">
 
 
+
+            <!--button ng-click="showglobalTiposTable=true" ng-model="countglobalTipos" ng-click="loadglobalTipos()" ng-hide="showglobalTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Tipos Globales Creados ( {{countglobalTipos}} ) </button>
+            <button ng-click="showglobalTiposTable=false" ng-show="showglobalTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Ocultar Tipos Globales</button-->
+            <form id="parametrosVoladura1-vertipobarrenos" ng-show="showGlobalTiposForm==true">
+                <ion-scroll>
+                    <table class="table table-bordered table-hover table-condensed">
+                        <tr>
+                            <th><strong>Tipo de Barreno</strong></th>
+                            <th><strong>Peso Total de Explosivo</strong></th>
+                            <th><strong>Largo Total</strong></th>
+
+                        </tr>
+                        <tr ng-repeat="prod in globalTipos track by $index" on-drag-left="showEditglobalTipo=false" on-double-tap="showEditglobalTipo=true">
+
+                            <td>{{prod.id}}</td>
+                            <td>{{prod.peso}}</td>
+                            <td>{{prod.prof}}</td>
+                            <td ng-show="showEditglobalTipo"><button ng-click="editglobalTipo(prod,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-ios-copy"></button></td>
+
+                        </tr>
+                    </table>
+                </ion-scroll>
+            </form>
+        </form>
 
         <!--button id="parametrosVoladura1-button26" ng-click="barrForm=true" style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-add-circle"></button-->
 

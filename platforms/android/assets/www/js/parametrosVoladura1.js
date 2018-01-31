@@ -41,6 +41,14 @@ angular.module('app.parametrosVoladura1', [])
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
+
+            let localAdminDB = new pouchDB('admin');
+            let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
+            remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteAdminDB.getSession();
+            });
+
             //Declara y Sincroniza base de datos de Tipo
 
             $scope.sync = function() {
@@ -50,7 +58,11 @@ angular.module('app.parametrosVoladura1', [])
                 }).on('error', function(err) {
                     // boo, we hit an error!
                 });
-
+                localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                    // yay, we're in sync!
+                }).on('error', function(err) {
+                    // boo, we hit an error!
+                });
                 $scope.hide();
             }
 
@@ -65,6 +77,27 @@ angular.module('app.parametrosVoladura1', [])
             }).catch(function(err) {
                 console.log(err);
             });
+            //llama datos de DB de tipos globales
+            $scope.loadglobalTipos = function() {
+                $scope.show();
+
+                var id = 'tipos'
+
+                localAdminDB.get(id).then(function(doc) {
+                    $scope.globalTipos = doc.tipos || [];
+
+                    //var rows = $scope.projTipos;
+                    console.log('tipos globales: ' + $scope.globalTipos);
+                    // console.log('tiporows' + rows);
+                    $scope.countglobalTipos = doc.tipos.length;
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
+
+
+                $scope.hide();
+            }
 
             var UpdatenewBarreno = function() {
                 $scope.newBarreno = { 'nam': barrparam }
@@ -102,6 +135,7 @@ angular.module('app.parametrosVoladura1', [])
                 $scope.hide();
             }
             $scope.loadprojTipos();
+            $scope.loadglobalTipos();
             //UpdatenewBarreno();
             //$scope.newBarreno = {'nam': barrparam};
             console.log($scope.newBarreno);
@@ -380,6 +414,68 @@ angular.module('app.parametrosVoladura1', [])
                 $scope.tipoID = obj.id;
                 $scope.tipoBarrNam = obj.id;
                 $scope.editBarrenoStatus = true;
+                $scope.barrForm = true;
+                $scope.showMainform = true;
+                $scope.showBarrForm();
+                var tipo = obj.id;
+                console.log('Tipo seleccionado para editar: ' + obj.id + ' tipoID ' + $scope.tipoID + ' index ' + idx)
+
+                $scope.tipoEditando = obj
+
+                $scope.selectedTipo_u = $scope.tipoEditando;
+                $scope.profcarga = $scope.tipoEditando.prof;
+                $scope.peso = $scope.tipoEditando.peso;
+                $scope.tacoini = $scope.tipoEditando.tacoini;
+                $scope.taco = $scope.tipoEditando.taco;
+                $scope.aire = $scope.tipoEditando.aire;
+                $scope.bordo = $scope.tipoEditando.bordo;
+                $scope.espaciamiento = $scope.tipoEditando.espaciamiento;
+                $scope.subperf = $scope.tipoEditando.subperf;
+                $scope.densidad = $scope.tipoEditando.densidad;
+                $scope.diametro = $scope.tipoEditando.diametro;
+                $scope.tipodecarga = $scope.tipoEditando.tipodecarga;
+                $scope.carga = $scope.tipoEditando.carga;
+                $scope.prods = $scope.tipoEditando.carga;
+                $scope.tipoExplo = $scope.tipoEditando.tipoExplo;
+                $scope.precorte = $scope.tipoEditando.precorte;
+
+                $scope.profcarga_u = $scope.profcarga;
+                $scope.peso_u = $scope.peso;
+                $scope.taco_u = $scope.taco;
+                $scope.tacoini_u = $scope.tacoini;
+                $scope.aire_u = $scope.aire;
+                $scope.bordo_u = $scope.bordo;
+                $scope.espaciamiento_u = $scope.espaciamiento;
+                $scope.subperf_u = $scope.subperf;
+                $scope.densidad_u = $scope.densidad;
+                $scope.diametro_u = $scope.diametro;
+                $scope.tipodecarga_u = $scope.tipodecarga;
+                $scope.carga_u = $scope.carga;
+                $scope.tacofinal = $scope.taco;
+                $scope.hide();
+            }
+
+            //muestra tipos globales
+            $scope.showGlobalTiposForm = false;
+            $scope.showGlobalTiposFunc = function(val) {
+                    if (val == 'show') {
+                        $scope.showGlobalTiposForm = true;
+                    } else {
+                        $scope.showGlobalTiposForm = false;
+                    }
+                    console.log('globaltipos show ' + $scope.showGlobalTiposForm)
+                }
+                //edita tipos globales
+
+            $scope.editglobalTipo = function(obj, idx) {
+                $scope.show();
+
+                $scope.tipoEditando = {};
+                $scope.newBarreno.nam = obj.id;
+                $scope.tipoIndex = idx;
+                $scope.tipoID = obj.id;
+                $scope.tipoBarrNam = obj.id;
+                $scope.editBarrenoStatus = false;
                 $scope.barrForm = true;
                 $scope.showMainform = true;
                 $scope.showBarrForm();
