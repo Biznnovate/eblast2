@@ -19,7 +19,16 @@ angular.module('app.editProds', [])
                 });
             };
 
-
+            $scope.tiposProd = [
+                { id: "cg", tipo: "Componentes / Emulsión a granel" },
+                { id: "ce", tipo: "Emulsión Empacada" },
+                { id: "ini", tipo: "Booster (Iniciador)" },
+                { id: "dd", tipo: "Detonadores Duales" },
+                { id: "li", tipo: "Líneas de inicio" },
+                { id: "cd", tipo: "Cordón detonante" },
+                { id: "de", tipo: "Detonadores eléctricos y electrónicos" },
+                { id: "ot", tipo: "Otros" },
+            ]
 
             //Load BD de de Proyectos y sus caracteristicas
 
@@ -96,7 +105,40 @@ angular.module('app.editProds', [])
                 console.log('subieron los productos')
 
             }
+            $scope.removeProd = function(index) {
+                $scope.users.splice(index, 1);
+            };
 
+            // add user
+            $scope.addProd = function() {
+                $scope.inserted = {
+                    id: $scope.prod_list.length + 1,
+                    tipoid: null,
+                    tipo: null,
+                    prod: "",
+                    "peso": 0,
+                    "densidad": 0,
+                    "diametro": 0,
+                    "largo": 0
+                };
+                $scope.prod_list.push($scope.inserted);
+            };
+
+
+            $scope.showTipo = function(obj) {
+                var selected = [];
+                if (obj.tipo) {
+                    selected = $filter('filter')($scope.tiposProd, { value: obj.tipo });
+                }
+                return selected.length ? selected[0].tipo : 'Not set';
+            };
+            $scope.showTipoID = function(obj) {
+                var selected = [];
+                if (obj.tipo) {
+                    selected = $filter('filter')($scope.tiposProd, { value: obj.tipo });
+                }
+                return selected.length ? selected[0].id : 'Not set';
+            };
 
         }
     ])

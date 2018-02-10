@@ -124,7 +124,7 @@ angular.module('app.editarVoladuraMapa', [])
                                 radius: function(context) {
                                     var value = context.dataset.data[context.dataIndex];
                                     var size = context.chart.width;
-                                    var base = 0.4;
+                                    var base = 0.3;
                                     return (size / 24) * base;
                                 }
                             }
