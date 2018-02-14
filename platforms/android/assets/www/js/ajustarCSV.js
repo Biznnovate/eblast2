@@ -357,7 +357,7 @@ angular.module('app.ajustarCSV', [])
             }
             $scope.selectProfu = function(obj) {
                 $scope.show();
-
+                $scope.continueOpt = false;
                 console.log(obj + ' valor ' + obj.val);
 
                 $scope.columnsIndex = [];
@@ -569,8 +569,9 @@ angular.module('app.ajustarCSV', [])
                 $scope.diametro_u = obj.id;
                 $scope.showDiamunit = 'yes';
             };
-
+            $scope.continueOpt = true;
             $scope.selectUnitProf = function(obj) {
+
                 console.log(obj)
                 console.log($scope.unitprof)
                 $scope.unitprof_u = obj.val;
@@ -620,6 +621,7 @@ angular.module('app.ajustarCSV', [])
                 });
                 $scope.showDiam = 'yes';
                 $scope.disP = true;
+
             };
 
             $scope.selectUnitDia = function(obj) {
