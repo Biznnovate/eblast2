@@ -14,8 +14,9 @@
         <form id="generarReporteProductos-form13" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
             <div class="btn-edit">
                 <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
-              Editar
+             
             </button>
+                <button style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-android-add-circle" ng-click="addProd()"></button>
                 <div class="btn-group">
                     <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                     <ul class="dropdown-menu " role="menu">
@@ -28,6 +29,35 @@
                     </ul>
                 </div>
             </div>
+
+            <div ng-show="showNewProdForm">
+                <strong>Nuevo</strong>
+                <table>
+
+                    <tr style="font-weight: bold">
+                        <td style="width:40%">Producto</td>
+                        <td style="width:30%">Tipo de Producto</td>
+                        <td style="width:30%"></td>
+
+
+
+                    </tr>
+                    <tr ng-repeat="prod in newProdList">
+                        <td> <label class="item item-input" id="editarVoladuraMapa-inputdiametro">
+                                <span class="input-label"></span>
+                                <input type="text" placeholder="nombre" ng-model="prod.prod" ng-change="updateNewProdName(prod.prod)">
+                                </label>
+                        </td>
+                        <td>
+                            <select ng-options="tipo as tipo.tipo for tipo in tiposProd" ng-model="prodtipo" ng-change="updateTipoProd(prodtipo)"></select>
+                        </td>
+                        <td><button ng-click="saveProd(prod,$index);prodID=prod.id" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+            {{prod_list.length}}
             <div id="productTable" print-section>
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
@@ -43,136 +73,112 @@
                             <strong>Componentes / Emulsión a granel</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='cg' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='cg' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
-
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd(prod)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Emulsión Empacada</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='ce' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='ce' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Booster (Iniciador)</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='ini' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipoid='ini' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Detonadores Duales</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Detonadores Duales' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Detonadores Duales' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Conectores de Superficie</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Conectores de Superficie'">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Conectores de Superficie' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Líneas de inicio</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Líneas de inicio' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Líneas de inicio' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Cordón detonante</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Cordón detonante' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Cordón detonante' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Detonadores eléctricos y electrónicos</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Detonadores eléctricos y electrónicos' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Detonadores eléctricos y electrónicos' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td style="width:100%">
                             <strong>Otros</strong>
                         </td>
                     </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Otros' ">
+                    <tr ng-repeat="prod in prod_list | filter:prod.tipo='Otros' track by $index">
                         <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                        <td> <span editable-number="prod.densidad">{{prod.densidad}}</span></td>
-                        <td> <span editable-number="prod.peso">{{prod.peso}}</span></td>
-
-                        <td> <span editable-number="prod.largo">{{prod.largo}}</span></td>
+                        <td> <span editable-number="prod.densidad" e-step="any">{{prod.densidad}}</span></td>
+                        <td> <span editable-number="prod.peso" e-step="any">{{prod.peso}}</span></td>
+                        <td> <span editable-number="prod.largo" e-step="any">{{prod.largo}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
-                    <tr style="font-weight: bold">
-                        <td style="width:100%">
-                            <strong>Nuevo</strong>
-                        </td>
-                    </tr>
-                    <tr style="font-weight: bold">
-                        <td style="width:15%">ID</td>
-                        <td style="width:30%">Tipo de Producto</td>
-                        <td style="width:15%">TipoID</td>
-                        <td style="width:15%">Producto</td>
 
-
-
-                    </tr>
-                    <tr ng-repeat="prod in prod_list | filter:prod.tipo=null">
-                        <td> <span>{{prod.id}}</span></td>
-                        <td> <span editable-select="prod.tipo" e-name="tipo" e-form="rowform" e-ng-options="s.value as s.tipo for s in tiposProd">{{$showTipo(prod)}}</td>
-                        <td> <span editable-text="prod.tipoid">{{$showTipoID(prod)}}</span></td>
-
-                        <td> <span editable-text="prod.prod">{{prod.prod}}</span></td>
-                    </tr>
                 </table>
-                <button class="btn btn-default" ng-click="addProd()">Nuevo</button>
+
             </div>
             <!-- buttons -->
 

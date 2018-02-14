@@ -19,7 +19,16 @@ angular.module('app.editProds', [])
                 });
             };
 
-
+            $scope.tiposProd = [
+                { id: "cg", tipo: "Componentes / Emulsión a granel" },
+                { id: "ce", tipo: "Emulsión Empacada" },
+                { id: "ini", tipo: "Booster (Iniciador)" },
+                { id: "dd", tipo: "Detonadores Duales" },
+                { id: "li", tipo: "Líneas de inicio" },
+                { id: "cd", tipo: "Cordón detonante" },
+                { id: "de", tipo: "Detonadores eléctricos y electrónicos" },
+                { id: "ot", tipo: "Otros" },
+            ]
 
             //Load BD de de Proyectos y sus caracteristicas
 
@@ -96,7 +105,103 @@ angular.module('app.editProds', [])
                 console.log('subieron los productos')
 
             }
+            $scope.removeProd = function(prod) {
+                var index = -1;
 
+                $scope.prod_list.some(function(obj, i) {
+                    return obj.prod === prod.prod ? index = i : false;
+                });
+
+                console.log(index);
+                $scope.prod_list.splice(index, 1);
+
+            };
+
+            // add user
+            $scope.showNewProdForm = false;
+            $scope.addProd = function() {
+                $scope.newProdList = []
+                $scope.showNewProdForm = true;
+                $scope.inserted = {
+                    id: $scope.prod_list.length + 1,
+                    tipoid: null,
+                    tipo: null,
+                    prod: "",
+                    "peso": 0,
+                    "densidad": 0,
+                    "diametro": 0,
+                    "largo": 0
+                };
+                $scope.newProdList.push($scope.inserted);
+            };
+
+            $scope.showTipoID = function(obj) {
+                var selected = [];
+                if (obj.tipo) {
+                    selected = $filter('filter')($scope.tiposProd, { value: obj.tipo });
+                }
+                return selected.length ? selected[0].id : 'Not set';
+                alert(obj.tipo)
+            };
+            $scope.showTipo = function(obj) {
+                var selected = [];
+                if (obj.tipo) {
+                    selected = $filter('filter')($scope.tiposProd, { value: obj.tipo });
+                }
+                $scope.selectedTipo = selected;
+                return selected.length ? selected[0].tipo : 'Not set';
+
+
+
+            };
+            $scope.updateNewProdName = function(obj) {
+                $scope.newProdName = obj;
+                console.log("newprodname " + obj)
+            }
+            $scope.updateTipoProd = function(obj) {
+                $scope.newProdTipo = obj.tipo;
+                $scope.newProdTipoID = obj.id
+                console.log("tipo " + obj.tipo + " tipoid " + obj.id)
+            }
+            $scope.saveProd = function(prod, idx) {
+
+                var newProd = {
+
+                    "id": prod.id,
+                    "tipoid": $scope.newProdTipoID,
+                    "tipo": $scope.newProdTipo,
+                    "prod": prod.prod,
+                    "peso": 0,
+                    "densidad": 0,
+                    "diametro": 0,
+                    "largo": 0
+
+                }
+                console.log(prod)
+                console.log(newProd)
+                $scope.prod_list.push(newProd);
+                $scope.showNewProdForm = false;
+            }
+
+            $scope.updateProductos = function() {
+                $scope.show();
+                var id = "productos"
+                localprodsDB.get(id).then(function(doc) {
+                    return localprodsDB.put({
+                        _id: id,
+                        _rev: doc._rev,
+                        prods: $scope.prod_list,
+
+                    });
+                }).then(function(response) {
+                    // handle response
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                $scope.hide();
+            }
 
         }
+
     ])

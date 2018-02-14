@@ -469,7 +469,7 @@ angular.module('app.parametrosVoladura1', [])
 
             $scope.editglobalTipo = function(obj, idx) {
                 $scope.show();
-
+                $scope.enableCreate = false;
                 $scope.tipoEditando = {};
                 $scope.newBarreno.nam = obj.id;
                 $scope.tipoIndex = idx;
@@ -666,7 +666,7 @@ angular.module('app.parametrosVoladura1', [])
 
             $scope.updateTipoBarrenos = function() {
 
-                let tempDB = new pouchDB('temp');
+                // let tempDB = new pouchDB('temp');
 
                 var tipos = $scope.tipos;
                 var subperfo = $scope.subperf_u || $scope.subperf;
@@ -678,7 +678,8 @@ angular.module('app.parametrosVoladura1', [])
 
                 console.log('Actualizando Tipo ' + tipo)
 
-                $scope.removeChoice(tipo, $scope.projTipos, $scope.tipoIndex);
+                //$scope.removeChoice(tipo, $scope.projTipos, $scope.tipoIndex);
+                $scope.deleteTipo($scope.tipoIndex)
                 var newTipo = {
                     id: tipo,
                     carga: $scope.prods,

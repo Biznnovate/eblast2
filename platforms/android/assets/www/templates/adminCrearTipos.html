@@ -12,7 +12,7 @@
 
 
 
-        <button ng-click="showTiposTable=true" ng-model="countprojTipos" ng-click="loadprojTipos()" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        <button ng-click="showTiposTable=true" ng-model="countprojTiposGlob" ng-click="loadprojTiposGlob()" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Tipos Creados ( {{countTipos}} ) </button>
         <button ng-click="showTiposTable=false" ng-show="showTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Ocultar Tipos</button>
@@ -24,7 +24,7 @@
                     <th><strong>Largo Total</strong></th>
 
                 </tr>
-                <tr ng-repeat="prod in projTipos track by $index" on-drag-left="showEditTipo=false" on-double-tap="showEditTipo=true">
+                <tr ng-repeat="prod in projTiposGlob track by $index" on-drag-left="showEditTipo=false" on-double-tap="showEditTipo=true">
 
                     <td>{{prod.id}}</td>
                     <td>{{prod.peso}}</td>

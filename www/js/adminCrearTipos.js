@@ -32,7 +32,7 @@ angular.module('app.adminCrearTipos', [])
             $scope.enableCreate = true;
             $scope.projID = $scope.editBarreno.proj || '';
             $scope.tipoID = $scope.editBarreno.id || '';
-            $scope.projTipos = [];
+            $scope.projTiposGlob = [];
             let localAdminDB = new pouchDB('admin');
             let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
             remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
@@ -42,23 +42,23 @@ angular.module('app.adminCrearTipos', [])
             //Declara y Sincroniza base de datos de Tipo
 
             $scope.sync = function() {
-                $scope.show();
-                localAdminDB.sync(remoteAdminDB).on('complete', function() {
-                    // yay, we're in sync!
-                }).on('error', function(err) {
-                    // boo, we hit an error!
-                });
+                    $scope.show();
+                    localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                        // yay, we're in sync!
+                    }).on('error', function(err) {
+                        // boo, we hit an error!
+                    });
 
-                $scope.hide();
-            }
-            let tempDB = new pouchDB('temp');
-            let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
-                console.log("I'm Batman.");
-                return remoteprojDB.getSession();
-            });
-            //Declara y Sincroniza base de datos de Tipo
+                    $scope.hide();
+                }
+                // let tempDB = new pouchDB('temp');
+                // let localprojDB = new pouchDB('projects');
+                //  let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
+                // remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                //     console.log("I'm Batman.");
+                //     return remoteprojDB.getSession();
+                // });
+                //Declara y Sincroniza base de datos de Tipo
 
             $scope.sync1 = function() {
                 $scope.show();
@@ -72,16 +72,16 @@ angular.module('app.adminCrearTipos', [])
             }
 
             //llama datos de DB
-            localprojDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.projInfo = result;
+            // localprojDB.allDocs({
+            //    include_docs: true,
+            //    attachments: true
+            // }).then(function(result) {
+            // handle result
+            //   $scope.projInfo = result;
 
-            }).catch(function(err) {
-                console.log(err);
-            });
+            //}).catch(function(err) {
+            //   console.log(err);
+            // });
 
 
 
@@ -95,13 +95,13 @@ angular.module('app.adminCrearTipos', [])
                 var id = 'tipos'
 
                 localAdminDB.get(id).then(function(doc) {
-                    $scope.projTipos = doc.tipos || [];
+                    $scope.projTiposGlob = doc.tipos || [];
                     $scope.tipos = doc.tipos || [];
                     // $scope.projNam = doc.proj
 
                     console.log('projtiposthing' + doc.tipos)
                     var selectedID = $scope.tipoBarrNam;
-                    //var rows = $scope.projTipos;
+                    //var rows = $scope.projTiposGlob;
                     console.log('Selected ID: ' + selectedID);
                     // console.log('tiporows' + rows);
                     $scope.countTipos = doc.tipos.length;
@@ -240,15 +240,15 @@ angular.module('app.adminCrearTipos', [])
                 $scope.reloadButton = '';
                 var id = 'tipos';
                 localAdminDB.get(id).then(function(doc) {
-                    $scope.projTiposUpdate = doc.tipos;
+                    $scope.projTiposGlobUpdate = doc.tipos;
                     console.log('projtiposthing' + doc.tipos)
                     $scope.tipoBarrNam = $scope.tipoBarrNam_u || $scope.editBarreno.id;
                     var selectedID = $scope.tipoBarrNam;
-                    var rows = $scope.projTipos;
-                    for (var i = 0; i < $scope.projTipos.length; i++) {
-                        if ($scope.projTipos[i]._id == $scope.tipoBarrNam) {
-                            $scope.projTipos.splice(i, 1); // removes the matched element
-                            i = $scope.projTipos.length; // break out of the loop. Not strictly necessary
+                    var rows = $scope.projTiposGlob;
+                    for (var i = 0; i < $scope.projTiposGlob.length; i++) {
+                        if ($scope.projTiposGlob[i]._id == $scope.tipoBarrNam) {
+                            $scope.projTiposGlob.splice(i, 1); // removes the matched element
+                            i = $scope.projTiposGlob.length; // break out of the loop. Not strictly necessary
                         }
                     }
 
@@ -343,36 +343,36 @@ angular.module('app.adminCrearTipos', [])
                 $scope.subperf_u = obj;
             };
             $scope.selectProjFunc = function() {
-                if ($scope.projID != '') {
-                    var proj = $scope.projID;
-                    localprojDB.get(proj).then(function(doc) {
-                        $scope.selectedProj = doc;
-                        console.log(doc)
-                        $scope.tipos = doc.tipos;
-                        $scope.projTipos = doc.tipos;
-                        console.log(doc.tipos)
-                        console.log('se encontro el proyecto:' + proj)
-                    }).catch(function(err) {
-                        console.log(err);
-                    });
-                } else {
-                    $scope.selectedProj = ''
-                    console.log('no se ha seleccionado un proyecto')
-                };
-            }
-            $scope.selectProjFunc();
+                    if ($scope.projID != '') {
+                        var proj = $scope.projID;
+                        localprojDB.get(proj).then(function(doc) {
+                            $scope.selectedProj = doc;
+                            console.log(doc)
+                            $scope.tipos = doc.tipos;
+                            $scope.projTiposGlob = doc.tipos;
+                            console.log(doc.tipos)
+                            console.log('se encontro el proyecto:' + proj)
+                        }).catch(function(err) {
+                            console.log(err);
+                        });
+                    } else {
+                        $scope.selectedProj = ''
+                        console.log('no se ha seleccionado un proyecto')
+                    };
+                }
+                //$scope.selectProjFunc();
             $scope.selectProj = function(obj) {
                 console.log(obj)
                 $scope.selectedproj_u = obj;
                 $scope.projID = obj.doc._id;
                 $scope.loadprojTipos();
-                $scope.selectProjFunc();
+                // $scope.selectProjFunc();
 
 
             }
-            $scope.projTiposAmount = function() {
-                for (var i = 0; i < $scope.projTipos.length; i++) {
-                    var total = $scope.projTipos.length
+            $scope.projTiposGlobAmount = function() {
+                for (var i = 0; i < $scope.projTiposGlob.length; i++) {
+                    var total = $scope.projTiposGlob.length
                 }
                 return total;
             }
@@ -460,8 +460,8 @@ angular.module('app.adminCrearTipos', [])
                     tipoexplo: $scope.tipoExplo || '',
                     precorte: $scope.precorte || '',
                 };
-                $scope.projTipos.push(newTipo);
-                $scope.countTipos = $scope.projTipos.length;
+                $scope.projTiposGlob.push(newTipo);
+                $scope.countTipos = $scope.projTiposGlob.length;
                 console.log('hay ' + $scope.countTipos + ' Tipos para subir')
                 $scope.hide();
             }
@@ -494,8 +494,8 @@ angular.module('app.adminCrearTipos', [])
                     tipoexplo: $scope.tipoExplo || '',
                     precorte: $scope.precorte || '',
                 };
-                $scope.projTipos.push(newTipo);
-                $scope.countTipos = $scope.projTipos.length;
+                $scope.projTiposGlob.push(newTipo);
+                $scope.countTipos = $scope.projTiposGlob.length;
                 console.log('hay ' + $scope.countTipos + ' Tipos para subir')
                 console.log('se va a subir tipos a ' + id)
 
@@ -506,7 +506,7 @@ angular.module('app.adminCrearTipos', [])
                         _rev: doc._rev,
 
 
-                        tipos: $scope.projTipos,
+                        tipos: $scope.projTiposGlob,
 
                     }).catch(function(err) {
                         console.log(err);
@@ -520,7 +520,7 @@ angular.module('app.adminCrearTipos', [])
             $scope.deleteTipo = function(index) {
                 $scope.show();
                 var id = 'tipos';
-                $scope.projTipos.splice(index, 1);
+                $scope.projTiposGlob.splice(index, 1);
                 // $scope.removeChoice(obj.prod, prods);
                 // $scope.prods = prods;
                 console.log('Tipo deleted');
@@ -533,7 +533,7 @@ angular.module('app.adminCrearTipos', [])
                         _id: id,
                         _rev: doc._rev,
 
-                        tipos: $scope.projTipos,
+                        tipos: $scope.projTiposGlob,
 
 
 
@@ -584,11 +584,11 @@ angular.module('app.adminCrearTipos', [])
                 var tipo = $scope.tipoID || $scope.tipoBarrNam;
                 var id = 'tipos';
                 $scope.tiposUpdate = [];
-                $scope.projTiposUpdate = [];
+                $scope.projTiposGlobUpdate = [];
 
                 console.log('Actualizando Tipo ' + tipo)
 
-                $scope.removeChoice(tipo, $scope.projTipos, $scope.tipoIndex);
+                $scope.removeChoice(tipo, $scope.projTiposGlob, $scope.tipoIndex);
                 var newTipo = {
                     id: tipo,
                     carga: $scope.prods,
@@ -606,7 +606,7 @@ angular.module('app.adminCrearTipos', [])
                     tipoexplo: $scope.tipoExplo,
                     precorte: $scope.precorte,
                 }
-                $scope.projTipos.push(newTipo);
+                $scope.projTiposGlob.push(newTipo);
 
                 console.log('Actualizando Proyecto ' + id)
                 localAdminDB.get(id).then(function(doc) {
@@ -616,7 +616,7 @@ angular.module('app.adminCrearTipos', [])
                         proj: doc.proj,
                         date: doc.date,
                         barrenos: doc.barrenos,
-                        tipos: $scope.projTipos,
+                        tipos: $scope.projTiposGlob,
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
@@ -868,7 +868,7 @@ angular.module('app.adminCrearTipos', [])
                     diametro: $scope.diametro_u,
                     subperf: subperfo,
                 }
-                $scope.projTipos.push(newTipo);
+                $scope.projTiposGlob.push(newTipo);
                 tipolocalDB.put({
                     _id: $scope.newBarreno.nam,
                     carga: $scope.prods,
