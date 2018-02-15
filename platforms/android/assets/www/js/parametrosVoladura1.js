@@ -475,6 +475,7 @@ angular.module('app.parametrosVoladura1', [])
                 $scope.tipoIndex = idx;
                 $scope.tipoID = obj.id;
                 $scope.tipoBarrNam = obj.id;
+                $scope.tipoBarrNam_u = obj.id;
                 $scope.editBarrenoStatus = false;
                 $scope.barrForm = true;
                 $scope.showMainform = true;
@@ -498,7 +499,7 @@ angular.module('app.parametrosVoladura1', [])
                 $scope.tipodecarga = $scope.tipoEditando.tipodecarga;
                 $scope.carga = $scope.tipoEditando.carga;
                 $scope.prods = $scope.tipoEditando.carga;
-                $scope.tipoExplo = $scope.tipoEditando.tipoExplo;
+                $scope.tipoExplo = $scope.tipoEditando.tipoexplo;
                 $scope.precorte = $scope.tipoEditando.precorte;
 
                 $scope.profcarga_u = $scope.profcarga;
