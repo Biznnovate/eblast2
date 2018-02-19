@@ -131,5 +131,11 @@ angular.module('app.admincons', [])
             $scope.gotoMapa = function() {
                 $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
             }
+            $scope.gotoExplo = function() {
+                $state.go('menu.adminExplo', { 'proj': $scope.projID });
+            }
+            $scope.gotoCamion = function() {
+                $state.go('menu.adminCamion', { 'proj': $scope.projID });
+            }
         }
     ])

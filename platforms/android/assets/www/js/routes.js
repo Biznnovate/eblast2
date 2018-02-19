@@ -368,6 +368,34 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.adminExplo', {
+            url: '/page29',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminExplo.html',
+                    controller: 'adminExploCtrl'
+                }
+            }
+        })
+        .state('menu.adminCamion', {
+            url: '/page30',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminCamion.html',
+                    controller: 'adminCamionCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 

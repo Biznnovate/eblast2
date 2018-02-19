@@ -42,11 +42,13 @@ angular.module('app.editarVoladuraMapa', [])
             }).then('complete', function() {
 
             })
+            $scope.radioSize = 50;
+
             $scope.dataChartBarrs = function(obj) {
                 //$scope.show();
                 console.log("datachartbarrs started")
                 var barrenosforchart = $scope.Barrenos;
-                var radio = obj || 5;
+                var radio = obj || 50;
                 $scope.dataChart = [];
                 // $scope.dataChart1 = [];
                 $scope.labelChart = [];
@@ -124,7 +126,7 @@ angular.module('app.editarVoladuraMapa', [])
                                 radius: function(context) {
                                     var value = context.dataset.data[context.dataIndex];
                                     var size = context.chart.width;
-                                    var base = 0.3;
+                                    var base = radio / 100;
                                     return (size / 24) * base;
                                 }
                             }
@@ -284,6 +286,29 @@ angular.module('app.editarVoladuraMapa', [])
                 // $scope.hide();
                 console.log("datachartbarrs ended " + $scope.dataChart)
             }
+            $scope.$watch('radioSize', function() {
+
+
+                console.log('Has changed');
+
+                if (timeoutId !== null) {
+                    console.log('Ignoring this movement');
+                    return;
+                }
+
+                console.log('Not going to ignore this one');
+                timeoutId = $timeout(function() {
+
+                    console.log('It changed recently!');
+
+                    $timeout.cancel(timeoutId);
+                    timeoutId = null;
+
+                    // Now load data from server 
+                }, 1000);
+                $scope.datachartBarrs();
+
+            });
             screen.orientation.onchange = function() {
 
                 // $scope.dataChartBarrs();

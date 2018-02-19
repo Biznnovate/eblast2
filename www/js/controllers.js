@@ -6647,7 +6647,7 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', 'Excel', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('generarReporteDatosGeneralesCtrl1', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', 'Excel', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, pouchDB, $timeout, Excel) {
@@ -6683,6 +6683,36 @@ angular.module('app.controllers', [])
             console.log(err);
         });
 
+        let localAdminDB = new pouchDB('admin');
+        let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
+        remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            console.log("I'm Batman.");
+            return remoteAdminDB.getSession();
+        });
+        $scope.loadprojExplo = function() {
+            $scope.show();
+
+            var id = 'explo'
+
+            localAdminDB.get(id).then(function(doc) {
+
+                $scope.explo = doc.explo || [];
+
+
+                console.log('projtiposthing' + doc.explo)
+
+
+                $scope.countExplos = doc.explo.length;
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+            $scope.hide();
+        }
+
+        $scope.loadprojExplo();
         $scope.projID = $scope.projparam.proj || '';
         $scope.BarrenosUpdated = [];
         $scope.BarrenosUpdatedCalcs = [];

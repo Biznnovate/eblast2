@@ -15,7 +15,7 @@
     </ion-nav-buttons>
 
     <ion-content class="has-header">
-
+        {{radioSize}}
         <div class="row responsive-sm">
             <div class="col col-66">
                 <ion-scroll direction="xy" zooming="true" has-bouncing="true" overflow-scroll="false">
@@ -74,6 +74,11 @@
                 </div>
 
                 <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+                <div class="item range">
+                    <i class="icon ion-ios-minus"></i>
+                    <input type="range" name="radio" ng-model="radioSize" ng-change="dataChartBarrs(radioSize)">
+                    <i class="icon ion-ios-plus"></i>
+                </div>
 
                 <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
                 <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
