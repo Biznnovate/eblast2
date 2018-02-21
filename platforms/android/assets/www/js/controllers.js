@@ -337,7 +337,7 @@ angular.module('app.controllers', [])
             $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
         }
         $scope.gotoSismo = function() {
-            $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
+            $state.go('menu.subirSismo', { 'proj': $scope.projID });
         }
         $scope.gotoDataGral = function() {
             $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
@@ -7542,7 +7542,7 @@ angular.module('app.controllers', [])
                 $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
             }
             $scope.gotoSismo = function() {
-                $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
+                $state.go('menu.subirSismo', { 'proj': $scope.projID });
             }
             $scope.gotoDataGral = function() {
                 $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });

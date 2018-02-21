@@ -396,6 +396,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.subirSismo', {
+            url: '/page31',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/subirSismo.html',
+                    controller: 'subirSismoCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 
