@@ -1,0 +1,94 @@
+<ion-view title="Editar Camiones" id="page30" hide-back-button="true">
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                               
+                                                </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+        <form id="generarReporteProductos-form13" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+            <div class="btn-edit">
+                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+             
+            </button>
+                <button style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-android-add-circle" ng-click="addProd()"></button>
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                    <ul class="dropdown-menu " role="menu">
+                        <li><button class="btn btn-link" ng-click="exportToExcel('#camionTable')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+
+                        <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                        <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                        <li><button class="btn btn-link" onClick="$('#camionTable').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+
+                    </ul>
+                </div>
+            </div>
+
+            <div ng-show="showNewProdForm">
+                <strong>Nuevo</strong>
+                <table>
+
+                    <tr style="font-weight: bold">
+                        <td style="width:40%">Camión</td>
+                        <td style="width:30%">Placa</td>
+                        <td style="width:30%"></td>
+
+
+
+                    </tr>
+                    <tr ng-repeat="camion in newcamion">
+                        <td> <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                                <span class="input-label"></span>
+                                <input type="text" placeholder="camion" ng-model="newcamion.name" ng-change="updateNewcamionName(newcamion.name)">
+                                </label>
+                        </td>
+                        <td>
+                            <label class="item item-input" id="editarVoladuraMapa-inputlicencia">
+                                <span class="input-label"></span>
+                                <input type="text" placeholder="placa" ng-model="newcamion.lic" ng-change="updateNewcamionLic(newcamion.lic)">
+                                </label>
+                        </td>
+                        <td><button ng-click="saveProd(newcamion,$index)" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+
+            <div id="camionTable" print-section>
+                <table class="table table-bordered table-hover table-condensed">
+                    <tr style="font-weight: bold">
+                        <td>Camión</td>
+                        <td>Placa</td>
+
+                    </tr>
+
+                    <tr ng-repeat="camion in camion track by $index">
+                        <td> <span editable-text="camion.name">{{camion.name}}</span></td>
+                        <td> <span editable-text="camion.lic">{{camion.lic}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <!-- buttons -->
+
+            <div class="btn-form" ng-show="tableform.$visible">
+                <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+                <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+            </div>
+
+        </form>
+
+
+        <button id="subirProyecto-button35" ng-click="updateProductos()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar</button>
+
+    </ion-content>
+</ion-view>

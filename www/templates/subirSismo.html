@@ -1,0 +1,59 @@
+<ion-view title="Subir Reporte de Sismógrafo" id="page31" hide-back-button="true">
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                                   
+                                                    </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+        <table class="table table-bordered table-hover table-condensed">
+            <tr>
+                <td>Archivo PDF único</td>
+                <td>
+
+                    <div class="button" ngf-select ng-model="file" ngf-multiple="false">Seleccione</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Multiples PDF
+                </td>
+                <td>
+
+                    <div class="button" ngf-select="upload($files)" ngf-multiple="true">Seleccione</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Drop PDF único:
+                </td>
+                <td>
+                    <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf" ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>
+                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                </td>
+            </tr>
+            <tr>
+                <td>Archivos a Subir</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+                    </ul>
+                </td>
+            </tr>
+
+
+            Progreso:
+            <pre>{{log}}</pre>
+            </div>
+        </table>
+        {{files}}
+        <button id="subirProyecto-button36" ng-click="createSis()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
+        <button id="subirProyecto-button35" ng-click="" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Volver a Menu</button>
+
+    </ion-content>
+</ion-view>
