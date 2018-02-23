@@ -461,19 +461,35 @@ angular.module('app.editarVoladuraMapa', [])
                     // $scope.selectedbarr_id = obj.id;
                 $scope.selectedbarr = obj;
                 //$scope.profreal = 0
-                $scope.profDis = +(obj.prof).toFixed(2)
-                if ($scope.profreal == obj.prof) {
-                    $scope.profreal = $scope.profreal
+                if (obj.status == "Pending") {
+                    console.log("barreno por trabajar ")
+                    $scope.profDis = +(obj.prof).toFixed(2)
+                    if ($scope.profreal == obj.prof) {
+                        $scope.profreal = $scope.profreal
+                    } else {
+                        $scope.profreal = obj.prof;
+                    }
+                    $scope.profreal = +(obj.prof).toFixed(2);
+                    $scope.profreal_u = $scope.profreal;
+                    if (obj.diam > 0) {
+                        $scope.diametro = obj.diam;
+                    } else {
+                        $scope.diametro = $scope.diametro;
+                    }
+
                 } else {
-                    $scope.profreal = obj.prof;
+                    console.log("barreno trabajado ")
+                    $scope.profDis = +(obj.prof).toFixed(2)
+
+                    $scope.profreal = +(obj.profreal).toFixed(2);
+                    $scope.profreal_u = $scope.profreal;
+                    if (obj.diam > 0) {
+                        $scope.diametro = obj.diametro;
+                    } else {
+                        $scope.diametro = $scope.diametro;
+                    }
                 }
-                $scope.profreal = +(obj.prof).toFixed(2);
-                $scope.profreal_u = $scope.profreal;
-                if (obj.diam > 0) {
-                    $scope.diametro = obj.diam;
-                } else {
-                    $scope.diametro = $scope.diametro;
-                }
+
                 //$scope.diametro = obj.diam;
                 $scope.diametro_u = $scope.diametro;
                 $scope.coordx = obj.coordx / 1;
@@ -607,12 +623,16 @@ angular.module('app.editarVoladuraMapa', [])
                     return item.name === criteria.name;
                 };
             };
+            $scope.selectedTipo_u = '';
             $scope.selectedMapDataFunc = function(obj) {
                 console.log('Selected Map Object ' + obj);
                 var prop = 'barr';
                 var value = obj;
-                var i = $scope.findIndexBarr(obj);
 
+                var i = $scope.findIndexBarr(obj);
+                if ($scope.selectedTipo_u == '') {
+                    alert('Seleccione un tipo de barreno')
+                }
 
                 //var result = $filter('filter')($scope.Barrenos, { barr: value })[0];
                 //var result = $scope.findBarr(value);
