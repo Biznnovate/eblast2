@@ -356,10 +356,10 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('vistaDeReporteCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('vistaDeReporteCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, Excel, $timeout) {
+        function($scope, $stateParams, $state, pouchDB, Excel, $timeout, $ionicLoading) {
             //llama bd de data
             $scope.projparam = {
                 'id': $stateParams.id,
@@ -761,10 +761,10 @@ angular.module('app.controllers', [])
 
         }
     ])
-    .controller('reporteCarga1Ctrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('reporteCarga1Ctrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, Excel, $timeout) {
+        function($scope, $stateParams, $state, pouchDB, Excel, $timeout, $ionicLoading) {
             //llama bd de data
             $scope.projparam = {
                 'id': $stateParams.id,
