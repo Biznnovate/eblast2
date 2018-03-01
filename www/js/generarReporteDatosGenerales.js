@@ -593,6 +593,7 @@ angular.module('app.generarReporteDatosGenerales', [])
                     }
                 });
             }
+
             $scope.exportToExcel = function(tableId, name) { // ex: '#my-table'
                 var data = tableId;
 
