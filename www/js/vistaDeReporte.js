@@ -388,7 +388,7 @@ angular.module('app.vistaDeReporte', [])
             };
 
             $scope.export = function() {
-                html2canvas(document.getElementById('barrenos'), {
+                html2canvas(document.getElementById('barrenostab'), {
                     onrendered: function(canvas) {
                         var data = canvas.toDataURL();
                         var docDefinition = {
@@ -401,6 +401,16 @@ angular.module('app.vistaDeReporte', [])
                     }
                 });
             }
+            $scope.exportData = function() {
+                alasql('SELECT * INTO XLSX("reporte.xlsx",{headers:true}) \ FROM HTML("#barrenostab",{headers:true})');
+                //alasql('SELECT * INTO XLSX("reporte.xlsx",{headers:false}) FROM ?', [$scope.Barrenos]);
+            };
+            $scope.exportDatatoCSV = function(obj) {
+                var barrenostab = obj;
+                var wb = XLSX.utils.table_to_book(document.getElementById('barrenostab'));
+                XLSX.writeFile(wb, "export.xlsx");
+                console.log("finishfunct")
+            };
 
         }
     ])

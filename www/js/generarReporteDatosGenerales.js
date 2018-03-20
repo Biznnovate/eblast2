@@ -594,6 +594,10 @@ angular.module('app.generarReporteDatosGenerales', [])
                 });
             }
 
+            $scope.exportData = function() {
+                alasql('SELECT * INTO XLSX("datosgrales.xlsx",{headers:true}) \ FROM HTML("#portada",{headers:true})');
+                //alasql('SELECT * INTO XLSX("reporte.xlsx",{headers:true}) FROM ?', [$scope.Barrenos]);
+            };
             $scope.exportToExcel = function(tableId, name) { // ex: '#my-table'
                 var data = tableId;
 

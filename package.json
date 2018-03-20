@@ -6,6 +6,7 @@
         "@ionic-native/core": "^4.2.0",
         "@ionic-native/file-transfer": "^4.5.3",
         "@ionic-native/screen-orientation": "^4.5.2",
+        "alasql": "^0.4.5",
         "angular-chart.js": "^1.1.1",
         "angular-save-html-to-pdf": "^1.3.2",
         "angular-ui-grid": "^4.0.6",
@@ -43,7 +44,7 @@
         "pdfmake": "^0.1.32",
         "pouchdb-find": "^6.2.0",
         "tableexport": "^4.0.11",
-        "xlsx": "^0.11.6"
+        "xlsx": "^0.11.19"
     },
     "devDependencies": {
         "bower": "^1.3.3",

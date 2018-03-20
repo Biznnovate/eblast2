@@ -76,22 +76,52 @@ angular.module('app.directives', [])
 
 .directive("importSheetJs", [SheetJSImportDirective])
 var SheetJSImportDirective = function() {
-    return {
-        scope: {},
-        link: function($scope, $elm, $attrs) {
-            $elm.on('change', function(changeEvent) {
-                var reader = new FileReader();
+        return {
+            scope: {},
+            link: function($scope, $elm, $attrs) {
+                $elm.on('change', function(changeEvent) {
+                    var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    /* read workbook */
-                    var bstr = e.target.result;
-                    var workbook = XLSX.read(bstr, { type: 'binary' });
+                    reader.onload = function(e) {
+                        /* read workbook */
+                        var bstr = e.target.result;
+                        var workbook = XLSX.read(bstr, { type: 'binary' });
 
-                    /* DO SOMETHING WITH workbook HERE */
-                };
+                        /* DO SOMETHING WITH workbook HERE */
+                    };
 
-                reader.readAsBinaryString(changeEvent.target.files[0]);
-            });
+                    reader.readAsBinaryString(changeEvent.target.files[0]);
+                });
+            }
+        };
+    }
+    .directive('exportToCsv', function() {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                var el = element[0];
+                element.bind('click', function(e) {
+                    var table = e.target.nextElementSibling;
+                    var csvString = '';
+                    for (var i = 0; i < table.rows.length; i++) {
+                        var rowData = table.rows[i].cells;
+                        for (var j = 0; j < rowData.length; j++) {
+                            csvString = csvString + rowData[j].innerHTML + ",";
+                        }
+                        csvString = csvString.substring(0, csvString.length - 1);
+                        csvString = csvString + "\n";
+                    }
+                    csvString = csvString.substring(0, csvString.length - 1);
+                    var a = $('<a/>', {
+                        style: 'display:none',
+                        href: 'data:application/octet-stream;base64,' + btoa(csvString),
+                        download: 'reporte.csv'
+                    }).appendTo('body')
+                    a[0].click()
+                    a.remove();
+                });
+            }
         }
-    };
-};
+    })
+    .factory('SheetJSExportService', SheetJSExportService);
+SheetJSExportService.inject = ['uiGridExporterService'];
