@@ -87,7 +87,7 @@
                 <div class="col">
                     <label class="item item-select" id="parametrosVoladura1-selectiniciadores">
         <span class="input-label">Iniciador</span>
-        <select ng-model="newIni" ng-options="producto as producto.prod for producto in listed_productos | filter:producto.tipoid='ini'"
+        <select ng-model="newIni" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid='ini'"
                 ng-change="getTipoIni(newIni)"></select>
       </label>
                     <label class="item item-input" id="editarVoladuraMapa-cantprod">
@@ -120,7 +120,7 @@
 
                         <label class="item item-select" id="parametrosVoladura1-select25" ng-show="showTipoprodbarrAct">
         <span class="input-label">{{tipoProd.tipo}}</span>
-        <select ng-model="newProd" ng-options="producto as producto.prod for producto in listed_productos | filter:producto.tipoid=tipoprodId"
+        <select ng-model="newProd" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid=tipoprodId"
                 ng-change="getTipoProd(newProd)"></select>
       </label>
 

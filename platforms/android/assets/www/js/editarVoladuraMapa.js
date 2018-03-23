@@ -42,6 +42,7 @@ angular.module('app.editarVoladuraMapa', [])
             }).then('complete', function() {
 
             })
+
             $scope.radioSize = 50;
 
             $scope.dataChartBarrs = function(obj) {
@@ -1858,7 +1859,7 @@ angular.module('app.editarVoladuraMapa', [])
             $scope.barrDetailstoggle = function() {
                 $scope.barrDetails = true;
             }
-
+            $scope.recentlyupdatedBarr = '';
             //agrega valores al barreno
             $scope.updateBarr = function() {
                 $scope.show();
@@ -1900,6 +1901,7 @@ angular.module('app.editarVoladuraMapa', [])
                     'iniciadores ': $scope.iniciadores,
                     'tacofinal ': $scope.tacofinal,
                 }
+                $scope.recentlyupdatedBarr = $scope.selectedbarr.barr;
                 $scope.Barrenos.push(newDataBarr);
                 console.log(newDataBarr)
                 localprojDB.get(id).then(function(doc) {
@@ -1934,7 +1936,7 @@ angular.module('app.editarVoladuraMapa', [])
 
 
 
-                $scope.message = "El Barreno fue Actualizado.";
+                $scope.message = "El Barreno " + $scope.recentlyupdatedBarr + " fue Actualizado.";
                 //$scope.showReloadButton = true;
                 console.log($scope.message);
                 // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });

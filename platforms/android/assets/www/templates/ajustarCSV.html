@@ -17,124 +17,183 @@
         </div>
         <label class="item item-input" id="subirProyecto-input5">
         <span class="input-label">Nombre del Proyecto</span>
-        <input type="text" placeholder="Proyecto 1" ng-model="projnam" ng-change="updateProjNam(projnam); continueOpt=false" >
+        <input type="text" placeholder="Proyecto 1" ng-model="projnam" ng-change="updateProjNam(projnam); continueOpt=false; showAll=true" >
       </label>
 
+        <div ng-show="showAll">
 
 
-        <div id="ajustarCSV-button-bar5" class="button-bar">
 
-            <button id="editarVoladuraMapa-button32" ng-click="corregir()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-left ion-android-arrow-dropleft-circle">Corregir</button>
+            <div id="ajustarCSV-button-bar5" class="button-bar">
 
-        </div>
-
-
-        <div class="row">
-            <div class="col">
-                <p>Cantidad Total de Barrenos: {{columns.length}}</p>
-            </div>
-            <div class="col">
-                <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle10" ng-true-value="'Si'" ng-false-value="'No'" ng-model="diamQ" ng-change="changeDiamQ(diamQ)">Incluye Diametro? <strong>{{diamQ}}</strong></ion-toggle>
+                <button id="editarVoladuraMapa-button32" ng-click="corregir()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-left ion-android-arrow-dropleft-circle">Corregir</button>
 
             </div>
 
 
-        </div>
-
-        <button id="editarVoladuraMapa-button32" ng-click="viewPreview=false" ng-show="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Vista Previa CSV</button>
-        <ion-list id="ajustarCSV-list11">
             <div class="row">
-                <div class="col">Columna 1</div>
-                <div class="col">Columna 2</div>
-                <div class="col">Columna 3</div>
-                <div class="col">Columna 4</div>
-                <div class="col">Columna 5</div>
-            </div>
-            <div class="row" ng-hide="viewPreview">
                 <div class="col">
-                    <label class="item item-select" id="ajustarCSV-select23">
+                    <p>Cantidad Total de Barrenos: {{columns.length}}</p>
+                </div>
+                <div class="col">
+                    <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle10" ng-true-value="'Si'" ng-false-value="'No'" ng-model="diamQ" ng-change="changeDiamQ(diamQ)">Incluye Diametro? <strong>{{diamQ}}</strong></ion-toggle>
+
+                </div>
+
+
+            </div>
+
+            <button id="editarVoladuraMapa-button32" ng-click="viewPreview=false" ng-show="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Vista Previa CSV</button>
+            <ion-scroll zooming="true" direction="xy" style="width: auto; height: 500px">
+                <ion-list id="ajustarCSV-list11">
+                    <div class="row">
+                        <div class="col">Col. 1</div>
+                        <div class="col">Col. 2</div>
+                        <div class="col">Col. 3</div>
+                        <div class="col">Col. 4</div>
+                        <div class="col">Col. 5</div>
+                        <div class="col">Col. 6</div>
+                        <div class="col">Col. 7</div>
+                        <div class="col">Col. 8</div>
+                        <div class="col">Col. 9</div>
+                        <div class="col">Col. 10</div>
+
+
+                    </div>
+                    <div class="row" ng-hide="viewPreview">
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
                                 <span class="input-label"></span>
                                 <select ng-options="nam as nam.nam for nam in column_nam_list" 
                                 ng-model="selcol1" 
                                 ng-change="selectCol1(selcol1)"></select>
                               </label>
-                </div>
-                <div class="col">
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
                                         <span class="input-label"></span>
                                         <select ng-options="nam as nam.nam for nam in column_nam_list" 
                                         ng-model="selcol2" 
                                         ng-change="selectCol2(selcol2)"></select>
                                       </label>
-                </div>
-                <div class="col">
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
                                                 <span class="input-label"></span>
                                                 <select ng-options="nam as nam.nam for nam in column_nam_list" 
                                                 ng-model="selcol3" 
                                                 ng-change="selectCol3(selcol3)"></select>
                                               </label>
-                </div>
-                <div class="col">
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
                                                         <span class="input-label"></span>
                                                         <select ng-options="nam as nam.nam for nam in column_nam_list" 
                                                         ng-model="selcol4" 
                                                         ng-change="selectCol4(selcol4)"></select>
                                                       </label>
-                </div>
-                <div class="col">
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
                                                                 <span class="input-label"></span>
                                                                 <select ng-options="nam as nam.nam for nam in column_nam_list" 
                                                                 ng-model="selcol5" 
                                                                 ng-change="selectCol5(selcol5)"></select>
                                                               </label>
-                </div>
-            </div>
-            <div class="row" ng-show="viewPreview">
-                <div class="col">
-                    <span class="input-label">Medida Profundidad</span>
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
+                                                                <span class="input-label"></span>
+                                                                <select ng-options="nam as nam.nam for nam in column_nam_list" 
+                                                                ng-model="selcol6" 
+                                                                ng-change="selectColAll(selcol6)"></select>
+                                                              </label>
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
+                                                                <span class="input-label"></span>
+                                                                <select ng-options="nam as nam.nam for nam in column_nam_list" 
+                                                                ng-model="selcol7" 
+                                                                ng-change="selectCol7(selcol7)"></select>
+                                                              </label>
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
+                                                                <span class="input-label"></span>
+                                                                <select ng-options="nam as nam.nam for nam in column_nam_list" 
+                                                                ng-model="selcol8" 
+                                                                ng-change="selectCol8(selcol8)"></select>
+                                                              </label>
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
+                                                                <span class="input-label"></span>
+                                                                <select ng-options="nam as nam.nam for nam in column_nam_list" 
+                                                                ng-model="selcol9" 
+                                                                ng-change="selectCol9(selcol9)"></select>
+                                                              </label>
+                        </div>
+                        <div class="col">
+                            <label class="item item-select" id="ajustarCSV-select23">
+                                                                <span class="input-label"></span>
+                                                                <select ng-options="nam as nam.nam for nam in column_nam_list" 
+                                                                ng-model="selcol10" 
+                                                                ng-change="selectCol10(selcol10)"></select>
+                                                              </label>
+                        </div>
+
+                    </div>
+                    <div class="row" ng-show="viewPreview">
+                        <div class="col">
+                            <span class="input-label">Medida Profundidad</span>
+                            <label class="item item-select" id="ajustarCSV-select23">
                             
                             <select ng-options="nam as nam.nam for nam in unitTableProf" 
                             ng-model="unitprof" 
-                            ng-change="selectProfu(unitprof)"></select>
+                            ng-change="continueOpt = false; selectProfu(unitprof)"></select>
                           </label>
-                </div>
-                <div class="col">
-                    <span class="input-label">Medida Diametro</span>
-                    <label class="item item-select" id="ajustarCSV-select23">
+                        </div>
+                        <div class="col">
+                            <span class="input-label">Medida Diametro</span>
+                            <label class="item item-select" id="ajustarCSV-select23">
                             
                 <select ng-options="nam as nam.nam for nam in unitTableDia" 
-                ng-model="unitdiam" ng-disabled="disP" ng-change="selectDiame(unitdiam)"></select>
+                ng-model="unitdiam" ng-disabled="disP" ng-change="continueOpt=false; selectDiame(unitdiam)"></select>
                     </label>
-                </div>
-            </div>
-            <ion-item class="assertive" id="ajustarCSV-list-item18" ng-model="columns" ng-hide="viewPreview" ng-repeat="barreno in projInfo.status | limitTo:5">
-                <div class="row">
+                        </div>
+                    </div>
+                    <ion-item class="assertive" id="ajustarCSV-list-item18" ng-model="columns" ng-hide="viewPreview" ng-repeat="barreno in projInfo.status | limitTo:5">
+                        <div class="row">
 
-                    <div class="col">{{barreno.Col1}}</div>
-                    <div class="col">{{barreno.Col2}}</div>
-                    <div class="col">{{barreno.Col3}}</div>
-                    <div class="col">{{barreno.Col4}}</div>
-                    <div class="col">{{barreno.Col5}}</div>
-                </div>
-            </ion-item>
+                            <div class="col">{{barreno.Col1}}</div>
+                            <div class="col">{{barreno.Col2}}</div>
+                            <div class="col">{{barreno.Col3}}</div>
+                            <div class="col">{{barreno.Col4}}</div>
+                            <div class="col">{{barreno.Col5}}</div>
+                            <div class="col">{{barreno.Col6}}</div>
+                            <div class="col">{{barreno.Col7}}</div>
+                            <div class="col">{{barreno.Col8}}</div>
+                            <div class="col">{{barreno.Col9}}</div>
+                            <div class="col">{{barreno.Col10}}</div>
+                        </div>
+                    </ion-item>
 
-            <ion-item class="assertive" id="ajustarCSV-list-item18" ng-show="viewPreview" ng-repeat="barreno in columns | limitTo:5">
-                <div class="row">
+                    <ion-item class="assertive" id="ajustarCSV-list-item18" ng-show="viewPreview" ng-repeat="barreno in columns | limitTo:5">
+                        <div class="row">
 
-                    <div class="col">{{barreno.barr}}</div>
-                    <div class="col">{{barreno.coordx}}</div>
-                    <div class="col">{{barreno.coordy}}</div>
-                    <div class="col">{{barreno.prof}}</div>
-                    <div class="col">{{barreno.diam}}</div>
-                </div>
-            </ion-item>
-        </ion-list>
-        <button id="editarVoladuraMapa-button32" ng-click="viewPreview=true; showConfirm=true" ng-hide="confirmContinue" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Ingresar Medidas</button>
-        <button id="editarVoladuraMapa-button33" ng-click="confirmData(); confirmContinue=true" ng-show="showConfirm" ng-hide="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar Datos</button>
-        <button id="editarVoladuraMapa-button33" ng-click="insertBarrenosProj()" ng-show="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
+                            <div class="col">{{barreno.barr}}</div>
+                            <div class="col">{{barreno.coordx}}</div>
+                            <div class="col">{{barreno.coordy}}</div>
+                            <div class="col">{{barreno.prof}}</div>
+                            <div class="col">{{barreno.diam}}</div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-scroll>
+            <button id="editarVoladuraMapa-button32" ng-click="viewPreview=true; showConfirm=true" ng-hide="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Ingresar Medidas</button>
+            <button id="editarVoladuraMapa-button33" ng-disabled="continueOpt" ng-click="confirmData(); confirmContinue=true" ng-show="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar Datos</button>
+            <button id="editarVoladuraMapa-button33" ng-click="insertBarrenosProj()" ng-show="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
+        </div>
+
     </ion-content>
 </ion-view>

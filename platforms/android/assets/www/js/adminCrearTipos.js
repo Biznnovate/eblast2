@@ -40,7 +40,27 @@ angular.module('app.adminCrearTipos', [])
                 return remoteAdminDB.getSession();
             });
             //Declara y Sincroniza base de datos de Tipo
+            let localprodsDB = new pouchDB('prods');
+            let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
+            remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprodsDB.getSession();
 
+            })
+
+
+            var prodid = 'productos'
+            localprodsDB.get('productos').then(function(doc) {
+                $scope.prod_listDB = doc;
+                //$scope.prod_listDB2 = doc;
+                console.log(doc)
+
+
+                console.log('bajaron los procutos')
+
+            }).catch(function(err) {
+                console.log(err);
+            });
             $scope.sync = function() {
                     $scope.show();
                     localAdminDB.sync(remoteAdminDB).on('complete', function() {

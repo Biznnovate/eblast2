@@ -329,7 +329,162 @@ angular.module('app.ajustarCSV', [])
                 }
                 $scope.hide();
             }
+            $scope.selectCol6 = function(obj, conv) {
+                $scope.show();
+                console.log(obj);
+                $scope.showSelectProf = false;
+                $scope.showSelectDiam = false;
+                $scope.columnsIndex = [];
+                var conversion = conv || 1;
+                var arrayObj = $scope.columns;
+                if (obj.id == 'barr') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].barr = arrayObj[i]['Col6'];
+                        delete arrayObj[i].Col6;
+                    }
 
+                } else if (obj.id == 'coordx') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordx = arrayObj[i]['Col6'];
+                        delete arrayObj[i].Col6;
+                    }
+                } else if (obj.id == 'coordy') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordy = arrayObj[i]['Col6'];
+                        delete arrayObj[i].Col6;
+                    }
+                } else if (obj.id == 'prof') {
+                    $scope.showSelectProf = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].prof = arrayObj[i]['Col6'];
+                        delete arrayObj[i].Col6;
+                    }
+                } else if (obj.id == 'diam') {
+                    $scope.showSelectDiam = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].diam = arrayObj[i]['Col6'];
+                        delete arrayObj[i].Col6;
+                    }
+                }
+                $scope.hide();
+            }
+            $scope.selectCol7 = function(obj, conv) {
+                $scope.show();
+                console.log(obj);
+                $scope.showSelectProf = false;
+                $scope.showSelectDiam = false;
+                $scope.columnsIndex = [];
+                var conversion = conv || 1;
+                var arrayObj = $scope.columns;
+                if (obj.id == 'barr') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].barr = arrayObj[i]['Col7'];
+                        delete arrayObj[i].Col7;
+                    }
+
+                } else if (obj.id == 'coordx') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordx = arrayObj[i]['Col7'];
+                        delete arrayObj[i].Col7;
+                    }
+                } else if (obj.id == 'coordy') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordy = arrayObj[i]['Col7'];
+                        delete arrayObj[i].Col7;
+                    }
+                } else if (obj.id == 'prof') {
+                    $scope.showSelectProf = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].prof = arrayObj[i]['Col7'];
+                        delete arrayObj[i].Col7;
+                    }
+                } else if (obj.id == 'diam') {
+                    $scope.showSelectDiam = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].diam = arrayObj[i]['Col7'];
+                        delete arrayObj[i].Col7;
+                    }
+                }
+                $scope.hide();
+            }
+            $scope.selectCol8 = function(obj, conv) {
+                $scope.show();
+                console.log(obj);
+                $scope.showSelectProf = false;
+                $scope.showSelectDiam = false;
+                $scope.columnsIndex = [];
+                var conversion = conv || 1;
+                var arrayObj = $scope.columns;
+                if (obj.id == 'barr') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].barr = arrayObj[i]['Col8'];
+                        delete arrayObj[i].Col8;
+                    }
+
+                } else if (obj.id == 'coordx') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordx = arrayObj[i]['Col8'];
+                        delete arrayObj[i].Col8;
+                    }
+                } else if (obj.id == 'coordy') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordy = arrayObj[i]['Col8'];
+                        delete arrayObj[i].Col8;
+                    }
+                } else if (obj.id == 'prof') {
+                    $scope.showSelectProf = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].prof = arrayObj[i]['Col8'];
+                        delete arrayObj[i].Col8;
+                    }
+                } else if (obj.id == 'diam') {
+                    $scope.showSelectDiam = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].diam = arrayObj[i]['Col8'];
+                        delete arrayObj[i].Col8;
+                    }
+                }
+                $scope.hide();
+            }
+            $scope.selectCol9 = function(obj, conv) {
+                $scope.show();
+                console.log(obj);
+                $scope.showSelectProf = false;
+                $scope.showSelectDiam = false;
+                $scope.columnsIndex = [];
+                var conversion = conv || 1;
+                var arrayObj = $scope.columns;
+                if (obj.id == 'barr') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].barr = arrayObj[i]['Col9'];
+                        delete arrayObj[i].Col9;
+                    }
+
+                } else if (obj.id == 'coordx') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordx = arrayObj[i]['Col9'];
+                        delete arrayObj[i].Col9;
+                    }
+                } else if (obj.id == 'coordy') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordy = arrayObj[i]['Col9'];
+                        delete arrayObj[i].Col9;
+                    }
+                } else if (obj.id == 'prof') {
+                    $scope.showSelectProf = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].prof = arrayObj[i]['Col9'];
+                        delete arrayObj[i].Col9;
+                    }
+                } else if (obj.id == 'diam') {
+                    $scope.showSelectDiam = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].diam = arrayObj[i]['Col9'];
+                        delete arrayObj[i].Col9;
+                    }
+                }
+                $scope.hide();
+            }
             $scope.selectProfu1 = function(obj) {
                 $scope.show();
                 console.log(obj + ' valor ' + obj.val);
@@ -355,9 +510,48 @@ angular.module('app.ajustarCSV', [])
                 $scope.showSelectProf = false;
                 $scope.hide();
             }
+            $scope.selectCol10 = function(obj, conv) {
+                $scope.show();
+                console.log(obj);
+                $scope.showSelectProf = false;
+                $scope.showSelectDiam = false;
+                $scope.columnsIndex = [];
+                var conversion = conv || 1;
+                var arrayObj = $scope.columns;
+                if (obj.id == 'barr') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].barr = arrayObj[i]['Col10'];
+                        delete arrayObj[i].Col10;
+                    }
+
+                } else if (obj.id == 'coordx') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordx = arrayObj[i]['Col10'];
+                        delete arrayObj[i].Col10;
+                    }
+                } else if (obj.id == 'coordy') {
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].coordy = arrayObj[i]['Col10'];
+                        delete arrayObj[i].Col10;
+                    }
+                } else if (obj.id == 'prof') {
+                    $scope.showSelectProf = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].prof = arrayObj[i]['Col10'];
+                        delete arrayObj[i].Col10;
+                    }
+                } else if (obj.id == 'diam') {
+                    $scope.showSelectDiam = true;
+                    for (i = 0; i < arrayObj.length; i++) {
+                        arrayObj[i].diam = arrayObj[i]['Col10'];
+                        delete arrayObj[i].Col10;
+                    }
+                }
+                $scope.hide();
+            }
             $scope.selectProfu = function(obj) {
                 $scope.show();
-                $scope.continueOpt = false;
+                //  $scope.continueOpt = false;
                 console.log(obj + ' valor ' + obj.val);
 
                 $scope.columnsIndex = [];
@@ -378,6 +572,7 @@ angular.module('app.ajustarCSV', [])
 
                 $scope.columns = $scope.columnsTemp;
                 $scope.showSelectProf = false;
+
                 $scope.hide();
             }
             $scope.selectDiame = function(obj) {

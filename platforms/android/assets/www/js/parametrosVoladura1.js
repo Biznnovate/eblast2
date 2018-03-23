@@ -49,6 +49,31 @@ angular.module('app.parametrosVoladura1', [])
                 return remoteAdminDB.getSession();
             });
 
+            let localprodsDB = new pouchDB('prods');
+            let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
+            remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprodsDB.getSession();
+
+            })
+
+
+            var prodid = 'productos'
+            localprodsDB.get('productos').then(function(doc) {
+                $scope.prod_listDB = doc;
+                //$scope.prod_listDB2 = doc;
+                console.log(doc)
+
+
+                console.log('bajaron los procutos')
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+
+
             //Declara y Sincroniza base de datos de Tipo
 
             $scope.sync = function() {
@@ -140,6 +165,7 @@ angular.module('app.parametrosVoladura1', [])
             //$scope.newBarreno = {'nam': barrparam};
             console.log($scope.newBarreno);
             $scope.listed_productos = Productos.list;
+            //$scope.listed_productosN = $scope.prod_listDB;
             $scope.prods = [];
             $scope.DisableSaveButton = true;
 
