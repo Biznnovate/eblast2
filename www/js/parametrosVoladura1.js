@@ -1,5 +1,6 @@
 angular.module('app.parametrosVoladura1', [])
-    .controller('parametrosVoladura1Ctrl', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('parametrosVoladura1Ctrl', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo',
+        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $state, Productos, $filter, $window, $timeout, $ionicLoading, pouchDB, $routeParams, passInfo) {
@@ -36,22 +37,22 @@ angular.module('app.parametrosVoladura1', [])
 
             let tempDB = new pouchDB('temp');
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
 
             let localAdminDB = new pouchDB('admin');
-            let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
-            remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+            remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteAdminDB.getSession();
             });
 
             let localprodsDB = new pouchDB('prods');
-            let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
-            remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprodsDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-products', { skipSetup: true });
+            remoteprodsDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprodsDB.getSession();
 
@@ -156,13 +157,24 @@ angular.module('app.parametrosVoladura1', [])
                     console.log('no proj selected')
                     $scope.projTipos = [];
                 }
-
+                //$scope.projTiposCountFunc();
                 $scope.hide();
             }
             $scope.loadprojTipos();
             $scope.loadglobalTipos();
-            //UpdatenewBarreno();
-            //$scope.newBarreno = {'nam': barrparam};
+
+            $scope.projTiposCountFunc = function() {
+                    var total = 0;
+                    for (var i = 0; i < $scope.projTipos.length; i++) {
+                        total = $scope.projTipos.length;
+                        $scope.projTiposCount = total;
+                        console.log("projtipos count " + $scope.projTiposCount)
+
+                    }
+                    return total;
+                }
+                //UpdatenewBarreno();
+                //$scope.newBarreno = {'nam': barrparam};
             console.log($scope.newBarreno);
             $scope.listed_productos = Productos.list;
             //$scope.listed_productosN = $scope.prod_listDB;
@@ -572,9 +584,11 @@ angular.module('app.parametrosVoladura1', [])
                 };
                 $scope.projTipos.push(newTipo);
                 $scope.countTipos = $scope.projTipos.length;
+                $scope.projTiposCountFunc();
                 console.log('hay ' + $scope.countTipos + ' Tipos para subir')
                 $scope.hide();
             }
+
             $scope.insertTipoBarrenos = function() {
                 $scope.show();
                 var id = $scope.projID;
@@ -611,6 +625,7 @@ angular.module('app.parametrosVoladura1', [])
 
                 localprojDB.get(id).then(function(doc) {
 
+
                     return localprojDB.put({
                         _id: id,
                         _rev: doc._rev,
@@ -625,9 +640,14 @@ angular.module('app.parametrosVoladura1', [])
                         console.log(err);
                     });
                 });
+
+                $scope.projTiposCountFunc();
+                $scope.countTipos = $scope.projTipos.length;
+                // $scope.loadprojTipos();
                 $scope.hide();
                 $scope.showMainform = false;
                 $scope.enableCreate = true;
+
 
             }
             $scope.deleteTipo = function(index) {

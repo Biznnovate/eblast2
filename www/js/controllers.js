@@ -6,8 +6,8 @@ angular.module('app.controllers', [])
     function($scope, $stateParams, pouchDB) {
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -68,8 +68,8 @@ angular.module('app.controllers', [])
         //Declara y Sincroniza base de datos de Tipo
 
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -128,21 +128,21 @@ angular.module('app.controllers', [])
         $scope.syncFunc = function() {
                 $scope.show();
                 let localprojDB = new pouchDB('projects');
-                let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-                remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+                remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                     console.log("I'm Batman.");
                     return remoteprojDB.getSession();
                 });
                 let localprodsDB = new pouchDB('prods');
-                let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
-                remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                let remoteprodsDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-products', { skipSetup: true });
+                remoteprodsDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                     console.log("I'm Batman.");
                     return remoteprodsDB.getSession();
 
                 })
                 let localAdminDB = new pouchDB('admin');
-                let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
-                remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+                remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                     console.log("I'm Batman.");
                     return remoteAdminDB.getSession();
                 });
@@ -369,8 +369,8 @@ angular.module('app.controllers', [])
 
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
@@ -774,8 +774,8 @@ angular.module('app.controllers', [])
 
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
@@ -1063,8 +1063,8 @@ angular.module('app.controllers', [])
 
         //  $scope.show();
         let localDB = new pouchDB('barrenoscsv');
-        let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv', { skipSetup: true });
-        remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv', { skipSetup: true });
+        remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteDB.getSession();
         });
@@ -1072,22 +1072,22 @@ angular.module('app.controllers', [])
 
 
         let localDivCSV = new pouchDB('barrenoscsvdiv');
-        let remoteDivCSV = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsvdiv', { skipSetup: true });
-        remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteDivCSV = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsvdiv', { skipSetup: true });
+        remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteDivCSV.getSession();
         });
 
 
         let localDB2 = new pouchDB('barrenos');
-        let remoteDB2 = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenos', { skipSetup: true });
-        remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteDB2 = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenos', { skipSetup: true });
+        remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteDB2.getSession();
         });
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -1213,7 +1213,7 @@ angular.module('app.controllers', [])
         $scope.addCSV = function() {
             $scope.show();
             let localDB = new pouchDB('barrenoscsv');
-            // let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
+            // let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv');
 
             $scope.showcleanup = true;
             $scope.showupload = true;
@@ -1265,7 +1265,7 @@ angular.module('app.controllers', [])
         }
         $scope.addCSV1 = function() {
             let localDB = new pouchDB('barrenoscsv');
-            let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
+            let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv');
 
             $scope.showcleanup = true;
             $scope.showupload = true;
@@ -1550,8 +1550,8 @@ angular.module('app.controllers', [])
             $scope.show();
 
             let localDB2 = new pouchDB('barrenos');
-            let remoteDB2 = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenos', { skipSetup: true });
-            remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteDB2 = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenos', { skipSetup: true });
+            remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteDB2.getSession();
             });
@@ -1669,8 +1669,8 @@ angular.module('app.controllers', [])
         //tipos de columna
 
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -2322,8 +2322,8 @@ angular.module('app.controllers', [])
         $scope.insertBarrenosProj = function() {
             $scope.show();
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
@@ -2408,8 +2408,8 @@ angular.module('app.controllers', [])
             }
             //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         }).then('complete', function() {
@@ -2561,8 +2561,8 @@ angular.module('app.controllers', [])
 
         let tempDB = new pouchDB('temp');
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -3546,8 +3546,8 @@ angular.module('app.controllers', [])
 
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         }).then('complete', function() {
@@ -5424,8 +5424,8 @@ angular.module('app.controllers', [])
 
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -5803,8 +5803,8 @@ angular.module('app.controllers', [])
 
 
             let localSDB = new PouchDB('sismografo');
-            let remoteSDB = new PouchDB('https://biznnovate.cloudant.com/eblast-sismografo', { skipSetup: true });
-            remoteSDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteSDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-sismografo', { skipSetup: true });
+            remoteSDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteDB.getSession();
             });
@@ -5819,8 +5819,8 @@ angular.module('app.controllers', [])
             //declara db de Explosivistas
 
             let localexpDB = new pouchDB('explo');
-            let remoteexpDB = new PouchDB('https://biznnovate.cloudant.com/eblast-explo', { skipSetup: true });
-            remoteexpDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteexpDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-explo', { skipSetup: true });
+            remoteexpDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteexpDB.getSession();
             });
@@ -6002,8 +6002,8 @@ angular.module('app.controllers', [])
 
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
@@ -6097,8 +6097,8 @@ angular.module('app.controllers', [])
     function($scope, $stateParams, $state, pouchDB, Excel, $timeout, $window) {
 
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -6142,8 +6142,8 @@ angular.module('app.controllers', [])
         var proj = $scope.projparam.proj;
 
         let localprodDB = new pouchDB('productos');
-        let remoteprodDB = new PouchDB('https://biznnovate.cloudant.com/eblast-prods', { skipSetup: true });
-        remoteprodDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprodDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-prods', { skipSetup: true });
+        remoteprodDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprodDB.getSession();
         });
@@ -6153,8 +6153,8 @@ angular.module('app.controllers', [])
             // boo, we hit an error!
         });
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -6494,8 +6494,8 @@ angular.module('app.controllers', [])
 
         $scope.createProductos = function() {
             let localprodDB = new pouchDB('productos');
-            let remoteprodDB = new PouchDB('https://biznnovate.cloudant.com/eblast-prods', { skipSetup: true });
-            remoteprodDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprodDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-prods', { skipSetup: true });
+            remoteprodDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprodDB.getSession();
             });
@@ -6578,8 +6578,8 @@ angular.module('app.controllers', [])
 
         $scope.updateProductos1 = function() {
             let localprodDB = new pouchDB('productos');
-            let remoteprodDB = new PouchDB('https://biznnovate.cloudant.com/eblast-prods', { skipSetup: true });
-            remoteprodDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprodDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-prods', { skipSetup: true });
+            remoteprodDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprodDB.getSession();
             });
@@ -6661,8 +6661,8 @@ angular.module('app.controllers', [])
 
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -6684,8 +6684,8 @@ angular.module('app.controllers', [])
         });
 
         let localAdminDB = new pouchDB('admin');
-        let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
-        remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+        remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteAdminDB.getSession();
         });
@@ -6885,8 +6885,8 @@ angular.module('app.controllers', [])
         //declara db de Explosivistas
 
         let localexpDB = new pouchDB('explo');
-        let remoteexpDB = new PouchDB('https://biznnovate.cloudant.com/eblast-explo', { skipSetup: true });
-        remoteexpDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteexpDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-explo', { skipSetup: true });
+        remoteexpDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteexpDB.getSession();
         });
@@ -7337,8 +7337,8 @@ angular.module('app.controllers', [])
 
         //Declara y Sincroniza base de datos de Tipo
         let localprojDB = new pouchDB('projects');
-        let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-        remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+        let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+        remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
             console.log("I'm Batman.");
             return remoteprojDB.getSession();
         });
@@ -7435,8 +7435,8 @@ angular.module('app.controllers', [])
             $scope.showAll = false;
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });

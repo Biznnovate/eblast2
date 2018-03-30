@@ -34,8 +34,8 @@ angular.module('app.subirProyecto', [])
 
             //  $scope.show();
             let localDB = new pouchDB('barrenoscsv');
-            let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv', { skipSetup: true });
-            remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv', { skipSetup: true });
+            remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteDB.getSession();
             });
@@ -43,22 +43,22 @@ angular.module('app.subirProyecto', [])
 
 
             let localDivCSV = new pouchDB('barrenoscsvdiv');
-            let remoteDivCSV = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsvdiv', { skipSetup: true });
-            remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteDivCSV = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsvdiv', { skipSetup: true });
+            remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteDivCSV.getSession();
             });
 
 
             let localDB2 = new pouchDB('barrenos');
-            let remoteDB2 = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenos', { skipSetup: true });
-            remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteDB2 = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenos', { skipSetup: true });
+            remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteDB2.getSession();
             });
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
@@ -184,7 +184,7 @@ angular.module('app.subirProyecto', [])
             $scope.addCSV = function() {
                 $scope.show();
                 let localDB = new pouchDB('barrenoscsv');
-                // let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
+                // let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv');
 
                 $scope.showcleanup = true;
                 $scope.showupload = true;
@@ -243,7 +243,7 @@ angular.module('app.subirProyecto', [])
             }
             $scope.addCSV1 = function() {
                 let localDB = new pouchDB('barrenoscsv');
-                let remoteDB = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenoscsv');
+                let remoteDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenoscsv');
 
                 $scope.showcleanup = true;
                 $scope.showupload = true;
@@ -530,8 +530,8 @@ angular.module('app.subirProyecto', [])
                 $scope.show();
 
                 let localDB2 = new pouchDB('barrenos');
-                let remoteDB2 = new PouchDB('https://biznnovate.cloudant.com/eblast-barrenos', { skipSetup: true });
-                remoteDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+                let remoteDB2 = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-barrenos', { skipSetup: true });
+                remoteDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                     console.log("I'm Batman.");
                     return remoteDB2.getSession();
                 });

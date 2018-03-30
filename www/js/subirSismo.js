@@ -33,8 +33,8 @@ angular.module('app.subirSismo', [])
             $scope.projID = $scope.projparam.id;
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
-            let remoteprojDB = new PouchDB('https://biznnovate.cloudant.com/eblast-proj', { skipSetup: true });
-            remoteprojDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             }).then('complete', function() {
@@ -45,8 +45,8 @@ angular.module('app.subirSismo', [])
 
 
             let localAdminDB = new pouchDB('admin');
-            let remoteAdminDB = new PouchDB('https://biznnovate.cloudant.com/eblast-admin', { skipSetup: true });
-            remoteAdminDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+            remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteAdminDB.getSession();
             });

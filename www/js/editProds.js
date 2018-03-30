@@ -43,8 +43,8 @@ angular.module('app.editProds', [])
 
 
             let localprodsDB = new pouchDB('prods');
-            let remoteprodsDB = new PouchDB('https://biznnovate.cloudant.com/eblast-products', { skipSetup: true });
-            remoteprodsDB.login('biznnovate', '5t24XN-Am@8dqF:R').then(function(batman) {
+            let remoteprodsDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-products', { skipSetup: true });
+            remoteprodsDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprodsDB.getSession();
 
