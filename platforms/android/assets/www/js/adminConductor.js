@@ -1,5 +1,5 @@
-angular.module('app.adminCamion', [])
-    .controller('adminCamionCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', 'Productos', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+angular.module('app.adminConductor', [])
+    .controller('adminConductorCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', 'Productos', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, Productos) {
@@ -51,21 +51,21 @@ angular.module('app.adminCamion', [])
 
                 $scope.hide();
             }
-            $scope.camion = [];
-            $scope.loadprojcamion = function() {
+            $scope.conductor = [];
+            $scope.loadprojconductor = function() {
                 $scope.show();
 
-                var id = 'camion'
+                var id = 'conductor'
 
                 localAdminDB.get(id).then(function(doc) {
 
-                    $scope.camion = doc.camion || [];
+                    $scope.conductor = doc.conductor || [];
 
 
-                    console.log('projtiposthing' + doc.camion)
+                    console.log('projtiposthing' + doc.conductor)
 
 
-                    $scope.countcamions = doc.camion.length;
+                    $scope.countconductors = doc.conductor.length;
 
                 }).catch(function(err) {
                     console.log(err);
@@ -75,7 +75,7 @@ angular.module('app.adminCamion', [])
                 $scope.hide();
             }
 
-            $scope.loadprojcamion();
+            $scope.loadprojconductor();
 
 
 
@@ -106,26 +106,26 @@ angular.module('app.adminCamion', [])
             $scope.removeProd = function(prod) {
                 var index = -1;
 
-                $scope.camion.some(function(obj, i) {
+                $scope.conductor.some(function(obj, i) {
                     return obj.lic === prod.lic ? index = i : false;
                 });
 
                 console.log(index);
-                $scope.camion.splice(index, 1);
+                $scope.conductor.splice(index, 1);
 
             };
 
-            // add camion
+            // add conductor
             $scope.showNewProdForm = false;
             $scope.addProd = function() {
-                $scope.newcamion = []
+                $scope.newconductor = []
                 $scope.showNewProdForm = true;
                 $scope.inserted = {
                     name: "Nuevo",
                     lic: null,
 
                 };
-                $scope.newcamion.push($scope.inserted);
+                $scope.newconductor.push($scope.inserted);
             };
 
             $scope.showTipoID = function(obj) {
@@ -147,17 +147,13 @@ angular.module('app.adminCamion', [])
 
 
             };
-            $scope.updateNewcamionName = function(obj) {
-                $scope.newcamionName = obj;
-                console.log("newcamionname " + obj)
+            $scope.updateNewconductorName = function(obj) {
+                $scope.newconductorName = obj;
+                console.log("newconductorname " + obj)
             }
-            $scope.updateNewcamionLic = function(obj) {
-                $scope.newcamionLic = obj;
-                console.log("newcamionlic " + obj)
-            }
-            $scope.updateNewcamionCod = function(obj) {
-                $scope.newcamionCod = obj;
-                console.log("newcamioncod " + obj)
+            $scope.updateNewconductorLic = function(obj) {
+                $scope.newconductorLic = obj;
+                console.log("newconductorlic " + obj)
             }
             $scope.updateTipoProd = function(obj) {
                 $scope.newProdTipo = obj.tipo;
@@ -168,25 +164,24 @@ angular.module('app.adminCamion', [])
 
                 var newProd = {
 
-                    "name": $scope.newcamionName,
-                    "lic": $scope.newcamionLic,
-                    "cod": $scope.newcamionCod,
+                    "name": $scope.newconductorName,
+                    "lic": $scope.newconductorLic
 
                 }
                 console.log(prod)
                 console.log(newProd)
-                $scope.camion.push(newProd);
+                $scope.conductor.push(newProd);
                 $scope.showNewProdForm = false;
             }
 
-            $scope.updatecamion = function() {
+            $scope.updateconductor = function() {
                 $scope.show();
-                var id = "camion"
+                var id = "conductor"
                 localAdminDB.get(id).then(function(doc) {
                     return localAdminDB.put({
                         _id: id,
                         _rev: doc._rev,
-                        prods: $scope.camion,
+                        conductor: $scope.conductor,
 
                     });
                 }).then(function(response) {

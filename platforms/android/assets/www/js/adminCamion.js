@@ -155,6 +155,10 @@ angular.module('app.adminCamion', [])
                 $scope.newcamionLic = obj;
                 console.log("newcamionlic " + obj)
             }
+            $scope.updateNewcamionCod = function(obj) {
+                $scope.newcamionCod = obj;
+                console.log("newcamioncod " + obj)
+            }
             $scope.updateTipoProd = function(obj) {
                 $scope.newProdTipo = obj.tipo;
                 $scope.newProdTipoID = obj.id
@@ -165,7 +169,8 @@ angular.module('app.adminCamion', [])
                 var newProd = {
 
                     "name": $scope.newcamionName,
-                    "lic": $scope.newcamionLic
+                    "lic": $scope.newcamionLic,
+                    "cod": $scope.newcamionCod,
 
                 }
                 console.log(prod)
@@ -191,6 +196,7 @@ angular.module('app.adminCamion', [])
                     console.log(err);
                 });
                 $scope.hide();
+                alert("Se ha actualizado la Información");
             }
 
         }

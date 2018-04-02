@@ -11,6 +11,7 @@
                                                     </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
+        {{fileExample}}
         <table class="table table-bordered table-hover table-condensed">
             <tr>
                 <td>Archivo PDF único</td>
@@ -25,7 +26,7 @@
                 </td>
                 <td>
 
-                    <div class="button" ngf-select="upload($files)" ngf-multiple="true">Seleccione</div>
+                    <div class="button" ngf-select="upload($files)" ngf-multiple="true" accept="image/*,application/pdf" ngf-pattern="'image/*,application/pdf'">Seleccione</div>
                 </td>
             </tr>
             <tr>

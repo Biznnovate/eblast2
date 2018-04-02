@@ -1,4 +1,4 @@
-<ion-view title="Editar Camiones" id="page30" hide-back-button="true">
+<ion-view title="Editar Conductores de Camión" id="page32" hide-back-button="true">
 
 
     <ion-nav-buttons side="left">
@@ -20,11 +20,11 @@
                 <div class="btn-group">
                     <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                     <ul class="dropdown-menu " role="menu">
-                        <li><button class="btn btn-link" ng-click="exportToExcel('#camionTable')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                        <li><button class="btn btn-link" ng-click="exportToExcel('#conductorTable')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
 
                         <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
                         <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
-                        <li><button class="btn btn-link" onClick="$('#camionTable').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+                        <li><button class="btn btn-link" onClick="$('#conductorTable').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
 
                     </ul>
                 </div>
@@ -35,52 +35,43 @@
                 <table>
 
                     <tr style="font-weight: bold">
-                        <td style="width:40%">Camión</td>
-                        <td style="width:20%">Placa</td>
-                        <td style="width:20%">Código</td>
-                        <td style="width:20%"></td>
+                        <td style="width:40%">Conductor</td>
+                        <td style="width:30%">Licencia</td>
+                        <td style="width:30%"></td>
 
 
 
                     </tr>
-                    <tr ng-repeat="camion in newcamion">
+                    <tr ng-repeat="conductor in newconductor">
                         <td> <label class="item item-input" id="editarVoladuraMapa-inputnombre">
                                 <span class="input-label"></span>
-                                <input type="text" placeholder="camion" ng-model="newcamion.name" ng-change="updateNewcamionName(newcamion.name)">
+                                <input type="text" placeholder="conductor" ng-model="newconductor.name" ng-change="updateNewconductorName(newconductor.name)">
                                 </label>
                         </td>
                         <td>
                             <label class="item item-input" id="editarVoladuraMapa-inputlicencia">
                                 <span class="input-label"></span>
-                                <input type="text" placeholder="placa" ng-model="newcamion.lic" ng-change="updateNewcamionLic(newcamion.lic)">
+                                <input type="text" placeholder="licencia" ng-model="newconductor.lic" ng-change="updateNewconductorLic(newconductor.lic)">
                                 </label>
                         </td>
-                        <td>
-                            <label class="item item-input" id="editarVoladuraMapa-inputcod">
-                                <span class="input-label"></span>
-                                <input type="text" placeholder="Código" ng-model="newcamion.cod" ng-change="updateNewcamionCod(newcamion.cod)">
-                                </label>
-                        </td>
-                        <td><button ng-click="saveProd(newcamion,$index)" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+                        <td><button ng-click="saveProd(newconductor,$index)" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
 
 
                     </tr>
                 </table>
             </div>
 
-            <div id="camionTable" print-section>
+            <div id="conductorTable" print-section>
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
-                        <td>Camion</td>
+                        <td>Conductor</td>
                         <td>Licencia</td>
-                        <td>Código</td>
 
                     </tr>
 
-                    <tr ng-repeat="camion in camion track by $index">
-                        <td> <span editable-text="camion.name">{{camion.name}}</span></td>
-                        <td> <span editable-text="camion.lic">{{camion.lic}}</span></td>
-                        <td> <span editable-text="camion.cod">{{camion.cod}}</span></td>
+                    <tr ng-repeat="conductor in conductor track by $index">
+                        <td> <span editable-text="conductor.name">{{conductor.name}}</span></td>
+                        <td> <span editable-text="conductor.lic">{{conductor.lic}}</span></td>
                         <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>
 
@@ -97,8 +88,7 @@
         </form>
 
 
-
-        <button id="subirProyecto-button35" ng-click="updatecamion()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar</button>
+        <button id="subirProyecto-button35" ng-click="updateconductor()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar</button>
 
     </ion-content>
 </ion-view>

@@ -120,6 +120,7 @@ angular.module('app.subirSismo', [])
             }
             $scope.upload = function(files) {
                 var userAustin = 'Austin';
+                $scope.fileExample = '';
                 //alert(files.length)
                 if (files && files.length) {
                     for (var i = 0; i < files.length; i++) {
@@ -128,11 +129,13 @@ angular.module('app.subirSismo', [])
                         if (!file.$error) {
 
                             console.log("no error file createSis Executed")
+                            $scope.fileExample = file;
                         }
                     }
                 }
             };
             $scope.upload1 = function(files) {
+
                 var userAustin = 'Austin';
                 if (files && files.length) {
 

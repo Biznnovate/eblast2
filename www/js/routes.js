@@ -410,6 +410,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.adminConductor', {
+            url: '/page32',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminConductor.html',
+                    controller: 'adminConductorCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 

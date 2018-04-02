@@ -124,4 +124,8 @@ var SheetJSImportDirective = function() {
         }
     })
     .factory('SheetJSExportService', SheetJSExportService);
-SheetJSExportService.inject = ['uiGridExporterService'];
+SheetJSExportService.inject = ['uiGridExporterService']
+
+
+
+;

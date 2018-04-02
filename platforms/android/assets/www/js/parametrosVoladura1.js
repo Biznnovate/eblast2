@@ -1,5 +1,6 @@
 angular.module('app.parametrosVoladura1', [])
-    .controller('parametrosVoladura1Ctrl', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('parametrosVoladura1Ctrl', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo',
+        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $state, Productos, $filter, $window, $timeout, $ionicLoading, pouchDB, $routeParams, passInfo) {
@@ -156,13 +157,24 @@ angular.module('app.parametrosVoladura1', [])
                     console.log('no proj selected')
                     $scope.projTipos = [];
                 }
-
+                //$scope.projTiposCountFunc();
                 $scope.hide();
             }
             $scope.loadprojTipos();
             $scope.loadglobalTipos();
-            //UpdatenewBarreno();
-            //$scope.newBarreno = {'nam': barrparam};
+
+            $scope.projTiposCountFunc = function() {
+                    var total = 0;
+                    for (var i = 0; i < $scope.projTipos.length; i++) {
+                        total = $scope.projTipos.length;
+                        $scope.projTiposCount = total;
+                        console.log("projtipos count " + $scope.projTiposCount)
+
+                    }
+                    return total;
+                }
+                //UpdatenewBarreno();
+                //$scope.newBarreno = {'nam': barrparam};
             console.log($scope.newBarreno);
             $scope.listed_productos = Productos.list;
             //$scope.listed_productosN = $scope.prod_listDB;
@@ -572,9 +584,11 @@ angular.module('app.parametrosVoladura1', [])
                 };
                 $scope.projTipos.push(newTipo);
                 $scope.countTipos = $scope.projTipos.length;
+                $scope.projTiposCountFunc();
                 console.log('hay ' + $scope.countTipos + ' Tipos para subir')
                 $scope.hide();
             }
+
             $scope.insertTipoBarrenos = function() {
                 $scope.show();
                 var id = $scope.projID;
@@ -626,7 +640,10 @@ angular.module('app.parametrosVoladura1', [])
                         console.log(err);
                     });
                 });
-                $scope.loadprojTipos();
+
+                $scope.projTiposCountFunc();
+                $scope.countTipos = $scope.projTipos.length;
+                // $scope.loadprojTipos();
                 $scope.hide();
                 $scope.showMainform = false;
                 $scope.enableCreate = true;

@@ -29,11 +29,11 @@
           <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
            ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
         </label>-->
-        <div ng-if="projTipos.length!=0">
+        <div ng-if="projTiposCountFunc()!=0">
 
 
-            <button ng-click="showTiposTable=true" ng-model="countprojTipos" ng-click="loadprojTipos()" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
-        Tipos Creados ( {{countTipos}} ) </button>
+            <button ng-click="showTiposTable=true" ng-click="loadprojTipos(); projTiposCountFunc();" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Tipos Creados ( {{projTiposCountFunc()}} ) </button>
             <button ng-click="showTiposTable=false" ng-show="showTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Ocultar Tipos</button>
             <form id="parametrosVoladura1-vertipobarrenos" ng-show="showTiposTable">
@@ -236,8 +236,8 @@
 
         <div id="parametrosVoladura1-button-bar1" class="button-bar" ng-model="tipoID">
 
-            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle" ng-disabled="enableCreate"
-                ng-hide="editBarrenoStatus">Crear Tipo</button>
+            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID=''; projTiposCountFunc();" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle"
+                ng-disabled="enableCreate" ng-hide="editBarrenoStatus">Crear Tipo</button>
             <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos();" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle " ng-show="editBarrenoStatus">Actualizar Tipo</button>
 
             <button id="parametrosVoladura1-button55" ng-click="gotovistaDeProj()" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-cancel " ng-show="editBarrenoStatus">Cancelar</button>
