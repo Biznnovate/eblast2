@@ -575,6 +575,8 @@ angular.module('app.editarVoladuraMapa', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -1916,6 +1918,8 @@ angular.module('app.editarVoladuraMapa', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -2011,6 +2015,8 @@ angular.module('app.editarVoladuraMapa', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
 
                     });
                 }).then(function(response) {

@@ -1,0 +1,171 @@
+<ion-view title="Captar info de Camiones" id="page33" hide-back-button="true">
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                                   
+                                                    </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+        <form id="generarReporteProductos-form13" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+            <div class="btn-edit">
+                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                 
+                </button>
+                <button style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-android-add-circle" ng-click="addProd()"></button>
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                    <ul class="dropdown-menu " role="menu">
+                        <li><button class="btn btn-link" ng-click="exportToExcel('#camionTable')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+
+                        <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                        <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                            <li><button class="btn btn-link" onClick="$('#camionTable').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+
+                    </ul>
+                </div>
+            </div>
+
+            <div ng-show="showNewProdForm">
+                <strong>Nuevo</strong>
+                <table>
+
+                    <tr style="font-weight: bold">
+                        <td style="width:40%">Camión</td>
+                        <td style="width:20%">Placa</td>
+                        <td style="width:20%">Código</td>
+                        <td style="width:20%"></td>
+
+
+
+                    </tr>
+                    <tr ng-repeat="camion in newcamion">
+                        <td> <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                                    <span class="input-label"></span>
+                                    <input type="text" placeholder="camion" ng-model="newcamion.name" ng-change="updateNewcamionName(newcamion.name)">
+                                    </label>
+                        </td>
+                        <td>
+                            <label class="item item-input" id="editarVoladuraMapa-inputlicencia">
+                                    <span class="input-label"></span>
+                                    <input type="text" placeholder="placa" ng-model="newcamion.lic" ng-change="updateNewcamionLic(newcamion.lic)">
+                                    </label>
+                        </td>
+                        <td>
+                            <label class="item item-input" id="editarVoladuraMapa-inputcod">
+                                    <span class="input-label"></span>
+                                    <input type="text" placeholder="Código" ng-model="newcamion.cod" ng-change="updateNewcamionCod(newcamion.cod)">
+                                    </label>
+                        </td>
+                        <td><button ng-click="saveProd(newcamion,$index)" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+
+            <form>
+                <label class="item item-select" id="generarReporteDatosGenerales-select20">
+                            <span class="input-label">Camión</span>
+                            <select ng-options="camion as camion.name for camion in camiones" 
+                            ng-change="updateCamion(selectedCamion)" ng-model="selectedCamion"> 
+                          </select>
+                    </label>
+                <label class="item item-select" id="generarReporteDatosGenerales-select20">
+                            <span class="input-label">Conductor</span>
+                            <select ng-options="conductor as conductor.name for conductor in conductores" 
+                            ng-change="updateConductor(selectedconductor)" ng-model="selectedconductor"> 
+                          </select>
+                    </label>
+
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Fecha</span>
+                            <input type="date" placeholder="fecha" ng-model="fecha" ng-change="updateFecha(fecha)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Documento</span>
+                            <input type="text" placeholder="documento" ng-model="documento" ng-change="updateDocumento(documento)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label"># Voladura Austin</span>
+                            <input type="text" placeholder="vnumaustin" ng-model="vnumaustin" ng-change="updateVnumaustin(vnumaustin)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label"># Voladura Minera</span>
+                            <input type="text" placeholder="vnumminera" ng-model="vnumminera" ng-change="updateVnumminera(vnumminera)">
+                    </label>
+
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Temperatura F</span>
+                            <input type="number" placeholder="" ng-model="temp" ng-change="updateTemp(temp)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Nitrato-YARA</span>
+                            <input type="number" placeholder="" ng-model="nitratoyara" ng-change="updateNitratoyara(nitratoyara)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Nitrato-Prilex</span>
+                            <input type="number" placeholder="" ng-model="nitratoprilex" ng-change="updateNitratoprilex(nitratoprilex)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">R2 Nitrito de Sodio</span>
+                            <input type="number" placeholder="" ng-model="r2" ng-change="updateR2(r2)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">R1 Ácido Acético</span>
+                            <input type="number" placeholder="" ng-model="r1" ng-change="updateR1(r1)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Hydromite Gassing</span>
+                            <input type="number" placeholder="" ng-model="hgassing" ng-change="updateHgassing(hgassing)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Hydromite Blend Yara</span>
+                            <input type="number" placeholder="" ng-model="hblendyara" ng-change="updateHblendyara(hblendyara)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Hydromite Blend ENAEX</span>
+                            <input type="number" placeholder="" ng-model="hblendenaex" ng-change="updateHblendenaex(hblendenaex)">
+                    </label>
+
+            </form>
+            <button id="subirProyecto-button35" ng-click="saveCamionData()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Aceptar</button>
+            <button id="subirProyecto-button35" ng-click="uploadCamionData()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
+
+            <div id="camionTable" print-section>
+                <table class="table table-bordered table-hover table-condensed">
+                    <tr style="font-weight: bold">
+                        <td>Camion</td>
+                        <td>Fecha</td>
+                        <td>Voladura</td>
+
+                    </tr>
+
+                    <tr ng-repeat="camion in dataCamion track by $index">
+                        <td> {{camion.camion.name}}</td>
+                        <td>{{camion.fecha}}</td>
+                        <td> {{camion.vnumaustin}}</td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <!-- buttons -->
+
+            <div class="btn-form" ng-show="tableform.$visible">
+                <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+                <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+            </div>
+
+        </form>
+
+
+
+
+    </ion-content>
+</ion-view>

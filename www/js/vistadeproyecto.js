@@ -317,6 +317,9 @@ angular.module('app.vistaDeProyecto', [])
             $scope.gotoAdmin = function() {
                 $state.go('menu.admincons', { 'proj': $scope.projID });
             }
+            $scope.gotoCamion = function() {
+                $state.go('menu.dataCamion', { 'proj': $scope.projID });
+            }
 
 
         }

@@ -424,6 +424,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.dataCamion', {
+            url: '/page33',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/dataCamion.html',
+                    controller: 'dataCamionCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 

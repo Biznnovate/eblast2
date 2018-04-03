@@ -636,6 +636,8 @@ angular.module('app.parametrosVoladura1', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
                     }).catch(function(err) {
                         console.log(err);
                     });
@@ -672,6 +674,8 @@ angular.module('app.parametrosVoladura1', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
 
 
                     }).catch(function(err) {
@@ -758,6 +762,8 @@ angular.module('app.parametrosVoladura1', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: doc.datacamion,
 
 
 

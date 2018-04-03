@@ -186,7 +186,7 @@ angular.module('app.adminCamion', [])
                     return localAdminDB.put({
                         _id: id,
                         _rev: doc._rev,
-                        prods: $scope.camion,
+                        camion: $scope.camion,
 
                     });
                 }).then(function(response) {

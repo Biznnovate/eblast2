@@ -3022,6 +3022,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 }).catch(function(err) {
                     console.log(err);
                 });
@@ -3052,6 +3054,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
 
                 }).catch(function(err) {
@@ -3137,6 +3141,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
 
 
@@ -3916,6 +3922,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 });
             }).then(function() {
                 return localprojDB.get(id);
@@ -5207,6 +5215,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 });
             }).then(function() {
                 return localprojDB.get(id);
@@ -5294,6 +5304,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
                 });
             }).then(function(response) {
