@@ -1,9 +1,14 @@
 angular.module('app.subirSismo', [])
-    .controller('subirSismoCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', 'Productos', 'Upload', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('subirSismoCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', 'Productos', 'Upload',
+        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, Productos, Upload) {
+        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, Productos, Upload, $cordovaFileTransfer, $cordovaFile, $cordovaFileOpener) {
             $scope.$root.showMenuIcon = true;
+            document.addEventListener("deviceready", function() {
+                console.log(cordova.file);
+                console.log($cordovaFile);
+            }, false);
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...',
@@ -63,25 +68,140 @@ angular.module('app.subirSismo', [])
 
                 $scope.hide();
             }
-            $scope.$watch('files', function() {
-                $scope.upload($scope.files);
-            });
-            $scope.$watch('file', function() {
-                if ($scope.file != null) {
-                    $scope.files = [$scope.file];
-                }
-            });
-            $scope.log = '';
-            $scope.pdfUpload = function(files) {
-                db.put({
-                    _id: 'mydoc',
-                    _attachments: {
-                        'myattachment.txt': {
-                            content_type: 'text/plain',
-                            data: $scope.files
-                        }
+
+            $scope.sismoPDFs = [];
+            $scope.savePDF = function(obj) {
+                    var info = {
+                        filename: obj.filename,
+                        base64: obj.base64,
+                        filetype: obj.filetype
                     }
+                    $scope.sismoPDFs.push(info);
+                }
+                /**
+                 * Convert a base64 string in a Blob according to the data and contentType.
+                 * 
+                 * @param b64Data {String} Pure base64 string without contentType
+                 * @param contentType {String} the content type of the file i.e (application/pdf - text/plain)
+                 * @param sliceSize {Int} SliceSize to process the byteCharacters
+                 * @see http://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+                 * @return Blob
+                 */
+            function b64toBlob(b64Data, contentType, sliceSize) {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    var byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+
+                var blob = new Blob(byteArrays, { type: contentType });
+                return blob;
+            }
+
+            /**
+             * Create a PDF file according to its database64 content only.
+             * 
+             * @param folderpath {String} The folder where the file will be created
+             * @param filename {String} The name of the file that will be created
+             * @param content {Base64 String} Important : The content can't contain the following string (data:application/pdf;base64). Only the base64 string is expected.
+             */
+            function savebase64AsPDF(folderpath, filename, content, contentType) {
+                // Convert the base64 string in a Blob
+                var DataBlob = b64toBlob(content, contentType);
+
+                console.log("Starting to write the file :3");
+
+                window.resolveLocalFileSystemURL(folderpath, function(dir) {
+                    console.log("Access to the directory granted succesfully");
+                    dir.getFile(filename, { create: true }, function(file) {
+                        console.log("File created succesfully.");
+                        file.createWriter(function(fileWriter) {
+                            console.log("Writing content to file");
+                            fileWriter.write(DataBlob);
+                        }, function() {
+                            alert('Unable to save file in path ' + folderpath);
+                        });
+                    });
                 });
+            }
+            $scope.openpdfBrowser = function(obj) {
+                var pdfData = atob(obj.base64);
+
+                // Loaded via <script> tag, create shortcut to access PDF.js exports.
+                //  var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+                // The workerSrc property shall be specified.
+                // pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+                // Using DocumentInitParameters object to load binary data.
+                var loadingTask = pdfjsLib.getDocument({ data: pdfData });
+                loadingTask.promise.then(function(pdf) {
+                    console.log('PDF loaded');
+
+                    // Fetch the first page
+                    var pageNumber = 1;
+                    pdf.getPage(pageNumber).then(function(page) {
+                        console.log('Page loaded');
+
+                        var scale = 1.5;
+                        var viewport = page.getViewport(scale);
+
+                        // Prepare canvas using PDF page dimensions
+                        var canvas = document.getElementById('the-canvas');
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        // Render PDF page into canvas context
+                        var renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+                        var renderTask = page.render(renderContext);
+                        renderTask.then(function() {
+                            console.log('Page rendered');
+                        });
+                    });
+                }, function(reason) {
+                    // PDF loading error
+                    console.error(reason);
+                });
+
+            }
+
+            $scope.openpdfBrowser1 = function(obj) {
+                currentBlob = new Blob([obj], { type: 'application/pdf' });
+                $scope.pdfUrl = URL.createObjectURL(currentBlob);
+                console.log($scope.pdfUrl)
+
+            }
+
+            $scope.openpdfFunc = function(obj) {
+                // Remember to execute this after the onDeviceReady event
+
+                // If your base64 string contains "data:application/pdf;base64,"" at the beginning, keep reading.
+                var myBase64 = obj.base64;
+                // To define the type of the Blob
+                var contentType = "application/pdf";
+                // if cordova.file is not available use instead :
+                // var folderpath = "file:///storage/emulated/0/";
+                var folderpath = cordova.file.externalRootDirectory;
+                var filename = obj.filename;
+                console.log(folderpath, filename, myBase64, contentType)
+                savebase64AsPDF(folderpath, filename, myBase64, contentType);
             }
             $scope.createSis = function() {
                 console.log("create sis inicio")
@@ -134,39 +254,7 @@ angular.module('app.subirSismo', [])
                     }
                 }
             };
-            $scope.upload1 = function(files) {
 
-                var userAustin = 'Austin';
-                if (files && files.length) {
-
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-
-                        if (!file.$error) {
-                            Upload.upload({
-                                url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                                data: {
-                                    username: userAustin,
-                                    file: file
-                                }
-                            }).then(function(resp) {
-                                $timeout(function() {
-                                    $scope.log = 'file: ' +
-                                        resp.config.data.file.name +
-                                        ', Response: ' + JSON.stringify(resp.data) +
-                                        '\n' + $scope.log;
-                                });
-                            }, null, function(evt) {
-                                var progressPercentage = parseInt(100.0 *
-                                    evt.loaded / evt.total);
-                                $scope.log = 'progress: ' + progressPercentage +
-                                    '% ' + evt.config.data.file.name + '\n' +
-                                    $scope.log;
-                            });
-                        }
-                    }
-                }
-            };
             $scope.loadproj = function() {
                 localprojDB.allDocs({
                     include_docs: true,
@@ -223,32 +311,6 @@ angular.module('app.subirSismo', [])
             }
             $scope.loadproj();
 
-
-            $scope.createSis1 = function() {
-                console.log
-                var id = $scope.projID;
-                localprojDB.get(id).then(function(doc) {
-
-                    return localprojDB.put({
-                        _id: id,
-                        _rev: doc._rev,
-                        proj: doc.proj,
-                        date: doc.date,
-                        barrenos: doc.barrenos,
-                        tipos: doc.tipos,
-                        productos: doc.productos,
-                        muestras: doc.muestras,
-                        datagral: doc.datagral,
-                        sismo: $scope.files,
-                    });
-                }).then(function() {
-                    return localprojDB.get(id);
-                    // handle response
-
-                }).catch(function(err) {
-                    console.log(err);
-                });
-            }
 
 
             $scope.createProductos = function() {

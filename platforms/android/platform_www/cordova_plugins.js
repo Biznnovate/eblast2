@@ -243,6 +243,24 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.screenorientation"
         ]
+    },
+    {
+        "id": "cordova-plugin-file-opener2.FileOpener2",
+        "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+        "pluginId": "cordova-plugin-file-opener2",
+        "clobbers": [
+            "cordova.plugins.fileOpener2"
+        ]
+    },
+    {
+        "id": "cordova-pdf-generator.pdf",
+        "file": "plugins/cordova-pdf-generator/www/pdf.js",
+        "pluginId": "cordova-pdf-generator",
+        "clobbers": [
+            "cordova.plugins.pdf",
+            "pugin.pdf",
+            "pdf"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -259,7 +277,9 @@ module.exports.metadata =
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-whitelist": "1.3.3",
     "es6-promise-plugin": "4.2.2",
-    "cordova-plugin-screen-orientation": "3.0.1"
+    "cordova-plugin-screen-orientation": "3.0.1",
+    "cordova-plugin-file-opener2": "2.0.19",
+    "cordova-pdf-generator": "2.0.1"
 };
 // BOTTOM OF METADATA
 });

@@ -11,50 +11,40 @@
                                                     </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
-        {{fileExample}}
+
+        <button id="subirProyecto-button36" ng-click="openpdfFunc(sismoPDF)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-download">bajar</button>
+        <button id="subirProyecto-button36" ng-click="openpdfBrowser(sismoPDF)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-download">bajar browser</button>
         <table class="table table-bordered table-hover table-condensed">
             <tr>
-                <td>Archivo PDF único</td>
+                <td>Subir PDF</td>
+
                 <td>
 
-                    <div class="button" ngf-select ng-model="file" ngf-multiple="false">Seleccione</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Multiples PDF
-                </td>
-                <td>
+                    <input type='file' ng-model='sismoPDF' base-sixty-four-input ng-change="showSismo=true">
 
-                    <div class="button" ngf-select="upload($files)" ngf-multiple="true" accept="image/*,application/pdf" ngf-pattern="'image/*,application/pdf'">Seleccione</div>
                 </td>
+                <td ng-show="showSismo"><button ng-click="savePDF(sismoPDF); showSismo=false" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
             </tr>
+
             <tr>
-                <td>
-                    Drop PDF único:
-                </td>
-                <td>
-                    <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf" ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>
-                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-                </td>
-            </tr>
-            <tr>
-                <td>Archivos a Subir</td>
+                <td>Archivos a Subir ({{sismoPDFs.length}})</td>
                 <td>
                     <ul>
-                        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+                        <li ng-repeat="f in sismoPDFs" style="font:smaller">{{f.filename}}</li>
                     </ul>
                 </td>
             </tr>
 
 
-            Progreso:
-            <pre>{{log}}</pre>
+
             </div>
         </table>
-        {{files}}
+
         <button id="subirProyecto-button36" ng-click="createSis()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
         <button id="subirProyecto-button35" ng-click="" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Volver a Menu</button>
 
-    </ion-content>
+        <canvas id="the-canvas"></canvas>
+        <ng-pdf template-url="/partials/viewer.html"></ng-pdf>
+        </div>
+
 </ion-view>

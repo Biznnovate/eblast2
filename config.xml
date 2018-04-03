@@ -91,8 +91,9 @@
     <plugin name="ionic-plugin-deploy" spec="~0.6.7" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <engine name="ios" spec="^4.4.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-file" spec="^4.3.3" />
 </widget>
