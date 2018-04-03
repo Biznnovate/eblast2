@@ -3,7 +3,7 @@ angular.module('app.subirSismo', [])
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, Productos, Upload, $cordovaFileTransfer, $cordovaFile) {
+        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, Productos, Upload, $cordovaFileTransfer, $cordovaFile, $cordovaFileOpener) {
             $scope.$root.showMenuIcon = true;
             document.addEventListener("deviceready", function() {
                 console.log(cordova.file);
@@ -69,7 +69,15 @@ angular.module('app.subirSismo', [])
                 $scope.hide();
             }
 
-            $scope.sismoPDFs = [];
+            $scope.deleteTipo = function(index) {
+                $scope.show();
+                var id = 'sismo';
+                $scope.sismoPDFs.splice(index, 1);
+
+                console.log('PDF deleted');
+
+                $scope.hide();
+            }
             $scope.savePDF = function(obj) {
                     var info = {
                         filename: obj.filename,
@@ -137,6 +145,59 @@ angular.module('app.subirSismo', [])
                     });
                 });
             }
+            $scope.openpdfBrowser = function(obj, idx) {
+                var pdfData = atob(obj.base64);
+                $scope.showButtonClose = true;
+
+                // Loaded via <script> tag, create shortcut to access PDF.js exports.
+                //  var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+                // The workerSrc property shall be specified.
+                // pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+                // Using DocumentInitParameters object to load binary data.
+                var loadingTask = pdfjsLib.getDocument({ data: pdfData });
+                loadingTask.promise.then(function(pdf) {
+                    console.log('PDF loaded');
+
+                    // Fetch the first page
+                    var pageNumber = 1;
+                    pdf.getPage(pageNumber).then(function(page) {
+                        console.log('Page loaded');
+
+                        var scale = 1.5;
+                        var viewport = page.getViewport(scale);
+
+                        // Prepare canvas using PDF page dimensions
+                        var canvas = document.getElementById('the-canvas');
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        // Render PDF page into canvas context
+                        var renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+                        var renderTask = page.render(renderContext);
+                        renderTask.then(function() {
+                            console.log('Page rendered');
+                        });
+                    });
+                }, function(reason) {
+                    // PDF loading error
+                    console.error(reason);
+                });
+
+            }
+
+            $scope.openpdfBrowser1 = function(obj) {
+                currentBlob = new Blob([obj], { type: 'application/pdf' });
+                $scope.pdfUrl = URL.createObjectURL(currentBlob);
+                console.log($scope.pdfUrl)
+
+            }
+
             $scope.openpdfFunc = function(obj) {
                 // Remember to execute this after the onDeviceReady event
 
@@ -154,15 +215,7 @@ angular.module('app.subirSismo', [])
             $scope.createSis = function() {
                 console.log("create sis inicio")
                 var id = $scope.projID;
-                localprojDB.put({
-                    _id: id,
-                    _attachments: {
-                        'test.pdf': {
-                            content_type: 'application/pdf',
-                            data: $scope.files
-                        }
-                    }
-                });
+
                 localprojDB.get(id).then(function(doc) {
 
                     return localprojDB.put({
@@ -175,7 +228,7 @@ angular.module('app.subirSismo', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
-                        sismo: 'files',
+                        sismo: $scope.sismoPDFs,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -226,8 +279,9 @@ angular.module('app.subirSismo', [])
 
                     $scope.proj = doc;
                     console.log(doc)
-                    $scope.tipos = doc.tipos;
+                    $scope.sismoPDFs = doc.sismo || [];
                     $scope.projNam = doc.proj;
+
                     console.log(doc.tipos)
                         // $scope.dataChartBarrs();
 

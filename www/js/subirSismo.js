@@ -69,7 +69,15 @@ angular.module('app.subirSismo', [])
                 $scope.hide();
             }
 
-            $scope.sismoPDFs = [];
+            $scope.deleteTipo = function(index) {
+                $scope.show();
+                var id = 'sismo';
+                $scope.sismoPDFs.splice(index, 1);
+
+                console.log('PDF deleted');
+
+                $scope.hide();
+            }
             $scope.savePDF = function(obj) {
                     var info = {
                         filename: obj.filename,
@@ -137,8 +145,9 @@ angular.module('app.subirSismo', [])
                     });
                 });
             }
-            $scope.openpdfBrowser = function(obj) {
+            $scope.openpdfBrowser = function(obj, idx) {
                 var pdfData = atob(obj.base64);
+                $scope.showButtonClose = true;
 
                 // Loaded via <script> tag, create shortcut to access PDF.js exports.
                 //  var pdfjsLib = window['pdfjs-dist/build/pdf'];
@@ -206,15 +215,7 @@ angular.module('app.subirSismo', [])
             $scope.createSis = function() {
                 console.log("create sis inicio")
                 var id = $scope.projID;
-                localprojDB.put({
-                    _id: id,
-                    _attachments: {
-                        'test.pdf': {
-                            content_type: 'application/pdf',
-                            data: $scope.files
-                        }
-                    }
-                });
+
                 localprojDB.get(id).then(function(doc) {
 
                     return localprojDB.put({
@@ -227,7 +228,7 @@ angular.module('app.subirSismo', [])
                         productos: doc.productos,
                         muestras: doc.muestras,
                         datagral: doc.datagral,
-                        sismo: 'files',
+                        sismo: $scope.sismoPDFs,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -278,8 +279,9 @@ angular.module('app.subirSismo', [])
 
                     $scope.proj = doc;
                     console.log(doc)
-                    $scope.tipos = doc.tipos;
+                    $scope.sismoPDFs = doc.sismo || [];
                     $scope.projNam = doc.proj;
+
                     console.log(doc.tipos)
                         // $scope.dataChartBarrs();
 

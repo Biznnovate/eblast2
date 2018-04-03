@@ -34,6 +34,12 @@
     <feature name="CDVOrientation">
         <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
     </feature>
+    <feature name="FileOpener2">
+        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
+    </feature>
+    <feature name="PDFService">
+        <param name="android-package" value="com.pdf.generator.PDFGenerator" />
+    </feature>
     <name>e-Blast</name>
     <description>Austin Blast Dispersion by Biznnovate</description>
     <author email="contact@biznnovate.com" href="http://biznnovate.com/">Biznnovate</author>
@@ -80,10 +86,4 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <feature name="FileOpener2">
-        <param name="android-package" value="io.github.pwlin.cordova.plugins.fileopener2.FileOpener2" />
-    </feature>
-    <feature name="PDFService">
-        <param name="android-package" value="com.pdf.generator.PDFGenerator" />
-    </feature>
 </widget>

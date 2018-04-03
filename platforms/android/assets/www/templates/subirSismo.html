@@ -12,10 +12,11 @@
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
 
-        <button id="subirProyecto-button36" ng-click="openpdfFunc(sismoPDF)" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-download">bajar</button>
+
+
         <table class="table table-bordered table-hover table-condensed">
             <tr>
-                <td>Subir PDF</td>
+                <td><strong>Subir PDF</strong></td>
 
                 <td>
 
@@ -26,21 +27,32 @@
             </tr>
 
             <tr>
-                <td>Archivos a Subir ({{sismoPDFs.length}})</td>
-                <td>
-                    <ul>
-                        <li ng-repeat="f in sismoPDFs" style="font:smaller">{{f.filename}}</li>
-                    </ul>
-                </td>
+                <td><strong>PDFs en Proyecto </strong> ({{sismoPDFs.length}})</td>
+            </tr>
+            <tr style="font:smaller" ng-repeat="f in sismoPDFs track by $index" on-drag-left="showEditTipo=false" on-double-tap="showEditTipo=true">
+                <td>{{f.filename}}</td>
+                <td ng-show="showEditTipo"><button ng-click="openpdfBrowser(f,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-android-phone-portrait"></button></td>
+                <td ng-show="showEditTipo"><button ng-click="deleteTipo($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
+                <td ng-show="showEditTipo"><button ng-click="openpdfFunc(f)" class="button button-positive button-full button-clear icon ion-ios-cloud-download-outline"></button></td>
+
             </tr>
 
 
 
             </div>
         </table>
-        {{files}}
-        <button id="subirProyecto-button36" ng-click="createSis()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
-        <button id="subirProyecto-button35" ng-click="" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Volver a Menu</button>
 
-    </ion-content>
+        <button id="subirProyecto-button36" ng-click="createSis()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
+
+
+        <button id="subirProyecto-button35" ng-click="showButtonClose=false" ng-show="showButtonClose" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-close-circled">Cerrar</button>
+        <div ng-show="showButtonClose">
+            <canvas id="the-canvas"></canvas>
+
+        </div>
+
+        <ng-pdf template-url="/partials/viewer.html"></ng-pdf>
+
+        </div>
+
 </ion-view>
