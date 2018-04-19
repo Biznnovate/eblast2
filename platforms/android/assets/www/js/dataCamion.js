@@ -29,7 +29,7 @@ angular.module('app.dataCamion', [])
                 'proj': $stateParams.proj,
             }
             Page.setTitle($stateParams.proj);
-
+            $scope.projID = $scope.projparam.proj;
             //Declara y Sincroniza base de datos de Tipo
 
 
@@ -39,19 +39,57 @@ angular.module('app.dataCamion', [])
                 console.log("I'm Batman.");
                 return remoteAdminDB.getSession();
             });
-            //Declara y Sincroniza base de datos de Tipo
 
-            $scope.sync = function() {
-                $scope.show();
-                localAdminDB.sync(remoteAdminDB).on('complete', function() {
-                    // yay, we're in sync!
-                }).on('error', function(err) {
-                    // boo, we hit an error!
+
+            //Declara y Sincroniza base de datos de Tipo
+            let localprojDB = new pouchDB('projects');
+            let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
+            remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
+                console.log("I'm Batman.");
+                return remoteprojDB.getSession();
+            }).then('complete', function() {
+
+            })
+            $scope.loadproj = function() {
+
+
+                var proj = $scope.projID;
+                localprojDB.get(proj).then(function(doc) {
+                    $scope.show();
+
+                    $scope.proj = doc;
+                    console.log(doc)
+
+
+
+                    //$scope.projNam = doc.proj;
+
+                    $scope.dataCamion = doc.datacamion || [];
+
+                    $scope.hide();
+                }).catch(function(err) {
+                    console.log(err);
+
                 });
 
-                $scope.hide();
             }
-            $scope.camion = [];
+            $scope.vnumaustin = $scope.projID;
+            $scope.loadproj();
+            $scope.sync = function() {
+                    $scope.show();
+                    localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                        // yay, we're in sync!
+                    }).on('error', function(err) {
+                        // boo, we hit an error!
+                    });
+                    localprojDB.sync(remoteprojDB).on('complete', function() {
+                        // yay, we're in sync!
+                    }).on('error', function(err) {
+                        // boo, we hit an error!
+                    });
+                    $scope.hide();
+                }
+                //$scope.camion = [];
             $scope.loadprojcamion = function() {
                 $scope.show();
 
@@ -59,24 +97,110 @@ angular.module('app.dataCamion', [])
 
                 localAdminDB.get(id).then(function(doc) {
 
-                    $scope.camion = doc.camion || [];
+                    $scope.camiones = doc.camion || [];
 
 
-                    console.log('projtiposthing' + doc.camion)
 
 
-                    $scope.countcamions = doc.camion.length;
+
+                    console.log('data de camion' + doc.camion)
+
+
+                    //   $scope.countcamions = doc.camion.length;
 
                 }).catch(function(err) {
                     console.log(err);
                 });
 
+                $scope.hide();
+            }
+            $scope.loadprojconductor = function() {
+                $scope.show();
+                var id = 'conductor'
+                localAdminDB.get(id).then(function(doc) {
+                    $scope.conductores = doc.conductor || [];
+                    // console.log('projtiposthing' + doc.camion)
+                    //$scope.countcamions = doc.camion.length;
 
+                }).catch(function(err) {
+                    console.log(err);
+                });
+                $scope.hide();
+            }
+            $scope.loadprojdatacamion = function() {
+                $scope.show();
+                var id = 'datacamion'
+                localAdminDB.get(id).then(function(doc) {
+                    $scope.dataCamion1 = doc.datacamion || [];
+                    console.log('data de camion' + doc.datacamion)
+                        // $scope.countcamions = doc.camion.length;
+
+                }).catch(function(err) {
+                    console.log(err);
+                });
                 $scope.hide();
             }
 
             $scope.loadprojcamion();
+            $scope.loadprojconductor();
+            $scope.loadprojdatacamion();
 
+            $scope.updateCamion = function(obj) {
+                $scope.selectedCamion_u = obj;
+
+            }
+            $scope.updateConductor = function(obj) {
+                $scope.selectedConductor_u = obj;
+
+            }
+            $scope.updateFecha = function(obj) {
+                $scope.fecha_u = obj;
+
+            }
+            $scope.updateDocumento = function(obj) {
+                $scope.documento_u = obj;
+
+            }
+            $scope.updateVnumaustin = function(obj) {
+                $scope.vnumaustin_u = obj;
+
+            }
+            $scope.updateVnumminera = function(obj) {
+                $scope.vnumminera_u = obj;
+
+            }
+            $scope.updateTemp = function(obj) {
+                $scope.temp_u = obj;
+
+            }
+            $scope.updateNitratoyara = function(obj) {
+                $scope.nitratoyara_u = obj;
+
+            }
+            $scope.updateNitratoprilex = function(obj) {
+                $scope.nitratoprilex_u = obj;
+
+            }
+            $scope.updateR2 = function(obj) {
+                $scope.r2_u = obj;
+
+            }
+            $scope.updateR1 = function(obj) {
+                $scope.r1_u = obj;
+
+            }
+            $scope.updateHgassing = function(obj) {
+                $scope.hgassing_u = obj;
+
+            }
+            $scope.updateHblendyara = function(obj) {
+                $scope.hblendyara_u = obj;
+
+            }
+            $scope.updateHblendenaex = function(obj) {
+                $scope.hblendenaex_u = obj;
+
+            }
 
 
             $scope.createProductos = function() {
@@ -106,12 +230,12 @@ angular.module('app.dataCamion', [])
             $scope.removeProd = function(prod) {
                 var index = -1;
 
-                $scope.camion.some(function(obj, i) {
-                    return obj.lic === prod.lic ? index = i : false;
+                $scope.dataCamion.some(function(obj, i) {
+                    return obj.name === prod.name ? index = i : false;
                 });
 
                 console.log(index);
-                $scope.camion.splice(index, 1);
+                $scope.dataCamion.splice(index, 1);
 
             };
 
@@ -147,23 +271,28 @@ angular.module('app.dataCamion', [])
 
 
             };
-            $scope.updateNewcamionName = function(obj) {
-                $scope.newcamionName = obj;
-                console.log("newcamionname " + obj)
+            $scope.saveCamionData = function() {
+                var data = {
+
+                    camion: $scope.selectedCamion_u,
+                    conductor: $scope.selectedConductor_u,
+                    fecha: $scope.fecha_u,
+                    doc: $scope.documento_u,
+                    vnumaustin: $scope.vnumaustin_u,
+                    vnumminera: $scope.vnumminera_u,
+                    temp: $scope.temp_u,
+                    nitratoyara: $scope.nitratoyara_u,
+                    nitratoprilex: $scope.nitratoprilex_u,
+                    r2: $scope.r2_u,
+                    r1: $scope.r1_u,
+                    hgassing: $scope.hgassing_u,
+                    hblendyara: $scope.hblendyara_u,
+                    hblendenaex: $scope.hblendenaex_u,
+
+                }
+                $scope.dataCamion.push(data);
             }
-            $scope.updateNewcamionLic = function(obj) {
-                $scope.newcamionLic = obj;
-                console.log("newcamionlic " + obj)
-            }
-            $scope.updateNewcamionCod = function(obj) {
-                $scope.newcamionCod = obj;
-                console.log("newcamioncod " + obj)
-            }
-            $scope.updateTipoProd = function(obj) {
-                $scope.newProdTipo = obj.tipo;
-                $scope.newProdTipoID = obj.id
-                console.log("tipo " + obj.tipo + " tipoid " + obj.id)
-            }
+
             $scope.saveProd = function(prod, idx) {
 
                 var newProd = {
@@ -179,22 +308,29 @@ angular.module('app.dataCamion', [])
                 $scope.showNewProdForm = false;
             }
 
-            $scope.updatecamion = function() {
+            $scope.uploadCamionData = function() {
                 $scope.show();
-                var id = "camion"
-                localAdminDB.get(id).then(function(doc) {
-                    return localAdminDB.put({
+                var id = $scope.projID;
+                localprojDB.get(id).then(function(doc) {
+
+
+                    return localprojDB.put({
                         _id: id,
                         _rev: doc._rev,
-                        prods: $scope.camion,
-
+                        proj: doc.proj,
+                        date: doc.date,
+                        barrenos: doc.barrenos,
+                        tipos: doc.tipos,
+                        productos: doc.productos,
+                        muestras: doc.muestras,
+                        datagral: doc.datagral,
+                        sismo: doc.sismo,
+                        datacamion: $scope.dataCamion,
+                    }).catch(function(err) {
+                        console.log(err);
                     });
-                }).then(function(response) {
-                    // handle response
-
-                }).catch(function(err) {
-                    console.log(err);
                 });
+
                 $scope.hide();
                 alert("Se ha actualizado la Información");
             }

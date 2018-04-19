@@ -64,7 +64,11 @@ angular.module('app.subirSismo', [])
                 }).on('error', function(err) {
                     // boo, we hit an error!
                 });
-
+                localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                    // yay, we're in sync!
+                }).on('error', function(err) {
+                    // boo, we hit an error!
+                });
 
                 $scope.hide();
             }
