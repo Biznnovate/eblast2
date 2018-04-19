@@ -80,10 +80,35 @@
                     <i class="icon ion-ios-plus"></i>
                 </div>
 
-                <button id="editarVoladuranMapa-butto33" ng-show="disableAddNewBarr" ng-click="addNewBarrS2(newBarrnam,coordx,coordy); shownewBarrForm=false; selectedBarreno=[];disableAddNewBarr=false" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+
                 <button id="editarVoladuranMapa-butto33" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
+                <button id="editarVoladuranMapa-butto33" ng-click="cloneSelectedBarr();" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-ios-copy"></button>
                 <button id="editarVoladuranMapa-butto33" ng-click="dataChartBarrs()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-ios-refresh-outline"></button>
+
                 <strong>{{message}}</strong>
+
+                <div ng-show="showCoordControl=='yes'">
+                    <center>
+                        <table>
+                            <tr>
+                                <td></td>
+                                <td><button id="editarVoladuranMapa-butto33" ng-click="moveBarrUp()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-arrow-dropup-circle"></button></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><button id="editarVoladuranMapa-butto33" ng-click="moveBarrLeft()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-arrow-dropleft-circle"></button></td>
+                                <td></td>
+                                <td><button id="editarVoladuranMapa-butto33" ng-click="moveBarrRight()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-arrow-dropright-circle"></button></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button id="editarVoladuranMapa-butto33" ng-click="moveBarrDown()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-arrow-dropdown-circle"></button></td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </center>
+                </div>
             </div>
 
 

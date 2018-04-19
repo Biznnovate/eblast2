@@ -54,6 +54,7 @@ angular.module('app.editarVoladuraMapa', [])
                 // $scope.dataChart1 = [];
                 $scope.labelChart = [];
                 $scope.pendingChart = [];
+                $scope.workingChart = [];
                 angular.forEach(barrenosforchart, function(value, key) {
                     if (value.status == "Pending") {
                         var data = {
@@ -66,6 +67,16 @@ angular.module('app.editarVoladuraMapa', [])
                         console.log(value)
                         $scope.pendingChart.push(data);
                         // var colorbarr = "#d42827"
+                    } else if (value.status == "Working") {
+                        var data = {
+                            'v': value.barr,
+                            'x': value.coordx,
+                            'y': value.coordy,
+                            //'r': radio,
+
+                        }
+                        $scope.workingChart.push(data);
+                        // var colorbarr = "#a6a6a6"
                     } else {
                         var data = {
                             'v': value.barr,
@@ -102,6 +113,12 @@ angular.module('app.editarVoladuraMapa', [])
                             backgroundColor: '#a6a6a6',
                             color: '#ffffff',
                             data: $scope.pendingChart,
+
+
+                        }, {
+                            backgroundColor: '#0000ff',
+                            color: '#ffffff',
+                            data: $scope.workingChart,
 
 
                         }]
@@ -505,6 +522,123 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.$applyAsync();
                 //  $scope.dataChartBarrs();
             };
+            $scope.showCoordControl = 'no';
+            $scope.cloneSelectedBarr = function(barr) {
+                $scope.showCoordControl = 'yes';
+                $scope.show();
+                var count = $scope.Barrenos.length;
+
+                console.log(count)
+                var newName = 'N' + (count + 1)
+                console.log(newName)
+
+
+
+
+                var id = $scope.projID;
+                var selectedID = $scope.selectedbarr.barr;
+                var rows = $scope.Barrenos;
+
+
+
+
+                var newDataBarr = {
+                    //'id': $scope.selectedbarr.id,
+                    'barr': newName,
+                    'prof': $scope.profDis,
+                    'diam': $scope.selectedbarr.diam,
+                    'tipo': $scope.selectedTipo_u,
+                    'profreal': $scope.profreal_u,
+                    'coordx': $scope.coordx_u,
+                    'coordy': $scope.coordy_u,
+                    'taco': $scope.taco_u,
+                    'tacoini': $scope.tacoini_u,
+                    'aire': $scope.aire_u,
+                    'bordo': $scope.bordo_u,
+                    'espaciamiento': $scope.espaciamiento_u,
+                    'diametro': $scope.diametro_u,
+                    'densidad': $scope.densidad_u,
+                    'status': "Working",
+                    'calcs': $scope.calcVals,
+                    'cargas ': $scope.cargas,
+                    'iniciadores ': $scope.iniciadores,
+                    'tacofinal ': $scope.tacofinal,
+                }
+                $scope.recentlyupdatedBarr = newName;
+
+                //$scope.recentlyAddedBarr = newDataBarr
+                $scope.Barrenos.push(newDataBarr);
+                console.log(newDataBarr)
+
+
+                $scope.shownewBarrForm = false;
+
+
+
+
+                $scope.message = "Agregando el Barreno " + newName + " .";
+
+                console.log($scope.message);
+                $scope.selectedMapDataFunc(newName);
+                $scope.hide();
+                $scope.$applyAsync();
+                $scope.dataChartBarrs();
+
+
+            }
+
+            $scope.moveBarrUp = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordy + .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordy_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrDown = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordy - .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordy_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrLeft = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordx - .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordx_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrRight = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordx + .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordx_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
             $scope.updateSelectedBarr23 = function(obj) {
                 console.log(obj)
                 console.log($scope.selectedBarreno)
@@ -612,6 +746,7 @@ angular.module('app.editarVoladuraMapa', [])
                     }
                 }
             }
+
             $scope.findBarr = function(value) {
                 var item = $scope.Barrenos;
                 return function(item) {
@@ -649,6 +784,7 @@ angular.module('app.editarVoladuraMapa', [])
 
 
             }
+
             $scope.canvasMap = document.getElementById('mapaBarrenos');
             $scope.showPopup = function() {
                 $scope.datapop = {};
@@ -1865,7 +2001,7 @@ angular.module('app.editarVoladuraMapa', [])
             //agrega valores al barreno
             $scope.updateBarr = function() {
                 $scope.show();
-
+                $scope.showCoordControl = 'no';
                 var id = $scope.projID;
                 var selectedID = $scope.selectedbarr.barr;
                 var rows = $scope.Barrenos;
@@ -1954,6 +2090,67 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.showProfDis = false;
                 var selectblanc = 0;
                 $scope.updateSelectedBarr(selectblanc);
+
+            }
+            $scope.updateNewBarr = function() {
+                $scope.show();
+
+                var id = $scope.projID;
+                var selectedID = $scope.selectedbarr.barr;
+                var rows = $scope.Barrenos;
+
+
+                //var index = $scope.Barrenos.barr.indexOf(selectedID)
+                //console.log('El indice es'+index)
+                //$scope.Barrenos.splice(index,1);     
+                // }
+                for (var i = 0; i < $scope.Barrenos.length; i++) {
+                    if ($scope.Barrenos[i].barr == selectedID) {
+                        $scope.Barrenos.splice(i, 1); // removes the matched element
+                        i = $scope.Barrenos.length; // break out of the loop. Not strictly necessary
+                    }
+                }
+                var newDataBarr = {
+                        //'id': $scope.selectedbarr.id,
+                        'barr': $scope.recentlyupdatedBarr,
+                        'prof': $scope.profDis,
+                        'diam': $scope.selectedbarr.diam,
+                        'tipo': $scope.selectedTipo_u,
+                        'profreal': $scope.profreal_u,
+                        'coordx': $scope.coordx_u,
+                        'coordy': $scope.coordy_u,
+                        'taco': $scope.taco_u,
+                        'tacoini': $scope.tacoini_u,
+                        'aire': $scope.aire_u,
+                        'bordo': $scope.bordo_u,
+                        'espaciamiento': $scope.espaciamiento_u,
+                        'diametro': $scope.diametro_u,
+                        'densidad': $scope.densidad_u,
+                        'status': "Working",
+                        'calcs': $scope.calcVals,
+                        'cargas ': $scope.cargas,
+                        'iniciadores ': $scope.iniciadores,
+                        'tacofinal ': $scope.tacofinal,
+                    }
+                    //  $scope.recentlyupdatedBarr = $scope.selectedbarr.barr;
+                $scope.Barrenos.push(newDataBarr);
+                console.log(newDataBarr)
+
+
+                $scope.shownewBarrForm = false;
+
+
+
+
+                $scope.message = "El Barreno " + $scope.recentlyupdatedBarr + " fue Actualizado.";
+                //$scope.showReloadButton = true;
+                console.log($scope.message);
+                // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
+                $scope.hide();
+                $scope.$applyAsync();
+                $scope.dataChartBarrs();
+                //$scope.profName = 'Diseño'
+
 
             }
 

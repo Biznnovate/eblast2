@@ -522,8 +522,9 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.$applyAsync();
                 //  $scope.dataChartBarrs();
             };
-
+            $scope.showCoordControl = 'no';
             $scope.cloneSelectedBarr = function(barr) {
+                $scope.showCoordControl = 'yes';
                 $scope.show();
                 var count = $scope.Barrenos.length;
 
@@ -539,16 +540,8 @@ angular.module('app.editarVoladuraMapa', [])
                 var rows = $scope.Barrenos;
 
 
-                //var index = $scope.Barrenos.barr.indexOf(selectedID)
-                //console.log('El indice es'+index)
-                //$scope.Barrenos.splice(index,1);     
-                // }
-                for (var i = 0; i < $scope.Barrenos.length; i++) {
-                    if ($scope.Barrenos[i].barr == selectedID) {
-                        $scope.Barrenos.splice(i, 1); // removes the matched element
-                        i = $scope.Barrenos.length; // break out of the loop. Not strictly necessary
-                    }
-                }
+
+
                 var newDataBarr = {
                     //'id': $scope.selectedbarr.id,
                     'barr': newName,
@@ -600,6 +593,45 @@ angular.module('app.editarVoladuraMapa', [])
                 var coord = $scope.coordy + .5
                 console.log("se actualizo la coord x a " + coord)
                 $scope.coordy_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrDown = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordy - .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordy_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrLeft = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordx - .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordx_u = coord;
+                $scope.updateNewBarr();
+                $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
+
+                $scope.hide();
+
+
+            }
+            $scope.moveBarrRight = function(obj) {
+                $scope.show();
+
+                var coord = $scope.coordx + .5
+                console.log("se actualizo la coord x a " + coord)
+                $scope.coordx_u = coord;
                 $scope.updateNewBarr();
                 $scope.selectedMapDataFunc($scope.recentlyupdatedBarr);
 
@@ -1969,7 +2001,7 @@ angular.module('app.editarVoladuraMapa', [])
             //agrega valores al barreno
             $scope.updateBarr = function() {
                 $scope.show();
-
+                $scope.showCoordControl = 'no';
                 var id = $scope.projID;
                 var selectedID = $scope.selectedbarr.barr;
                 var rows = $scope.Barrenos;
