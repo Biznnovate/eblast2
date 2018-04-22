@@ -1,4 +1,4 @@
-<ion-view title="Reporte de Carga1" id="page25">
+<ion-view title="Reporte de Carga" id="page25">
     <style>
         table,
         th,
@@ -27,8 +27,8 @@
                 <div class="btn-group">
                     <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                     <ul class="dropdown-menu " role="menu">
-                        <li><button class="btn btn-link" ng-click="exportToExcel('#barrenos')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
-
+                        <!--li><button class="btn btn-link" ng-click="exportToExcel('#barrenos')"><span class="glyphicon glyphicon-share"></span> XLS</button></li-->
+                        <li><button class="btn btn-link" ng-click="exportData()"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
                         <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
                         <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
                         <li><button class="btn btn-link" onClick="$('#barrenos').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
@@ -37,6 +37,37 @@
             </div>
 
             <div id="barrenos" print-section>
+                <table border="1">
+                    <thead>
+                        <tr class="table-header" style="font-weight: bold">
+                            <th>No. de Barrenos</th>
+                            <th>Prof. Diseñada (m)</th>
+                            <th>Prof. Real (m)</th>
+                            <th>Sub Perforación</th>
+                            <th>Taco (m)</th>
+                            <th>Peso Explosivo/Retardo (Kgs)</th>
+                            <th>Bordo (m)</th>
+                            <th>Espaciamiento (m)</th>
+                            <th>Volumen</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in Barrenos | orderBy:['x.status', 'x.barr']:true track by $index">
+                            <td style="text-align:center">{{x.barr}}</td>
+                            <td style="text-align:center">{{x.prof}}</td>
+                            <td style="text-align:center">{{x.profreal}}</td>
+                            <td style="text-align:center">{{x.calcs.s}}</td>
+                            <td style="text-align:center">{{x.taco}}</td>
+                            <td style="text-align:center">{{x.calcs.Pt | number:2}}</td>
+                            <td style="text-align:center">{{x.bordo}}</td>
+                            <td style="text-align:center">{{x.espaciamiento}}</td>
+                            <td style="text-align:center">{{x.calcs.V | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="false" id="barrenostab">
                 <table border="1">
                     <thead>
                         <tr class="table-header" style="font-weight: bold">

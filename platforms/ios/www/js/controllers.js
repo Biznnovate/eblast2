@@ -33,12 +33,14 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
+.controller('vistaDeProyectoCtrl1', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
     // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
         // Show loader from service
+
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -131,6 +133,19 @@ angular.module('app.controllers', [])
                     console.log("I'm Batman.");
                     return remoteprojDB.getSession();
                 });
+                let localprodsDB = new pouchDB('prods');
+                let remoteprodsDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-products', { skipSetup: true });
+                remoteprodsDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
+                    console.log("I'm Batman.");
+                    return remoteprodsDB.getSession();
+
+                })
+                let localAdminDB = new pouchDB('admin');
+                let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+                remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
+                    console.log("I'm Batman.");
+                    return remoteAdminDB.getSession();
+                });
 
                 localprojDB.sync(remoteprojDB).on('complete', function() {
                     //  yay, we're in sync!
@@ -139,6 +154,18 @@ angular.module('app.controllers', [])
                     // boo, we hit an error!
                     console.log(err)
                 });
+                localprodsDB.sync(remoteprodsDB).on('complete', function() {
+                    // yay, we're in sync!
+
+                }).on('error', function(err) {
+                    // boo, we hit an error!
+                });
+                localAdminDB.sync(remoteAdminDB).on('complete', function() {
+                    // yay, we're in sync!
+                }).on('error', function(err) {
+                    // boo, we hit an error!
+                });
+
 
                 localprojDB.allDocs({
                     include_docs: true,
@@ -310,7 +337,7 @@ angular.module('app.controllers', [])
             $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
         }
         $scope.gotoSismo = function() {
-            $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
+            $state.go('menu.subirSismo', { 'proj': $scope.projID });
         }
         $scope.gotoDataGral = function() {
             $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
@@ -329,10 +356,10 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('vistaDeReporteCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('vistaDeReporteCtrl1', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, Excel, $timeout) {
+        function($scope, $stateParams, $state, pouchDB, Excel, $timeout, $ionicLoading) {
             //llama bd de data
             $scope.projparam = {
                 'id': $stateParams.id,
@@ -734,10 +761,10 @@ angular.module('app.controllers', [])
 
         }
     ])
-    .controller('reporteCarga1Ctrl', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('reporteCarga1Ctrl1', ['$scope', '$stateParams', '$state', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, Excel, $timeout) {
+        function($scope, $stateParams, $state, pouchDB, Excel, $timeout, $ionicLoading) {
             //llama bd de data
             $scope.projparam = {
                 'id': $stateParams.id,
@@ -1001,11 +1028,12 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('subirProyectoCtrl', ['$scope', '$stateParams', '$state', '$filter', '$window', '$timeout', '$ionicLoading', 'Uploadcsv', 'CsvParser', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('subirProyectoCtrl1', ['$scope', '$stateParams', '$state', '$filter', '$window', '$timeout', '$ionicLoading', 'Uploadcsv', 'CsvParser', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, $filter, $window, $timeout, $ionicLoading, Uploadcsv, CsvParser, pouchDB, ngCsvImport) {
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -1600,11 +1628,12 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('ajustarCSVCtrl', ['$scope', '$stateParams', '$state', '$window', '$timeout', '$ionicLoading', '$filter', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('ajustarCSVCtrl1', ['$scope', '$stateParams', '$state', '$window', '$timeout', '$ionicLoading', '$filter', 'pouchDB', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, $window, $timeout, $ionicLoading, $filter, pouchDB) {
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -2495,13 +2524,14 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('parametrosVoladura1Ctrl', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('parametrosVoladura1Ctrl1', ['$scope', '$stateParams', '$state', 'Productos', '$filter', '$window', '$timeout', '$ionicLoading', 'pouchDB', 'passInfo', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, Productos, $filter, $window, $timeout, $ionicLoading, pouchDB, $routeParams, passInfo) {
         //option.name for option in data.availableOptions track by option.id
 
         // Show loader from service
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -2992,6 +3022,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 }).catch(function(err) {
                     console.log(err);
                 });
@@ -3022,6 +3054,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
 
                 }).catch(function(err) {
@@ -3107,6 +3141,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
 
 
@@ -3485,6 +3521,7 @@ angular.module('app.controllers', [])
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page) {
 
+        $scope.$root.showMenuIcon = true;
         $scope.show = function() {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3885,6 +3922,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 });
             }).then(function() {
                 return localprojDB.get(id);
@@ -5176,6 +5215,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
                 });
             }).then(function() {
                 return localprojDB.get(id);
@@ -5263,6 +5304,8 @@ angular.module('app.controllers', [])
                     productos: doc.productos,
                     muestras: doc.muestras,
                     datagral: doc.datagral,
+                    sismo: doc.sismo,
+                    datacamion: doc.datacamion,
 
                 });
             }).then(function(response) {
@@ -6616,7 +6659,7 @@ angular.module('app.controllers', [])
     }
 ])
 
-.controller('generarReporteDatosGeneralesCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', 'Excel', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('generarReporteDatosGeneralesCtrl1', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', 'Excel', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
     // You can include any angular dependencies as parameters for this function
     // TIP: Access Route Parameters for your page via $stateParams.parameterName
     function($scope, $stateParams, $state, pouchDB, $timeout, Excel) {
@@ -6652,6 +6695,36 @@ angular.module('app.controllers', [])
             console.log(err);
         });
 
+        let localAdminDB = new pouchDB('admin');
+        let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
+        remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
+            console.log("I'm Batman.");
+            return remoteAdminDB.getSession();
+        });
+        $scope.loadprojExplo = function() {
+            $scope.show();
+
+            var id = 'explo'
+
+            localAdminDB.get(id).then(function(doc) {
+
+                $scope.explo = doc.explo || [];
+
+
+                console.log('projtiposthing' + doc.explo)
+
+
+                $scope.countExplos = doc.explo.length;
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+            $scope.hide();
+        }
+
+        $scope.loadprojExplo();
         $scope.projID = $scope.projparam.proj || '';
         $scope.BarrenosUpdated = [];
         $scope.BarrenosUpdatedCalcs = [];
@@ -7344,11 +7417,12 @@ angular.module('app.controllers', [])
 
         }
     ])
-    .controller('adminconsCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('adminconsCtrlold', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
         function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
             // Show loader from service
+            $scope.$root.showMenuIcon = true;
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...',
@@ -7480,7 +7554,7 @@ angular.module('app.controllers', [])
                 $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
             }
             $scope.gotoSismo = function() {
-                $state.go('menu.tomaDeSismografos', { 'proj': $scope.projID });
+                $state.go('menu.subirSismo', { 'proj': $scope.projID });
             }
             $scope.gotoDataGral = function() {
                 $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });

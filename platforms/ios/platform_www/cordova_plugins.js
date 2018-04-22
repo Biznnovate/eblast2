@@ -264,7 +264,6 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.2.1",
     "ionic-plugin-keyboard": "2.2.1",
     "ionic-plugin-deploy": "0.6.7",
-    "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-file-transfer": "1.6.3",
     "cordova-plugin-whitelist": "1.3.3",

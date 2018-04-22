@@ -38,9 +38,5 @@
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     }
   },
-  "dependent_plugins": {
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    }
-  }
+  "dependent_plugins": {}
 }

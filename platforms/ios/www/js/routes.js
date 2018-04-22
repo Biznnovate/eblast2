@@ -57,6 +57,11 @@ angular.module('app.routes', [])
 
     .state('menu', {
         url: '/side-menu21',
+        params: {
+            id: "",
+            status: "",
+            proj: ""
+        },
         templateUrl: 'templates/menu.html',
         controller: 'menuCtrl'
     })
@@ -332,6 +337,104 @@ angular.module('app.routes', [])
                 'side-menu21': {
                     templateUrl: 'templates/admincons.html',
                     controller: 'adminconsCtrl'
+                }
+            }
+        })
+        .state('menu.editProds', {
+            url: '/page27',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/editProds.html',
+                    controller: 'editProdsCtrl'
+                }
+            }
+        })
+        .state('menu.adminCrearTipos', {
+            url: '/page28',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminCrearTipos.html',
+                    controller: 'adminCrearTiposCtrl'
+                }
+            }
+        })
+        .state('menu.adminExplo', {
+            url: '/page29',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminExplo.html',
+                    controller: 'adminExploCtrl'
+                }
+            }
+        })
+        .state('menu.adminCamion', {
+            url: '/page30',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminCamion.html',
+                    controller: 'adminCamionCtrl'
+                }
+            }
+        })
+        .state('menu.subirSismo', {
+            url: '/page31',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/subirSismo.html',
+                    controller: 'subirSismoCtrl'
+                }
+            }
+        })
+        .state('menu.adminConductor', {
+            url: '/page32',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminConductor.html',
+                    controller: 'adminConductorCtrl'
+                }
+            }
+        })
+        .state('menu.dataCamion', {
+            url: '/page33',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/dataCamion.html',
+                    controller: 'dataCamionCtrl'
                 }
             }
         })

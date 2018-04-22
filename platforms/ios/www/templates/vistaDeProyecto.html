@@ -1,9 +1,14 @@
-<ion-view title="eBlast v1.0118.1.1" id="page13">
+<ion-view title="eBlast v1.0118.4.1" id="page13" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
     <ion-nav-buttons side="right">
         <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
                        
                         </button>
     </ion-nav-buttons>
+
     <ion-content padding="true" class="has-header">
 
         <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
@@ -42,16 +47,31 @@
             </tr>
 
         </table>
-        <button ui-sref="menu.subirProyecto()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-android-add-circle">Nuevo Proyecto</button>
-        <!--button ng-click="gotoMapa()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-map">Ver Mapa de Barrenos</button-->
-        <button ng-click="gotoParam()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-calculator ">Crear Tipo de Barreno</button>
-        <button ng-click="gotoCapt()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-android-locate">Captar Barrenos</button>
-        <button ng-click="gotoProductos()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-android-compass">Productos Utilizados</button>
-        <button ng-click="gotoMuestra()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-android-done-all">Agregar Muestreo de Calidad</button>
-        <button ng-click="gotoSismo()" id="vistaDeProyecto-button22" class="button button-positive button-block icon-left ion-ios-pulse-strong">Agregar Sismografo</button>
-        <button ng-click="gotoDataGral()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Datos Generales</button>
-        <button ng-click="gotoCarga()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Cargas</button>
-        <button ng-click="gotoReporte()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Barrenos</button>
-        <button ng-click="gotoAdmin()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-options">Consola Administrativa</button>
+        <div class="list card">
+
+            <a ion-item ui-sref="menu.subirProyecto()" id="vistaDeProyecto-button36" class="item item-icon-left"><i class="icon ion-android-add-circle"></i>Nuevo Proyecto</a>
+            <a ion-item ng-click="gotoParam()" ng-hide="projID==''" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-calculator"></i> Tipo de Barreno</a>
+            <a ion-item ng-click="gotoCapt()" ng-hide="projID==''" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-android-locate"></i> Barrenos</a>
+            <a ion-item ng-click="gotoProductos()" ng-hide="projID==''" id="vistaDeProyecto-button36" class="item item-icon-left"><i class="icon ion-android-compass"></i>Productos Utilizados</a>
+            <a ion-item ng-click="gotoMuestra()" ng-hide="projID==''" id="vistaDeProyecto-button37" class="item item-icon-left"><i class="icon ion-android-done-all"></i>Agregar Muestreo de Calidad</a>
+            <a ion-item ng-click="gotoSismo()" ng-hide="projID==''" id="vistaDeProyecto-button22" class="item item-icon-left"><i class="icon ion-ios-pulse-strong"></i> Sismografo</a>
+            <a ion-item ng-click="gotoCamion()" ng-hide="projID==''" id="vistaDeProyecto-button22" class="item item-icon-left"><i class="icon ion-android-car"></i> Camión</a>
+            <a ion-item ng-click="gotoDataGral()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Datos Generales</a>
+            <a ion-item ng-click="gotoCarga()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Informe de Cargas</a>
+            <a ion-item ng-click="gotoReporte()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Informe de Barrenos</a>
+            <a ion-item ng-click="gotoAdmin()" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-options"></i> Administrativa</a>
+
+        </div>
+        <!--button ion-item ui-sref="menu.subirProyecto()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-android-add-circle">Nuevo Proyecto</button>
+        <!--button ng-click="gotoMapa()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-map">Ver Mapa de Barrenos</button>
+        <button ion-item ng-click="gotoParam()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-calculator ">Crear Tipo de Barreno</button>
+        <button ion-item ng-click="gotoCapt()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-android-locate">Captar Barrenos</button>
+        <button ion-item ng-click="gotoProductos()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-android-compass">Productos Utilizados</button>
+        <button ion-item ng-click="gotoMuestra()" id="vistaDeProyecto-button37" class="button button-positive button-block icon-left ion-android-done-all">Agregar Muestreo de Calidad</button>
+        <button ion-item ng-click="gotoSismo()" id="vistaDeProyecto-button22" class="button button-positive button-block icon-left ion-ios-pulse-strong">Agregar Sismografo</button>
+        <button ion-item ng-click="gotoDataGral()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Datos Generales</button>
+        <button ion-item ng-click="gotoCarga()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Cargas</button>
+        <button ion-item ng-click="gotoReporte()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-download">Informe de Barrenos</button>
+        <button ion-item ng-click="gotoAdmin()" id="vistaDeProyecto-button38" class="button button-positive button-block icon-left ion-android-options">Consola Administrativa</button>-->
     </ion-content>
 </ion-view>

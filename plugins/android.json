@@ -7,31 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-pdf-generator": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
     "cordova-plugin-console": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "ionic-plugin-deploy": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "ionic-plugin-keyboard": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     },
     "cordova-plugin-file": {
@@ -40,14 +22,33 @@
     "cordova-plugin-file-opener2": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     },
-    "cordova-pdf-generator": {
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "ionic-plugin-deploy": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "ANDROID_SUPPORT_V4_VERSION": "27.+",
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     }
   },
   "dependent_plugins": {
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
     "es6-promise-plugin": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     }

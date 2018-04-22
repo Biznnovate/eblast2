@@ -1,11 +1,16 @@
-<ion-view title="Crear Tipo de Barreno" id="page8">
+<ion-view title="Crear Tipo de Barreno" id="page8" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
     <ion-nav-buttons side="right">
         <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
                                                
                                                 </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
-        <strong><h3>Proyecto: {{projNam}}</h3></strong>
+
+        <strong><h3>Proyecto: {{projNam}}</h3></strong> {{prod_listDB2.prods}}
         <!-- {{showtipoEditthing()}}
         <!--ion-item id="parametrosVoladura1-list-itemupd11" ng-repeat="tipo in projTipos | filter: tipo._id=tipoBarrNam_u" ng-model="projTipos">{{tipo._id}}</ion-item-->
         <!--<table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
@@ -24,11 +29,11 @@
           <select ng-options="proj as proj.doc._id for proj in projInfo.rows | orderBy: 'doc.proj'  "
            ng-model="selectedproj" ng-change="selectProj(selectedproj)"></select>
         </label>-->
-        <div ng-if="projTipos.length!=0">
+        <div ng-if="projTiposCountFunc()!=0">
 
 
-            <button ng-click="showTiposTable=true" ng-model="countprojTipos" ng-click="loadprojTipos()" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
-        Tipos Creados ( {{countTipos}} ) </button>
+            <button ng-click="showTiposTable=true" ng-click="loadprojTipos(); projTiposCountFunc();" ng-hide="projID=='' || showTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Tipos Creados ( {{projTiposCountFunc()}} ) </button>
             <button ng-click="showTiposTable=false" ng-show="showTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
         Ocultar Tipos</button>
             <form id="parametrosVoladura1-vertipobarrenos" ng-show="showTiposTable">
@@ -44,14 +49,45 @@
                         <td>{{prod.id}}</td>
                         <td>{{prod.peso}}</td>
                         <td>{{prod.prof}}</td>
-                        <td ng-show="showEditTipo"><button ng-click="editTipo(prod,$index)" class="button button-positive button-full button-clear icon ion-edit"></button></td>
+                        <td ng-show="showEditTipo"><button ng-click="editTipo(prod,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-edit"></button></td>
                         <td ng-show="showEditTipo"><button ng-click="deleteTipo($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
                     </tr>
                 </table>
             </form>
         </div>
+        <div ng-if="globalTipos.length!=0">
+            <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle101" ng-true-value="'show'" ng-false-value="" ng-model="$parent.showGlobalTiposVal" ng-change="showGlobalTiposFunc(showGlobalTiposVal)">Tipos Globales ( {{countglobalTipos}} )</ion-toggle>
+        </div>
+
+        <form ng-show="showGlobalTiposForm==true">
 
 
+
+            <!--button ng-click="showglobalTiposTable=true" ng-model="countglobalTipos" ng-click="loadglobalTipos()" ng-hide="showglobalTiposTable==true " id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Tipos Globales Creados ( {{countglobalTipos}} ) </button>
+            <button ng-click="showglobalTiposTable=false" ng-show="showglobalTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Ocultar Tipos Globales</button-->
+            <form id="parametrosVoladura1-vertipobarrenos" ng-show="showGlobalTiposForm==true">
+                <ion-scroll>
+                    <table class="table table-bordered table-hover table-condensed">
+                        <tr>
+                            <th><strong>Tipo de Barreno</strong></th>
+                            <th><strong>Peso Total de Explosivo</strong></th>
+                            <th><strong>Largo Total</strong></th>
+
+                        </tr>
+                        <tr ng-repeat="prod in globalTipos track by $index" on-drag-left="showEditglobalTipo=false" on-double-tap="showEditglobalTipo=true">
+
+                            <td>{{prod.id}}</td>
+                            <td>{{prod.peso}}</td>
+                            <td>{{prod.prof}}</td>
+                            <td ng-show="showEditglobalTipo"><button ng-click="editglobalTipo(prod,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-ios-copy"></button></td>
+
+                        </tr>
+                    </table>
+                </ion-scroll>
+            </form>
+        </form>
 
         <!--button id="parametrosVoladura1-button26" ng-click="barrForm=true" style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-add-circle"></button-->
 
@@ -102,7 +138,7 @@
                 <div class="col">
                     <label class="item item-select" id="parametrosVoladura1-selectiniciadores">
         <span class="input-label">Iniciador</span>
-        <select ng-model="newIni" ng-options="producto as producto.prod for producto in listed_productos | filter:producto.tipoid='ini'"
+        <select ng-model="newIni" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid='ini'"
                 ng-change="getTipoIni(newIni)"></select>
       </label>
                     <label class="item item-input" id="editarVoladuraMapa-cantprod">
@@ -135,7 +171,7 @@
 
                         <label class="item item-select" id="parametrosVoladura1-select25" ng-show="showTipoprodbarrAct">
         <span class="input-label">{{tipoProd.tipo}}</span>
-        <select ng-model="newProd" ng-options="producto as producto.prod for producto in listed_productos | filter:producto.tipoid=tipoprodId"
+        <select ng-model="newProd" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid=tipoprodId"
                 ng-change="getTipoProd(newProd)"></select>
       </label>
 
@@ -200,13 +236,17 @@
 
         <div id="parametrosVoladura1-button-bar1" class="button-bar" ng-model="tipoID">
 
-            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle" ng-disabled="enableCreate==false"
-                ng-hide="editBarrenoStatus">Crear Tipo</button>
-            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos(); newBarreno.nam=''; tipoID='';editBarrenoStatus=false " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle "
-                ng-show="tipoID!=''&&editBarrenoStatus">Actualizar Tipo</button>
+            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID=''; projTiposCountFunc();" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle"
+                ng-disabled="enableCreate" ng-hide="editBarrenoStatus">Crear Tipo</button>
+            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos();" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle " ng-show="editBarrenoStatus">Actualizar Tipo</button>
+
+            <button id="parametrosVoladura1-button55" ng-click="gotovistaDeProj()" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-cancel " ng-show="editBarrenoStatus">Cancelar</button>
 
             <button id="parametrosVoladura1-button56 " ng-click="gotoPage() " id="parametrosVoladura1-button60 " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-left ion-android-locate ">Captar Barrenos</button>
+
         </div>
+
+        <!--div ng-show="projID==''">tipoid {{tipoID}} editbarrenostatus {{editBarrenoStatus}}</div>
         <!--div id="parametrosVoladura1-markdown11 " class="show-list-numbers-and-dots ">
       <p style="color:#000000; ">{{newTipoBars.nam}} {{newTipoBars.carga}} tipolocal {{TipoLocal}} tipolocalload {{TipoLocalLoad}} new BArreno {{$scope.newBarreno}}</p>
     </div-->

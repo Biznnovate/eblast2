@@ -6,7 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'pouchdb', 'chart.js', 'xeditable', 'ngcsv', 'ngSanitize', 'ngCsv', 'ngCsvImport', 'app.controllers', 'app.routes',
-    'app.directives', 'app.services', 'barrenos', 'productos', 'iniciadores', 'htmlToPdfSave', 'productosgranel', 'ionic.native', 'AngularPrint', 'app.editarVoladuraMapa',
+    'app.directives', 'app.services', 'barrenos', 'productos', 'iniciadores', 'htmlToPdfSave', 'productosgranel', 'ionic.native', 'AngularPrint', 'app.editarVoladuraMapa', 'app.ajustarCSV', 'app.parametrosVoladura1',
+    'app.editProds', 'app.admincons', 'app.adminCrearTipos', 'app.adminExplo', 'app.generarReporteDatosGenerales', 'app.adminCamion', 'app.subirSismo', 'ngFileUpload', 'app.vistaDeReporte',
+    'app.reporteCarga1', 'app.subirProyecto', 'app.vistaDeProyecto', 'app.adminConductor', 'angularjs-input-file', 'naif.base64', 'pdf', 'app.dataCamion',
 ])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider) {

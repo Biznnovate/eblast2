@@ -18,14 +18,14 @@
         "chart.js": "^2.7.1",
         "chartjs-plugin-datalabels": "^0.1.0",
         "chartjs-plugin-zoom": "^0.5.0",
-        "cordova-android": "^6.2.3",
-        "cordova-browser": "^4.1.0",
+        "cordova-android": "6.3.0",
         "cordova-ios": "^4.4.0",
         "cordova-osx": "^4.0.1",
         "cordova-pdf-generator": "^2.0.1",
-        "cordova-plugin-compat": "^1.1.0",
+        "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-console": "1.0.5",
         "cordova-plugin-device": "1.1.4",
+        "cordova-plugin-facebook4": "^1.7.4",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-opener2": "^2.0.19",
         "cordova-plugin-file-transfer": "^1.6.3",
@@ -50,6 +50,7 @@
         "ngcsv": "^0.2.0",
         "npm": "^5.8.0",
         "pdfmake": "^0.1.32",
+        "phonegap-plugin-barcodescanner": "^7.1.1",
         "pouchdb-find": "^6.2.0",
         "tableexport": "^4.0.11",
         "xlsx": "^0.11.19"
@@ -90,9 +91,8 @@
             "cordova-plugin-file": {}
         },
         "platforms": [
-            "android",
-            "browser",
-            "ios"
+            "ios",
+            "android"
         ]
     }
 }
