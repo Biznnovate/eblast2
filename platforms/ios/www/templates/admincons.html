@@ -1,0 +1,25 @@
+<ion-view title="eBlast Admin Console" id="page26" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()">
+                       
+                        </button>
+    </ion-nav-buttons>
+
+    <ion-content padding="true" class="has-header">
+        <div class="list card">
+
+            <a ion-item ng-click="gotoProds()" id="vistaDeProyecto-button36" class="item item-icon-left"><i class="icon ion-android-add-circle"></i>Productos</a>
+            <a ion-item ng-click="gotoTipos()" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-calculator"></i> Tipos Globales</a>
+            <a ion-item ng-click="gotoExplo()" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-ios-people"></i> Explosivistas</a>
+            <a ion-item ng-click="gotoCamion()" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-android-car"></i> Camiones</a>
+            <a ion-item ng-click="gotoConductor()" id="vistaDeProyecto-button37" class="item item-icon-left"> <i class="icon ion-android-car"></i> Conductores</a>
+            <a ion-item ng-click="gotoUsrs()" id="vistaDeProyecto-button36" class="item item-icon-left"><i class="icon ion-android-contacts"></i>Usuarios</a>
+
+
+        </div>
+    </ion-content>
+</ion-view>

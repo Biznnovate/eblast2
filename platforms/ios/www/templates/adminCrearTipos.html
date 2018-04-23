@@ -1,0 +1,204 @@
+<ion-view title="Crear Tipo de Barreno Globales" id="page28" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                               
+                                                </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+
+
+
+        <button ng-click="showTiposTable=true" ng-model="countprojTiposGlob" ng-click="loadprojTiposGlob()" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Tipos Creados ( {{countTipos}} ) </button>
+        <button ng-click="showTiposTable=false" ng-show="showTiposTable" id="parametrosVoladura1-vertiposbar" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-left ion-android-list">
+        Ocultar Tipos</button>
+        <form id="parametrosVoladura1-vertipobarrenos" ng-show="showTiposTable">
+            <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                    <th><strong>Tipo de Barreno</strong></th>
+                    <th><strong>Peso Total de Explosivo</strong></th>
+                    <th><strong>Largo Total</strong></th>
+
+                </tr>
+                <tr ng-repeat="prod in projTiposGlob track by $index" on-drag-left="showEditTipo=false" on-double-tap="showEditTipo=true">
+
+                    <td>{{prod.id}}</td>
+                    <td>{{prod.peso}}</td>
+                    <td>{{prod.prof}}</td>
+                    <td ng-show="showEditTipo"><button ng-click="editTipo(prod,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-edit"></button></td>
+                    <td ng-show="showEditTipo"><button ng-click="deleteTipo($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
+                </tr>
+            </table>
+        </form>
+
+
+
+
+        <!--button id="parametrosVoladura1-button26" ng-click="barrForm=true" style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-add-circle"></button-->
+
+
+
+
+        <label class="item item-input" id="parametrosVoladura1-input93">
+            <span class="input-label">Nombre del Tipo de Barreno</span>
+    
+            <input type="text" style="text-align: right;" placeholder="Escriba el Nombre del Barreno" 
+            ng-model="newBarreno.nam"  ng-value="newBarreno.nam"
+            ng-change='updateBarrenoNam(newBarreno.nam)'>
+          </label>
+        <form id="newTipoForm" class="list" ng-show="showMainform">
+
+            <ion-toggle toggle-class="toggle-positive" id="parametrosVoladura1-toggle10" ng-true-value="Precorte" ng-false-value="" ng-model="precorte">Precorte?</ion-toggle>
+
+            <label class="item item-input" id="editarVoladuraMapa-inputtaco">
+        <span class="input-label">Taco Inicial</span>
+        <input type="number" placeholder=" mts" ng-model="tacoini" ng-change="updateTacoIni(tacoini)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputtaco">
+        <span class="input-label">Taco</span>
+        <input type="number" placeholder=" mts" ng-model="taco" ng-change="updateTaco(taco)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputaire">
+        <span class="input-label">Aire</span>
+        <input type="number" placeholder=" mts" ng-model="aire" ng-change="updateAire(aire)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputbordo">
+        <span class="input-label">Bordo</span>
+        <input ng-pattern="onlyNumbers" type="number" placeholder=" mts" ng-model="bordo" ng-change="updateBordo(bordo)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputespaciamiento">
+        <span class="input-label">Espaciamiento</span>
+        <input type="number" placeholder=" mts" ng-model="espaciamiento" ng-change="updateEspaciamiento(espaciamiento)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputdiametro">
+        <span class="input-label">Diametro</span>
+        <input type="number" placeholder=" mm" ng-model="diametro" ng-change="updateDiametro(diametro)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+            <label class="item item-input" id="editarVoladuraMapa-inputdiametro">
+        <span class="input-label">Sub-Perforación</span>
+        <input type="number" placeholder=" mts" ng-model="subperf" ng-change="updateSubperf(subperf)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+      </label>
+
+            <div class="row">
+                <div class="col">
+                    <label class="item item-select" id="parametrosVoladura1-selectiniciadores">
+        <span class="input-label">Iniciador</span>
+        <select ng-model="newIni" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid='ini'"
+                ng-change="getTipoIni(newIni)"></select>
+      </label>
+                    <label class="item item-input" id="editarVoladuraMapa-cantprod">
+      <span class="input-label">Cantidad</span>
+      <input type="number" placeholder=""  ng-model="cantini" ng-change="updateCantIni(cantini)">
+        </label>
+                </div>
+                <div class="col">
+                    <button id="parametrosVoladura1-button244" ng-disabled="enableAddIni" ng-click="addIni(newTipoProd,cantini)" style="left:-10px;border-radius:0px 0px 0px 0px;" class="button button-positive button-full button-clear icon ion-android-add-circle"></button>
+                </div>
+            </div>
+            <div class="row">
+
+
+
+
+                <ion-toggle toggle-class="toggle-positive" id="tipodeprod-toggle5" ng-model="tipodecarga" ng-true-value="'Variable'" ng-false-value="'Fija'" ng-change="changeTipoCarga(tipodecarga)">Tipo de Carga {{tipodecarga}}</ion-toggle>
+            </div>
+            <form id="tiposde carga-form6" class="list">
+
+                <div class="row">
+                    <div class="col">
+                        <label class="item item-select" id="parametrosVoladura1-select13">
+            <span ng-disabled="showCargaForm" class="input-label">Carga {{tipodecarga}}</span>
+        <select ng-options="tipo as tipo.tipo for tipo in tipodeprod_list" ng-model="tipoProd" ng-show="tipodecarga=='Fija'" ng-change="showTipoprodbarr(tipoProd)"></select>
+        <select ng-options="tipo as tipo.tipo for tipo in tipodeprod_list" ng-model="tipoProd" ng-show="tipodecarga=='Variable'" ng-change="showTipoprodbarr(tipoProd)"></select>
+        
+      </label>
+
+
+                        <label class="item item-select" id="parametrosVoladura1-select25" ng-show="showTipoprodbarrAct">
+        <span class="input-label">{{tipoProd.tipo}}</span>
+        <select ng-model="newProd" ng-options="producto as producto.prod for producto in prod_listDB.prods | filter:producto.tipoid=tipoprodId"
+                ng-change="getTipoProd(newProd)"></select>
+      </label>
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <label class="item item-input" ng-disabled="showAmountInput" id="editarVoladuraMapa-cantprod" ng-show="tipodecarga=='Fija'">
+        <span class="input-label">Cantidad (mts)</span>
+
+      <input type="number" placeholder=""  ng-model="cantprod" ng-show="tipodecarga=='Fija'" ng-change="updateCant(cantprod)">
+        </label>
+                        <!--label class="item ite2input" ng-disabled="showAmountInput" id="editarVoladuraMapa-cantprod" ng-hide="tipodecarga=='Variable'">
+      <span class="input-label">Cantidad</span>
+      <input type="number" placeholder=""  ng-model="cantprodgra" ng-show="tipodecarga=='Variable'" ng-change="updateCantGra(cantprodgra)">
+        </label-->
+                    </div>
+                </div>
+
+                <div class="col">
+
+
+                    <button id="parametrosVoladura1-button24" ng-disabled="enableAddProd" ng-click="add(newTipoProd)" style="left:-10px;border-radius:0px 0px 0px 0px;" class="button button-positive button-full button-clear icon ion-android-add-circle"></button>
+
+
+                </div>
+            </form>
+
+            <form id="showprodsinparametrovol" class="list" ng-model="prods">
+                <table class="table table-bordered table-hover table-condensed" ng-show="showMainform">
+                    <tr>
+                        <th>Largo Total</th>
+                        <th>Peso Total</th>
+                        <th>Densidad Total</th>
+                    </tr>
+                    <tr>
+                        <td>{{getLargoTotal()}}</td>
+                        <td>{{getPesoGra()}}</td>
+                        <td>{{getDensidad()}}</td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered table-hover table-condensed" ng-show="showMainform">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                    <tr ng-repeat="prod in prods track by $index" on-drag-left="showEditProd=false" on-double-tap="showEditProd=true">
+                        <td>{{prod.prod}}</td>
+                        <td>{{prod.tipo}}</td>
+                        <td ng-show="prod.tipoid!='ini'">{{prod.cantidad}}</td>
+                        <td ng-show="prod.tipoid=='ini'">{{prod.cantidad_ini}}</td>
+                        <td ng-show="showEditProd"><button ng-click="deleteProd($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
+                    </tr>
+                </table>
+
+            </form>
+
+        </form>
+
+        <div id="parametrosVoladura1-button-bar1" class="button-bar" ng-model="tipoID">
+
+            <button id="parametrosVoladura1-button51" ng-click="insertTipoBarrenos(); barrForm=false; newBarreno.nam=''; tipoID='';" style="border-radius:25px 25px 25px 25px;" class="button button-positive button-block icon-right ion-android-add-circle" ng-disabled="enableCreate"
+                ng-hide="editBarrenoStatus">Crear Tipo</button>
+            <button id="parametrosVoladura1-button55" ng-click="updateTipoBarrenos();" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-add-circle " ng-show="tipoID!=''&&editBarrenoStatus">Actualizar Tipo</button>
+
+            <button id="parametrosVoladura1-button55" ng-click="gotovistaDeProj()" style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-right ion-android-cancel " ng-show="tipoID!=''&&editBarrenoStatus">Cancelar</button>
+
+            <button id="parametrosVoladura1-button56 " ng-click="gotoPage() " id="parametrosVoladura1-button60 " style="border-radius:25px 25px 25px 25px; " class="button button-positive button-block icon-left ion-android-locate ">Captar Barrenos</button>
+
+        </div>
+
+        <!--div ng-show="projID==''">tipoid {{tipoID}} editbarrenostatus {{editBarrenoStatus}}</div>
+        <!--div id="parametrosVoladura1-markdown11 " class="show-list-numbers-and-dots ">
+      <p style="color:#000000; ">{{newTipoBars.nam}} {{newTipoBars.carga}} tipolocal {{TipoLocal}} tipolocalload {{TipoLocalLoad}} new BArreno {{$scope.newBarreno}}</p>
+    </div-->
+
+    </ion-content>
+</ion-view>

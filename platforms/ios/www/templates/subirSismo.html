@@ -1,0 +1,70 @@
+<ion-view title="Subir Reporte de Sismógrafo" id="page31" hide-back-button="true">
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                                   
+                                                    </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+
+
+
+        <table class="table table-bordered table-hover table-condensed">
+            <tr>
+                <td><strong>Subir PDF</strong></td>
+
+                <td>
+
+                    <input type='file' ng-model='sismoPDF' base-sixty-four-input ng-change="showSismo=true">
+
+                </td>
+                <td ng-show="showSismo"><button ng-click="savePDF(sismoPDF); showSismo=false" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+            </tr>
+
+            <tr>
+                <td><strong>PDFs en Proyecto </strong> ({{sismoPDFs.length}})</td>
+            </tr>
+            <tr style="font:smaller" ng-repeat="f in sismoPDFs track by $index" on-drag-left="showEditTipo=false" on-double-tap="showEditTipo=true">
+                <td>{{f.filename}}</td>
+                <td ng-show="showEditTipo"><button ng-click="openpdfBrowser(f,$index);editBarrenoStatus=true;tipoID=prod.id" class="button button-positive button-full button-clear icon ion-ios-monitor-outline"></button></td>
+                <td ng-show="showEditTipo"><button ng-click="openpdfFunc(f)" class="button button-positive button-full button-clear icon ion-android-phone-portrait"></button></td>
+                <td ng-show="showEditTipo"><button ng-click="deleteTipo($index)" class="button button-positive button-full button-clear icon ion-android-remove-circle"></button></td>
+
+
+            </tr>
+
+
+
+            </div>
+        </table>
+
+        <button id="subirProyecto-button36" ng-click="createSis()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-upload">Subir</button>
+
+
+        <button id="subirProyecto-button35" ng-click="showButtonClose=false" ng-show="showButtonClose" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-close-circled">Cerrar</button>
+        <div class="btn-group" ng-show="showButtonClose">
+            <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+            <ul class="dropdown-menu " role="menu">
+
+                <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                            <li><button class="btn btn-link" onClick="$('#barrenostab').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+            </ul>
+        </div>
+        <div ng-show="showButtonClose" print-section>
+
+
+            <canvas id="the-canvas"></canvas>
+
+
+        </div>
+
+
+
+
+</ion-view>

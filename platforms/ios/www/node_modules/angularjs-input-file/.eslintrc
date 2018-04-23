@@ -1,0 +1,15 @@
+{
+  "globals": {
+    "expect": true,
+    "angular": true
+  },
+  "root": true,
+  "env": {
+    "browser": true,
+    "jasmine": true
+  },
+  "parser": "babel-eslint",
+  "extends": [
+    "xo-space/esnext"
+  ]
+}
