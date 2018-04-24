@@ -58,9 +58,12 @@ angular.module('app.dataCamion', [])
                     $scope.show();
 
                     $scope.proj = doc;
+                    $scope.projName = doc.proj
+
                     console.log(doc)
+                    console.log('projname ' + $scope.projName)
 
-
+                    $scope.vnumminera = $scope.projName;
 
                     //$scope.projNam = doc.proj;
 
@@ -73,8 +76,9 @@ angular.module('app.dataCamion', [])
                 });
 
             }
-            $scope.vnumaustin = $scope.projID;
+
             $scope.loadproj();
+            $scope.vnumminera = $scope.projName;
             $scope.sync = function() {
                     $scope.show();
                     localAdminDB.sync(remoteAdminDB).on('complete', function() {
