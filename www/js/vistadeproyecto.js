@@ -32,13 +32,14 @@ angular.module('app.vistaDeProyecto', [])
             $scope.showAll = false;
             // $scope.show();
             //Declara y Sincroniza base de datos de Tipo
-
+            $scope.projInfoT5 = [];
             let localprojDB = new pouchDB('projects');
             let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
             remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
+
             var currDate = new Date().toISOString();
             localprojDB.createIndex({
                 index: {
@@ -57,7 +58,7 @@ angular.module('app.vistaDeProyecto', [])
                     limit: 5
                 }).then(function(result) {
                     $scope.projInfoT5 = result.docs;
-                    console.log(result.docs);
+                    console.log('loading these top 5 ' + result.docs);
                 });
             });
             console.log('loaded top 5')
@@ -82,14 +83,25 @@ angular.module('app.vistaDeProyecto', [])
                     }).then(function(result) {
                         $scope.projInfoT5 = result.docs;
                         console.log(result.docs);
+                        console.log('loading these top 5 ' + result.docs);
                     });
                 });
                 console.log('loaded top 5')
+
+                if ($scope.projInfoT5.length != 0) {
+                    $scope.displayIntroMessage = false;
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                } else {
+
+                    $scope.introMessage = "No se encontraron Proyectos en la primera carga, por favor oprimir el Boton de Sincronizar" + $scope.projInfoT5
+                    $scope.displayIntroMessage = true;
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                }
                 $scope.hide();
             }
+            $scope.displayIntroMessage = false;
 
             $scope.loadT5Proj();
-
 
             $scope.syncFunc = function() {
                     $scope.show();
@@ -146,7 +158,7 @@ angular.module('app.vistaDeProyecto', [])
                     });
 
 
-
+                    $scope.loadT5Proj();
                     $scope.hide();
 
                 }

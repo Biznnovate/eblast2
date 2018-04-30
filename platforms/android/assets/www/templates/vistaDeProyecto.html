@@ -1,4 +1,4 @@
-<ion-view title="eBlast v1.0118.4.2" id="page13" hide-back-button="true">
+<ion-view title="eBlast v1.0118.4.4" id="page13" hide-back-button="true">
     <ion-nav-buttons side="left">
         <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
 
@@ -10,6 +10,13 @@
     </ion-nav-buttons>
 
     <ion-content padding="true" class="has-header">
+
+        <div ng-show="displayIntroMessage==true">
+            <h1>{{introMessage}}</h1>
+
+            <center> <button class="button icon-center button-positive ion-android-sync" ng-click="syncFunc()"></button></center>
+
+        </div>
 
         <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
             <tr>

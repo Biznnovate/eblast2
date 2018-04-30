@@ -9,7 +9,7 @@
                                                 </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
-
+        {{$scope.tipoEditando}}
         <strong><h3>Proyecto: {{projNam}}</h3></strong> {{prod_listDB2.prods}}
         <!-- {{showtipoEditthing()}}
         <!--ion-item id="parametrosVoladura1-list-itemupd11" ng-repeat="tipo in projTipos | filter: tipo._id=tipoBarrNam_u" ng-model="projTipos">{{tipo._id}}</ion-item-->
@@ -97,7 +97,7 @@
         <label class="item item-input" id="parametrosVoladura1-input93">
             <span class="input-label">Nombre del Tipo de Barreno</span>
     
-            <input type="text" style="text-align: right;" placeholder="Escriba el Nombre del Barreno" 
+            <input type="text" style="text-align: right;" placeholder="Escriba el Nombre del Tipo de Barreno" 
             ng-model="newBarreno.nam"  ng-value="newBarreno.nam"
             ng-change='updateBarrenoNam(newBarreno.nam)'>
           </label>

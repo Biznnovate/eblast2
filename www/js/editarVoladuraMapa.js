@@ -357,42 +357,50 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.projID = '';
             }
             $scope.projID = $scope.projparam.proj || '';
-            var proj = $scope.projparam.proj;
+
+            $scope.loadProj = function() {
+                var proj = $scope.projparam.proj;
 
 
-            localprojDB.get(proj).then(function(doc) {
+                localprojDB.get(proj).then(function(doc) {
 
-                $scope.proj = doc;
-                console.log(doc)
-                $scope.tipos = doc.tipos;
-                $scope.projNam = doc.proj;
-                console.log(doc.tipos)
-                $scope.dataChartBarrs();
+                    $scope.proj = doc;
+                    console.log(doc)
+                    $scope.tipos = doc.tipos;
+                    $scope.projNam = doc.proj;
+                    console.log(doc.tipos)
+                    $scope.dataChartBarrs();
 
-            }).catch(function(err) {
-                console.log(err);
-                // alert('no');
-                $scope.showForm2 = true;
-                $scope.projExists = false;
+                }).catch(function(err) {
+                    console.log(err);
+                    // alert('no');
+                    $scope.showForm2 = true;
+                    $scope.projExists = false;
 
-            });
-            var proj = $scope.projID;
-            localprojDB.get(proj).then(function(doc) {
-                $scope.show();
+                });
+                var proj = $scope.projID;
+                localprojDB.get(proj).then(function(doc) {
+                    $scope.show();
 
-                $scope.proj = doc;
-                console.log(doc)
-                $scope.tipobarr = doc.tipos;
-                $scope.Barrenos = [];
-                $scope.Barrenos = doc.barrenos;
-                $scope.projNam = doc.proj;
-                $scope.dataChartBarrs();
-                console.log(doc.tipos)
-                $scope.hide();
-            }).catch(function(err) {
-                console.log(err);
+                    $scope.proj = doc;
+                    console.log(doc)
+                    $scope.tipobarr = doc.tipos;
+                    $scope.Barrenos = [];
+                    $scope.Barrenos = doc.barrenos;
+                    $scope.projNam = doc.proj;
+                    $scope.dataChartBarrs();
+                    console.log(doc.tipos)
+                    $scope.hide();
+                }).catch(function(err) {
+                    console.log(err);
 
-            });
+                });
+            }
+            $scope.loadProj();
+            $scope.syncload = function() {
+                $scope.sync();
+                $scope.loadProj();
+            }
             $scope.selectProj = function(obj) {
                 $scope.show();
                 console.log(obj)

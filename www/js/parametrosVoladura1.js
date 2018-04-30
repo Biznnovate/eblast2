@@ -140,6 +140,7 @@ angular.module('app.parametrosVoladura1', [])
                         $scope.projTipos = doc.tipos || [];
                         $scope.tipos = doc.tipos || [];
                         $scope.projNam = doc.proj
+                        $scope.fullProj = doc || [];
 
                         console.log('projtiposthing' + doc.tipos)
                         var selectedID = $scope.tipoBarrNam;
@@ -642,7 +643,7 @@ angular.module('app.parametrosVoladura1', [])
                         console.log(err);
                     });
                 });
-
+                $scope.sync();
                 $scope.projTiposCountFunc();
                 $scope.countTipos = $scope.projTipos.length;
                 // $scope.loadprojTipos();
@@ -682,6 +683,7 @@ angular.module('app.parametrosVoladura1', [])
                         console.log(err);
                     });
                 });
+                $scope.sync();
                 $scope.hide();
             }
             $scope.deleteProd = function(index) {
@@ -780,15 +782,7 @@ angular.module('app.parametrosVoladura1', [])
                 $scope.showMainform = false;
 
                 console.log('Se actualizo el Tipo ' + tipo)
-                localprojDB.sync(remoteprojDB).on('complete', function() {
-                    // yay, we're in sync!
-
-                }).on('error', function(err) {
-                    // boo, we hit an error!
-                });
-                // $scope.loadprojTipos();
-                //  $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, });
-
+                $scope.sync();
                 $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
 
             }
