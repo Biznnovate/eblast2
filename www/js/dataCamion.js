@@ -161,6 +161,10 @@ angular.module('app.dataCamion', [])
                 $scope.fecha_u = obj;
 
             }
+            $scope.updateHora = function(obj) {
+                $scope.hora_u = obj;
+
+            }
             $scope.updateDocumento = function(obj) {
                 $scope.documento_u = obj;
 
@@ -281,6 +285,7 @@ angular.module('app.dataCamion', [])
                     camion: $scope.selectedCamion_u,
                     conductor: $scope.selectedConductor_u,
                     fecha: $scope.fecha_u,
+                    hora: $scope.hora_u,
                     doc: $scope.documento_u,
                     vnumaustin: $scope.vnumaustin_u,
                     vnumminera: $scope.vnumminera_u,

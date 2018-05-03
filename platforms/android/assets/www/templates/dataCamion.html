@@ -84,7 +84,11 @@
 
                 <label class="item item-input" id="editarVoladuraMapa-inputnombre">
                             <span class="input-label">Fecha</span>
-                            <input type="date" placeholder="fecha" ng-model="fecha" ng-change="updateFecha(fecha)">
+                            <input type="date" placeholder="" ng-model="fecha" ng-change="updateFecha(fecha)">
+                    </label>
+                <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                            <span class="input-label">Hora</span>
+                            <input type="time" placeholder="" ng-model="hora" ng-change="updateHora(hora)">
                     </label>
                 <label class="item item-input" id="editarVoladuraMapa-inputnombre">
                             <span class="input-label">Documento</span>
@@ -141,6 +145,7 @@
                     <tr style="font-weight: bold">
                         <td>Camion</td>
                         <td>Fecha</td>
+                        <td>Hora</td>
                         <td>Voladura</td>
 
                     </tr>
@@ -148,6 +153,7 @@
                     <tr ng-repeat="camion in dataCamion track by $index">
                         <td> {{camion.camion.name}}</td>
                         <td>{{camion.fecha}}</td>
+                        <td>{{camion.hora}}</td>
                         <td> {{camion.vnumaustin}}</td>
                         <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
                     </tr>

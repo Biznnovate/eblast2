@@ -62,6 +62,22 @@ angular.module('app.vistaDeProyecto', [])
                 });
             });
             console.log('loaded top 5')
+            $scope.displayIntroFunc = function() {
+
+                var projlength = $scope.projInfoT5.length;
+                console.log('Hay ' + projlength + ' proyectos cargados')
+                if (projlength > 0) {
+                    $scope.displayIntroMessage = 'no';
+                    $scope.introMessage = '';
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                } else {
+
+                    $scope.introMessage = "Aplicación sin sincronizar, por favor oprimir el Boton de Sincronizar" + $scope.projInfoT5
+                    $scope.displayIntroMessage = 'yes';
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                }
+            }
+
             $scope.loadT5Proj = function() {
                 $scope.show();
                 var currDate = new Date().toISOString();
@@ -84,24 +100,22 @@ angular.module('app.vistaDeProyecto', [])
                         $scope.projInfoT5 = result.docs;
                         console.log(result.docs);
                         console.log('loading these top 5 ' + result.docs);
+                        $scope.displayIntroFunc();
                     });
                 });
                 console.log('loaded top 5')
 
-                if ($scope.projInfoT5.length != 0) {
-                    $scope.displayIntroMessage = false;
-                    console.log("displayintro " + $scope.displayIntroMessage)
-                } else {
-
-                    $scope.introMessage = "No se encontraron Proyectos en la primera carga, por favor oprimir el Boton de Sincronizar" + $scope.projInfoT5
-                    $scope.displayIntroMessage = true;
-                    console.log("displayintro " + $scope.displayIntroMessage)
-                }
                 $scope.hide();
-            }
-            $scope.displayIntroMessage = false;
 
+            }
+            $scope.displayIntroMessage = 'no';
             $scope.loadT5Proj();
+            $timeout(function() {
+                console.log('timedout')
+                $scope.loadT5Proj();
+                $scope.displayIntroFunc();
+                //any code in here will automatically have an apply run afterwards
+            });
 
             $scope.syncFunc = function() {
                     $scope.show();
@@ -162,7 +176,8 @@ angular.module('app.vistaDeProyecto', [])
                     $scope.hide();
 
                 }
-                //   $scope.syncFunc();
+                //$scope.syncFunc();
+
 
             $scope.loadProjDBFunc = function() {
                     $scope.show();

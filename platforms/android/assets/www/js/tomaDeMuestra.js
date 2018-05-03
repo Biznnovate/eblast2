@@ -130,19 +130,6 @@ angular.module('app.tomaDeMuestra', [])
 
 
             };
-            $scope.dens0_u = 0;
-            $scope.dens5_u = 0;
-            $scope.dens10_u = 0;
-            $scope.dens15_u = 0;
-            $scope.dens20_u = 0;
-            $scope.dens25_u = 0;
-            $scope.dens30_u = 0;
-            $scope.dens35_u = 0;
-            $scope.dens40_u = 0;
-            $scope.dens45_u = 0;
-            $scope.dens50_u = 0;
-            $scope.dens55_u = 0;
-            $scope.dens60_u = 0;
 
             $scope.updateCamion = function(obj) {
                 console.log(obj)
@@ -318,7 +305,40 @@ angular.module('app.tomaDeMuestra', [])
             }
             $scope.showGraph = false;
 
+            $scope.newMuestra = function() {
+                var data = {
+                    _id: new Date().toISOString(),
+                    barr: $scope.barr_u,
+                    camion: $scope.camion_u,
+                    hora: $scope.hora_u,
+                    r1: $scope.r1_u,
+                    r2: $scope.r2_u,
+                    rpm: $scope.rpm_u,
+                    temp: $scope.temp_u,
+                    dens0: $scope.dens0_u,
+                    dens5: $scope.dens5_u,
+                    dens10: $scope.dens10_u,
+                    dens15: $scope.dens15_u,
+                    dens20: $scope.dens20_u,
+                    dens25: $scope.dens25_u,
+                    dens30: $scope.dens30_u,
+                    dens35: $scope.dens35_u,
+                    dens40: $scope.dens40_u,
+                    dens45: $scope.dens45_u,
+                    dens50: $scope.dens50_u,
+                    dens55: $scope.dens55_u,
+                    dens60: $scope.dens60_u,
+                    coment: $scope.coment_u,
+                }
 
+                $scope.muestraData.push(data);
+                $scope.insertMuestra();
+                $scope.reloadPage()
+
+
+
+
+            };
 
             $scope.insertMuestra = function() {
                 var id = $scope.projID;
@@ -353,138 +373,7 @@ angular.module('app.tomaDeMuestra', [])
                 });
             }
 
-            $scope.newMuestra = function() {
-                $scope.tempMuestra = [];
-                $scope.tempMuestraVal = [];
-                if ($scope.dens0_u != 0) {
-                    var densval = {
-                        dens: $scope.dens0_u,
-                        val: 0,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens5_u != 0) {
-                    var densval = {
-                        dens: $scope.dens5_u,
-                        val: 5,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens10_u != 0) {
-                    var densval = {
-                        dens: $scope.dens10_u,
-                        val: 10,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens15_u != 0) {
-                    var densval = {
-                        dens: $scope.dens15_u,
-                        val: 15,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens20_u != 0) {
-                    var densval = {
-                        dens: $scope.dens20_u,
-                        val: 20,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens25_u != 0) {
-                    var densval = {
-                        dens: $scope.dens25_u,
-                        val: 25,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens30_u != 0) {
-                    var densval = {
-                        dens: $scope.dens30_u,
-                        val: 30,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens35_u != 0) {
-                    var densval = {
-                        dens: $scope.dens35_u,
-                        val: 35,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens40_u != 0) {
-                    var densval = {
-                        dens: $scope.dens40_u,
-                        val: 40,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens45_u != 0) {
-                    var densval = {
-                        dens: $scope.dens45_u,
-                        val: 45,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens50_u != 0) {
-                    var densval = {
-                        dens: $scope.dens50_u,
-                        val: 50,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens55_u != 0) {
-                    var densval = {
-                        dens: $scope.dens55_u,
-                        val: 55,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
-                if ($scope.dens60_u != 0) {
-                    var densval = {
-                        dens: $scope.dens60_u,
-                        val: 60,
-                    }
-                    $scope.tempMuestra.push(densval.dens)
-                    $scope.tempMuestraVal.push(densval.val)
-                }
 
-
-
-                var data = {
-                    _id: new Date().toISOString(),
-                    barr: $scope.barr_u,
-                    camion: $scope.camion_u,
-                    hora: $scope.hora_u,
-                    r1: $scope.r1_u,
-                    r2: $scope.r2_u,
-                    rpm: $scope.rpm_u,
-                    temp: $scope.temp_u,
-                    dens: $scope.tempMuestra,
-                    val: $scope.tempMuestraVal,
-                    coment: $scope.coment_u,
-                }
-
-                $scope.muestraData.push(data);
-                $scope.insertMuestra();
-                $scope.reloadPage()
-
-
-
-
-            };
 
             $scope.newMuestra1 = function() {
                 localMDB.put({
