@@ -1,9 +1,9 @@
 angular.module('app.vistaDeProyecto', [])
-    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
+    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup',
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
+        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup) {
             // Show loader from service
 
             $scope.$root.showMenuIcon = true;
@@ -78,6 +78,7 @@ angular.module('app.vistaDeProyecto', [])
                 }
             }
 
+
             $scope.loadT5Proj = function() {
                 $scope.show();
                 var currDate = new Date().toISOString();
@@ -116,7 +117,22 @@ angular.module('app.vistaDeProyecto', [])
                 $scope.displayIntroFunc();
                 //any code in here will automatically have an apply run afterwards
             });
+            // A confirm dialog
+            $scope.showConfirm = function(proj) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Borrar Proyecto',
+                    template: 'Seguro que desea borrar el proyecto. Una vez borrado no podrá recuperarse'
+                });
+                confirmPopup.then(function(res) {
+                    if (res) {
+                        console.log('Seguro');
+                        $scope.deleteProj(proj);
+                    } else {
+                        console.log('No estoy seguro');
 
+                    }
+                });
+            };
             $scope.syncFunc = function() {
                     $scope.show();
                     let localprojDB = new pouchDB('projects');
@@ -346,6 +362,9 @@ angular.module('app.vistaDeProyecto', [])
             }
             $scope.gotoCamion = function() {
                 $state.go('menu.dataCamion', { 'proj': $scope.projID });
+            }
+            $scope.gotoReporteCamion = function() {
+                $state.go('menu.reporteCamion', { 'proj': $scope.projID });
             }
 
 

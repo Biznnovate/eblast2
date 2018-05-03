@@ -57,11 +57,11 @@
                                 <table>
                                     <tr>
                                         <th>Camion </th>
-                                        <td>{{doc.camion}}</td>
+                                        <td>{{doc.camion.name}}</td>
                                     </tr>
                                     <tr>
                                         <th>Hora </th>
-                                        <td>{{doc.hora}}</td>
+                                        <td>{{doc.hora | date: 'shortTime' }}</td>
                                     </tr>
                                     <tr>
                                         <th>r1 </th>
@@ -83,19 +83,7 @@
                             </td>
 
 
-                            <td><canvas id="bar" class="chart chart-line" chart-data="[doc.dens0,
-                            doc.dens5,
-                            doc.dens10,
-                            doc.dens15,
-                            doc.dens20,
-                            doc.dens25,
-                            doc.dens30,
-                            doc.dens35,
-                            doc.dens40,
-                            doc.dens45,
-                            doc.dens50,
-                            doc.dens55,
-                            doc.dens60]" chart-labels="[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]" chart-series="" chart-colors="red">
+                            <td><canvas id="bar" class="chart chart-line" chart-data="doc.dens" chart-labels="doc.val" chart-series="" chart-colors="red">
                           </canvas></td>
 
                             <!--td>

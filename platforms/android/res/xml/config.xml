@@ -46,7 +46,7 @@
     <name>e-Blast</name>
     <description>Austin Blast Dispersion by Biznnovate</description>
     <author email="contact@biznnovate.com" href="http://biznnovate.com/">Biznnovate</author>
-    <content original-src="index.html" src="http://192.168.1.112:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
