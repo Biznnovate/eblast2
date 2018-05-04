@@ -356,6 +356,7 @@ angular.module('app.tomaDeMuestra', [])
             $scope.newMuestra = function() {
                 $scope.tempMuestra = [];
                 $scope.tempMuestraVal = [];
+                $scope.tempdens = [];
                 if ($scope.dens0_u != 0) {
                     var densval = {
                         dens: $scope.dens0_u,
@@ -363,6 +364,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens5_u != 0) {
                     var densval = {
@@ -371,6 +373,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens10_u != 0) {
                     var densval = {
@@ -379,6 +382,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens15_u != 0) {
                     var densval = {
@@ -387,6 +391,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens20_u != 0) {
                     var densval = {
@@ -395,6 +400,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens25_u != 0) {
                     var densval = {
@@ -403,6 +409,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens30_u != 0) {
                     var densval = {
@@ -411,6 +418,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens35_u != 0) {
                     var densval = {
@@ -419,6 +427,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens40_u != 0) {
                     var densval = {
@@ -427,6 +436,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens45_u != 0) {
                     var densval = {
@@ -435,6 +445,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens50_u != 0) {
                     var densval = {
@@ -443,6 +454,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens55_u != 0) {
                     var densval = {
@@ -451,6 +463,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
                 if ($scope.dens60_u != 0) {
                     var densval = {
@@ -459,6 +472,7 @@ angular.module('app.tomaDeMuestra', [])
                     }
                     $scope.tempMuestra.push(densval.dens)
                     $scope.tempMuestraVal.push(densval.val)
+                    $scope.tempdens.push(densval)
                 }
 
 
@@ -471,6 +485,7 @@ angular.module('app.tomaDeMuestra', [])
                     r1: $scope.r1_u,
                     r2: $scope.r2_u,
                     rpm: $scope.rpm_u,
+                    densval: $scope.tempdens,
                     temp: $scope.temp_u,
                     dens: $scope.tempMuestra,
                     val: $scope.tempMuestraVal,
@@ -480,6 +495,7 @@ angular.module('app.tomaDeMuestra', [])
                 $scope.muestraData.push(data);
                 $scope.insertMuestra();
                 $scope.reloadPage()
+                alert('Su muestra ha sido guardada correctamente')
 
 
 
