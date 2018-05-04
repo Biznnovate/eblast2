@@ -22,6 +22,7 @@ angular.module('app.ajustarCSV', [])
                     console.log("The loading indicator is now hidden");
                 });
             };
+
             $scope.projInfo = {
                 'id': $stateParams.id,
                 'status': $stateParams.status,
@@ -29,6 +30,7 @@ angular.module('app.ajustarCSV', [])
             }
             $scope.columns = $scope.projInfo.status;
             $scope.projID = '';
+
             $scope.updateProjNam = function(obj) {
                 console.log(obj)
                 $scope.projnam_u = obj;
@@ -37,6 +39,9 @@ angular.module('app.ajustarCSV', [])
 
             }
             $scope.corregir = function() {
+
+
+                window.location.reload()
                 $state.go('menu.subirProyecto');
             }
             console.log($scope.projInfo);

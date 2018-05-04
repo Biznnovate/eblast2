@@ -1,9 +1,9 @@
 angular.module('app.vistaDeProyecto', [])
-    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading',
+    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup',
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading) {
+        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup) {
             // Show loader from service
 
             $scope.$root.showMenuIcon = true;
@@ -32,13 +32,14 @@ angular.module('app.vistaDeProyecto', [])
             $scope.showAll = false;
             // $scope.show();
             //Declara y Sincroniza base de datos de Tipo
-
+            $scope.projInfoT5 = [];
             let localprojDB = new pouchDB('projects');
             let remoteprojDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-proj', { skipSetup: true });
             remoteprojDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
                 console.log("I'm Batman.");
                 return remoteprojDB.getSession();
             });
+
             var currDate = new Date().toISOString();
             localprojDB.createIndex({
                 index: {
@@ -57,10 +58,27 @@ angular.module('app.vistaDeProyecto', [])
                     limit: 5
                 }).then(function(result) {
                     $scope.projInfoT5 = result.docs;
-                    console.log(result.docs);
+                    console.log('loading these top 5 ' + result.docs);
                 });
             });
             console.log('loaded top 5')
+            $scope.displayIntroFunc = function() {
+
+                var projlength = $scope.projInfoT5.length;
+                console.log('Hay ' + projlength + ' proyectos cargados')
+                if (projlength > 0) {
+                    $scope.displayIntroMessage = 'no';
+                    $scope.introMessage = '';
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                } else {
+
+                    $scope.introMessage = "Aplicación sin sincronizar, por favor oprimir el Boton de Sincronizar" + $scope.projInfoT5
+                    $scope.displayIntroMessage = 'yes';
+                    console.log("displayintro " + $scope.displayIntroMessage)
+                }
+            }
+
+
             $scope.loadT5Proj = function() {
                 $scope.show();
                 var currDate = new Date().toISOString();
@@ -82,15 +100,39 @@ angular.module('app.vistaDeProyecto', [])
                     }).then(function(result) {
                         $scope.projInfoT5 = result.docs;
                         console.log(result.docs);
+                        console.log('loading these top 5 ' + result.docs);
+                        $scope.displayIntroFunc();
                     });
                 });
                 console.log('loaded top 5')
+
                 $scope.hide();
+
             }
-
+            $scope.displayIntroMessage = 'no';
             $scope.loadT5Proj();
+            $timeout(function() {
+                console.log('timedout')
+                $scope.loadT5Proj();
+                $scope.displayIntroFunc();
+                //any code in here will automatically have an apply run afterwards
+            });
+            // A confirm dialog
+            $scope.showConfirm = function(proj) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Borrar Proyecto',
+                    template: 'Seguro que desea borrar el proyecto. Una vez borrado no podrá recuperarse'
+                });
+                confirmPopup.then(function(res) {
+                    if (res) {
+                        console.log('Seguro');
+                        $scope.deleteProj(proj);
+                    } else {
+                        console.log('No estoy seguro');
 
-
+                    }
+                });
+            };
             $scope.syncFunc = function() {
                     $scope.show();
                     let localprojDB = new pouchDB('projects');
@@ -146,11 +188,12 @@ angular.module('app.vistaDeProyecto', [])
                     });
 
 
-
+                    $scope.loadT5Proj();
                     $scope.hide();
 
                 }
-                //   $scope.syncFunc();
+                //$scope.syncFunc();
+
 
             $scope.loadProjDBFunc = function() {
                     $scope.show();
@@ -315,10 +358,13 @@ angular.module('app.vistaDeProyecto', [])
                 $state.go('menu.vistaDeReporte', { 'proj': $scope.projID });
             }
             $scope.gotoAdmin = function() {
-                $state.go('menu.admincons', { 'proj': $scope.projID });
+                $state.go('menu.login', { 'proj': $scope.projID });
             }
             $scope.gotoCamion = function() {
                 $state.go('menu.dataCamion', { 'proj': $scope.projID });
+            }
+            $scope.gotoReporteCamion = function() {
+                $state.go('menu.reporteCamion', { 'proj': $scope.projID });
             }
 
 

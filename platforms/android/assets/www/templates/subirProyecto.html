@@ -10,8 +10,8 @@
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
         <div id="subirproyecto-button-bar5" class="button-bar">
-            <button id="subirProyecto-button35" ng-click="showOption = {'new':true, 'open': false}" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-add">Nuevo</button>
-            <button id="subirProyecto-button35" ng-click="showOption ={'open':true, 'new': false}" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-folder">Abrir</button>
+            <button id="subirProyecto-button35" ng-click="showOption = {'new':true, 'open': false}; clearAll();" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-add">Nuevo</button>
+
         </div>
         <label class="item item-select" id="editarVoladuraMapa-select19" ng-show="showOption.open">
           <span class="input-label">Seleccione el Proyecto</span>

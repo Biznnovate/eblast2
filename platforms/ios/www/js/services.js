@@ -159,9 +159,32 @@ angular.module('app.services', [])
 })
 
 .factory('Page', function() {
-    var title = 'default';
-    return {
-        title: function() { return title; },
-        setTitle: function(newTitle) { title = newTitle }
-    };
-});
+        var title = 'default';
+        return {
+            title: function() { return title; },
+            setTitle: function(newTitle) { title = newTitle }
+        };
+    })
+    .service('LoginService', function($q) {
+        return {
+            loginUser: function(name, pw) {
+                var deferred = $q.defer();
+                var promise = deferred.promise;
+
+                if (name == 'user' && pw == '123') {
+                    deferred.resolve('Welcome ' + name + '!');
+                } else {
+                    deferred.reject('Wrong credentials.');
+                }
+                promise.success = function(fn) {
+                    promise.then(fn);
+                    return promise;
+                }
+                promise.error = function(fn) {
+                    promise.then(null, fn);
+                    return promise;
+                }
+                return promise;
+            }
+        }
+    });

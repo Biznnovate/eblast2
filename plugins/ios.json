@@ -36,6 +36,9 @@
     },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
+    "cordova-plugin-cache-clear": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
     }
   },
   "dependent_plugins": {}

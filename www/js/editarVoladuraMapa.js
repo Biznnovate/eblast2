@@ -479,6 +479,8 @@ angular.module('app.editarVoladuraMapa', [])
             $scope.shownewBarrForm = false;
 
             $scope.updateSelectedBarr = function(obj) {
+                $scope.cargaTotal = ''
+                $scope.cargaTotalMessage = ''
                 console.log(obj)
                 $scope.selectedBarreno = obj;
 
@@ -488,6 +490,8 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.selectedbarr = obj;
                 //$scope.profreal = 0
                 if (obj.status == "Pending") {
+                    $scope.cargaTotal = ''
+                    $scope.cargaTotalMessage = ''
                     console.log("barreno por trabajar ")
                     $scope.profDis = +(obj.prof).toFixed(2)
                     if ($scope.profreal == obj.prof) {
@@ -506,7 +510,8 @@ angular.module('app.editarVoladuraMapa', [])
                 } else {
                     console.log("barreno trabajado ")
                     $scope.profDis = +(obj.prof).toFixed(2)
-
+                    $scope.cargaTotalMessage = 'Cargado'
+                    $scope.cargaTotal = obj.calcs.Ct
                     $scope.profreal = +(obj.profreal).toFixed(2);
                     $scope.profreal_u = $scope.profreal;
                     if (obj.diam > 0) {
@@ -522,6 +527,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.coordy = obj.coordy / 1;
                 $scope.coordx_u = $scope.coordx;
                 $scope.coordy_u = $scope.coordy;
+
 
                 //count barrenos
                 $scope.message = "Barreno Seleccionado"
@@ -1181,7 +1187,7 @@ angular.module('app.editarVoladuraMapa', [])
                     s: s,
                     Lc: Lc,
                     Cm: Cm,
-                    Ct: +(Ct).toFixed(2),
+                    Ct: +(Ct).toFixed(0),
                     V: V,
                     Pt: Pt,
                     Fc: Fc
@@ -1305,7 +1311,7 @@ angular.module('app.editarVoladuraMapa', [])
                     Lv: Lv,
                     Pe: Pe,
                     V: V,
-                    Ct: +(Ct).toFixed(2),
+                    Ct: +(Ct).toFixed(0),
                     Pt: Pt,
                     Fc: Fc
                 }
@@ -1442,7 +1448,7 @@ angular.module('app.editarVoladuraMapa', [])
                     Lv: Lv,
                     Pe: Pe,
                     V: V,
-                    Ct: +(Ct).toFixed(2),
+                    Ct: +(Ct).toFixed(0),
                     Pt: Pt,
                     Fc: Fc
                 }
@@ -1608,7 +1614,7 @@ angular.module('app.editarVoladuraMapa', [])
                     Pe: Pe,
                     Lc: Lc,
                     Pt: Pt,
-                    Ct: +(Ct).toFixed(2),
+                    Ct: +(Ct).toFixed(0),
                     V: V,
                     Fc: Fc
                 }
@@ -1760,7 +1766,7 @@ angular.module('app.editarVoladuraMapa', [])
                         Pe: Pe,
                         Lc: Lc,
                         Pt: Pt,
-                        Ct: +(Ct).toFixed(2),
+                        Ct: +(Ct).toFixed(0),
                         V: V,
                         Fc: Fc
 

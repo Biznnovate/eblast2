@@ -269,6 +269,14 @@ module.exports = [
     "clobbers": [
       "cordova.plugins.barcodeScanner"
     ]
+  },
+  {
+    "id": "cordova-plugin-cache-clear.CacheClear",
+    "file": "plugins/cordova-plugin-cache-clear/www/CacheClear.js",
+    "pluginId": "cordova-plugin-cache-clear",
+    "clobbers": [
+      "CacheClear"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -287,7 +295,8 @@ module.exports.metadata =
   "cordova-plugin-whitelist": "1.3.3",
   "ionic-plugin-deploy": "0.6.7",
   "ionic-plugin-keyboard": "2.2.1",
-  "phonegap-plugin-barcodescanner": "7.1.1"
+  "phonegap-plugin-barcodescanner": "7.1.1",
+  "cordova-plugin-cache-clear": "1.3.7"
 };
 // BOTTOM OF METADATA
 });

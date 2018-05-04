@@ -29,7 +29,7 @@
                 <div class="btn-group">
                     <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
                     <ul class="dropdown-menu " role="menu">
-                        <li><button class="btn btn-link" ng-click="exportToExcel('#Muestras')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+                        <li><button class="btn btn-link" ng-click="exportData()"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
                         <!--li><button class="btn btn-link" onClick="$('#Muestras').tableExport({type:'excel',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XLS</button></li-->
                         <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li-->
                         <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
@@ -57,11 +57,11 @@
                                 <table>
                                     <tr>
                                         <th>Camion </th>
-                                        <td>{{doc.camion}}</td>
+                                        <td>{{doc.camion.name}}</td>
                                     </tr>
                                     <tr>
                                         <th>Hora </th>
-                                        <td>{{doc.hora}}</td>
+                                        <td>{{doc.hora | date: 'shortTime' }}</td>
                                     </tr>
                                     <tr>
                                         <th>r1 </th>
@@ -83,86 +83,76 @@
                             </td>
 
 
-                            <td><canvas id="bar" class="chart chart-line" chart-data="[doc.dens0,
-                            doc.dens5,
-                            doc.dens10,
-                            doc.dens15,
-                            doc.dens20,
-                            doc.dens25,
-                            doc.dens30,
-                            doc.dens35,
-                            doc.dens40,
-                            doc.dens45,
-                            doc.dens50,
-                            doc.dens55,
-                            doc.dens60]" chart-labels="[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]" chart-series="" chart-colors="red">
+                            <td><canvas id="bar" class="chart chart-line" chart-data="doc.dens" chart-labels="doc.val" chart-series="" chart-colors="red">
                           </canvas></td>
 
-                            <!--td>
-                                <table>
-                                    <tr>
-                                        <th>Dens</th>
-                                        <th>Val</th>
-                                    </tr>
-                                    <tr>
-                                        <td>0 </td>
-                                        <td>{{doc.dens0}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5 </td>
-                                        <td>{{doc.dens5}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>10 </td>
-                                        <td>{{doc.dens10}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>15 </td>
-                                        <td>{{doc.dens15}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>20 </td>
-                                        <td>{{doc.dens20}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>25 </td>
-                                        <td>{{doc.dens25}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>30 </td>
-                                        <td>{{doc.dens30}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>35 </td>
-                                        <td>{{doc.dens35}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>40 </td>
-                                        <td>{{doc.dens40}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>45 </td>
-                                        <td>{{doc.dens45}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>50 </td>
-                                        <td>{{doc.dens50}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>55 </td>
-                                        <td>{{doc.dens55}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>60 </td>
-                                        <td>{{doc.dens60}}</td>
-                                    </tr>
-
-                                </table>
-                            </td-->
                             <td>{{doc.coment}}</td>
 
                         </tr>
 
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="false" id="muestras">
+
+
+                <table border="1">
+                    <thead>
+                        <tr class="table-header" style="font-weight: bold">
+                            <th>Barreno</th>
+                            <th>Camion</th>
+                            <th>Hora</th>
+                            <th>R1</th>
+                            <th>R2</th>
+                            <th>KG/Min</th>
+                            <th>Temp</th>
+                            <th>Dens0</th>
+                            <th>Dens5</th>
+                            <th>Dens10</th>
+                            <th>Dens15</th>
+                            <th>Dens20</th>
+                            <th>Dens25</th>
+                            <th>Dens30</th>
+                            <th>Dens35</th>
+                            <th>Dens40</th>
+                            <th>Dens45</th>
+                            <th>Dens50</th>
+                            <th>Dens55</th>
+                            <th>Dens60</th>
+                            <th>Comentario</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="doc in muestrasToPrint">
+                            <td>{{doc.barr}}</td>
+
+                            <td>{{doc.camion.name}}</td>
+
+                            <td>{{doc.hora | date: 'shortTime' }}</td>
+
+                            <td>{{doc.r1}}</td>
+
+                            <td>{{doc.r2}}</td>
+
+                            <td>{{doc.rpm}}</td>
+
+                            <td>{{doc.temp}}</td>
+                            <td>{{doc.densidades.dens0}}</td>
+                            <td>{{doc.densidades.dens5}}</td>
+                            <td>{{doc.densidades.dens10}}</td>
+                            <td>{{doc.densidades.dens15}}</td>
+                            <td>{{doc.densidades.dens20}}</td>
+                            <td>{{doc.densidades.dens25}}</td>
+                            <td>{{doc.densidades.dens30}}</td>
+                            <td>{{doc.densidades.dens35}}</td>
+                            <td>{{doc.densidades.dens40}}</td>
+                            <td>{{doc.densidades.dens45}}</td>
+                            <td>{{doc.densidades.dens50}}</td>
+                            <td>{{doc.densidades.dens55}}</td>
+                            <td>{{doc.densidades.dens60}}</td>
+                            <td>{{doc.coment}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

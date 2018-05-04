@@ -19,6 +19,10 @@ angular.module('app.subirProyecto', [])
                     console.log("The loading indicator is now hidden");
                 });
             };
+            $scope.clearAll = function() {
+                $scope.csv = {}
+                console.log('csv cleared')
+            }
 
             //upload files
             //$scope.showOption = '';

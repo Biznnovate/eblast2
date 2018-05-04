@@ -357,42 +357,50 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.projID = '';
             }
             $scope.projID = $scope.projparam.proj || '';
-            var proj = $scope.projparam.proj;
+
+            $scope.loadProj = function() {
+                var proj = $scope.projparam.proj;
 
 
-            localprojDB.get(proj).then(function(doc) {
+                localprojDB.get(proj).then(function(doc) {
 
-                $scope.proj = doc;
-                console.log(doc)
-                $scope.tipos = doc.tipos;
-                $scope.projNam = doc.proj;
-                console.log(doc.tipos)
-                $scope.dataChartBarrs();
+                    $scope.proj = doc;
+                    console.log(doc)
+                    $scope.tipos = doc.tipos;
+                    $scope.projNam = doc.proj;
+                    console.log(doc.tipos)
+                    $scope.dataChartBarrs();
 
-            }).catch(function(err) {
-                console.log(err);
-                // alert('no');
-                $scope.showForm2 = true;
-                $scope.projExists = false;
+                }).catch(function(err) {
+                    console.log(err);
+                    // alert('no');
+                    $scope.showForm2 = true;
+                    $scope.projExists = false;
 
-            });
-            var proj = $scope.projID;
-            localprojDB.get(proj).then(function(doc) {
-                $scope.show();
+                });
+                var proj = $scope.projID;
+                localprojDB.get(proj).then(function(doc) {
+                    $scope.show();
 
-                $scope.proj = doc;
-                console.log(doc)
-                $scope.tipobarr = doc.tipos;
-                $scope.Barrenos = [];
-                $scope.Barrenos = doc.barrenos;
-                $scope.projNam = doc.proj;
-                $scope.dataChartBarrs();
-                console.log(doc.tipos)
-                $scope.hide();
-            }).catch(function(err) {
-                console.log(err);
+                    $scope.proj = doc;
+                    console.log(doc)
+                    $scope.tipobarr = doc.tipos;
+                    $scope.Barrenos = [];
+                    $scope.Barrenos = doc.barrenos;
+                    $scope.projNam = doc.proj;
+                    $scope.dataChartBarrs();
+                    console.log(doc.tipos)
+                    $scope.hide();
+                }).catch(function(err) {
+                    console.log(err);
 
-            });
+                });
+            }
+            $scope.loadProj();
+            $scope.syncload = function() {
+                $scope.sync();
+                $scope.loadProj();
+            }
             $scope.selectProj = function(obj) {
                 $scope.show();
                 console.log(obj)
@@ -471,6 +479,7 @@ angular.module('app.editarVoladuraMapa', [])
             $scope.shownewBarrForm = false;
 
             $scope.updateSelectedBarr = function(obj) {
+                $scope.cargaTotal = ''
                 console.log(obj)
                 $scope.selectedBarreno = obj;
 
@@ -480,6 +489,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.selectedbarr = obj;
                 //$scope.profreal = 0
                 if (obj.status == "Pending") {
+                    $scope.cargaTotal = ''
                     console.log("barreno por trabajar ")
                     $scope.profDis = +(obj.prof).toFixed(2)
                     if ($scope.profreal == obj.prof) {
@@ -498,7 +508,7 @@ angular.module('app.editarVoladuraMapa', [])
                 } else {
                     console.log("barreno trabajado ")
                     $scope.profDis = +(obj.prof).toFixed(2)
-
+                    $scope.cargaTotal = obj.calcs.ct
                     $scope.profreal = +(obj.profreal).toFixed(2);
                     $scope.profreal_u = $scope.profreal;
                     if (obj.diam > 0) {
@@ -514,6 +524,7 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.coordy = obj.coordy / 1;
                 $scope.coordx_u = $scope.coordx;
                 $scope.coordy_u = $scope.coordy;
+
 
                 //count barrenos
                 $scope.message = "Barreno Seleccionado"

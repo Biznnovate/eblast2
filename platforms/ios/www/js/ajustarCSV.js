@@ -22,6 +22,7 @@ angular.module('app.ajustarCSV', [])
                     console.log("The loading indicator is now hidden");
                 });
             };
+            $scope.projnam = '';
             $scope.projInfo = {
                 'id': $stateParams.id,
                 'status': $stateParams.status,
@@ -37,6 +38,12 @@ angular.module('app.ajustarCSV', [])
 
             }
             $scope.corregir = function() {
+                $scope.columns = '';
+                $scope.projInfo = '';
+                $scope.projnam = '';
+                $scope.projID = '';
+
+                window.CacheClear(success, error);
                 $state.go('menu.subirProyecto');
             }
             console.log($scope.projInfo);
@@ -549,13 +556,23 @@ angular.module('app.ajustarCSV', [])
                 }
                 $scope.hide();
             }
+            $scope.profuValue = 1;
+            $scope.diameValue = 1;
             $scope.selectProfu = function(obj) {
+                $scope.profuValue = obj.val;
+
+            }
+            $scope.selectDiame = function(obj) {
+                $scope.diameValue = obj.val;
+
+            }
+            $scope.calcProfu = function(obj) {
                 $scope.show();
                 //  $scope.continueOpt = false;
-                console.log(obj + ' valor ' + obj.val);
+                console.log(' valor ' + obj);
 
                 $scope.columnsIndex = [];
-                var conv = obj.val;
+                var conv = obj;
                 var arrayObj = $scope.columns;
                 $scope.columnsTemp = []
                 angular.forEach(arrayObj, function(val) {
@@ -575,13 +592,13 @@ angular.module('app.ajustarCSV', [])
 
                 $scope.hide();
             }
-            $scope.selectDiame = function(obj) {
+            $scope.calcDiame = function(obj) {
                 $scope.show();
 
-                console.log(obj + ' valor ' + obj.val);
+                console.log(' valor ' + obj);
 
                 $scope.columnsIndex = [];
-                var conv = obj.val;
+                var conv = obj;
                 var arrayObj = $scope.columns;
                 $scope.columnsTemp = []
                 angular.forEach(arrayObj, function(val) {
@@ -873,8 +890,10 @@ angular.module('app.ajustarCSV', [])
 
             }
 
-            $scope.confirmData = function() {
+            $scope.confirmData = function(prof, diame) {
                 $scope.barrenosToInsert = [];
+                $scope.calcProfu(prof);
+                $scope.calcDiame(diame)
                 if ($scope.diamQ == "Si") {
                     console.log('Diametro fue Incluido en CSV')
                     angular.forEach($scope.columns, function(value) {
@@ -906,6 +925,7 @@ angular.module('app.ajustarCSV', [])
                 }
 
 
+                alert("Las medidas han sido cuardadas correctamente")
 
                 console.log('For Each de Barrenos ' + $scope.barrenosToInsert.length)
 

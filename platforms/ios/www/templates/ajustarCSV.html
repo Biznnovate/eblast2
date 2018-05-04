@@ -165,16 +165,36 @@
                     <ion-item class="assertive" id="ajustarCSV-list-item18" ng-model="columns" ng-hide="viewPreview" ng-repeat="barreno in projInfo.status | limitTo:5">
                         <div class="row">
 
-                            <div class="col">{{barreno.Col1}}</div>
-                            <div class="col">{{barreno.Col2}}</div>
-                            <div class="col">{{barreno.Col3}}</div>
-                            <div class="col">{{barreno.Col4}}</div>
-                            <div class="col">{{barreno.Col5}}</div>
-                            <div class="col">{{barreno.Col6}}</div>
-                            <div class="col">{{barreno.Col7}}</div>
-                            <div class="col">{{barreno.Col8}}</div>
-                            <div class="col">{{barreno.Col9}}</div>
-                            <div class="col">{{barreno.Col10}}</div>
+                            <div class="col">
+                                <center>{{barreno.Col1}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col2}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col3}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col4}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col5}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col6}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col7}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col8}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col9}}</center>
+                            </div>
+                            <div class="col">
+                                <center>{{barreno.Col10}}</center>
+                            </div>
                         </div>
                     </ion-item>
 
@@ -184,14 +204,14 @@
                             <div class="col">{{barreno.barr}}</div>
                             <div class="col">{{barreno.coordx}}</div>
                             <div class="col">{{barreno.coordy}}</div>
-                            <div class="col">{{barreno.prof}}</div>
-                            <div class="col">{{barreno.diam}}</div>
+                            <div class="col">{{barreno.prof * profuValue}}</div>
+                            <div class="col">{{barreno.diam * diameValue}}</div>
                         </div>
                     </ion-item>
                 </ion-list>
             </ion-scroll>
             <button id="editarVoladuraMapa-button32" ng-click="viewPreview=true; showConfirm=true" ng-hide="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block">Ingresar Medidas</button>
-            <button id="editarVoladuraMapa-button33" ng-disabled="continueOpt" ng-click="confirmData(); confirmContinue=true" ng-show="viewPreview" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar Datos</button>
+            <button id="editarVoladuraMapa-button33" ng-disabled="continueOpt" ng-click="confirmData(profuValue, diameValue); confirmContinue=true" ng-show="viewPreview" ng-hide="confirmContinue==true" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar Datos</button>
             <button id="editarVoladuraMapa-button33" ng-click="insertBarrenosProj()" ng-show="confirmContinue" ng-disabled="continueOpt" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Continuar</button>
         </div>
 

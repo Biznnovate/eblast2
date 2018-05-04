@@ -58,9 +58,12 @@ angular.module('app.dataCamion', [])
                     $scope.show();
 
                     $scope.proj = doc;
+                    $scope.projName = doc.proj
+
                     console.log(doc)
+                    console.log('projname ' + $scope.projName)
 
-
+                    $scope.vnumminera = $scope.projName;
 
                     //$scope.projNam = doc.proj;
 
@@ -73,8 +76,9 @@ angular.module('app.dataCamion', [])
                 });
 
             }
-            $scope.vnumaustin = $scope.projID;
+
             $scope.loadproj();
+            $scope.vnumminera = $scope.projName;
             $scope.sync = function() {
                     $scope.show();
                     localAdminDB.sync(remoteAdminDB).on('complete', function() {
@@ -155,6 +159,10 @@ angular.module('app.dataCamion', [])
             }
             $scope.updateFecha = function(obj) {
                 $scope.fecha_u = obj;
+
+            }
+            $scope.updateHora = function(obj) {
+                $scope.hora_u = obj;
 
             }
             $scope.updateDocumento = function(obj) {
@@ -277,6 +285,7 @@ angular.module('app.dataCamion', [])
                     camion: $scope.selectedCamion_u,
                     conductor: $scope.selectedConductor_u,
                     fecha: $scope.fecha_u,
+                    hora: $scope.hora_u,
                     doc: $scope.documento_u,
                     vnumaustin: $scope.vnumaustin_u,
                     vnumminera: $scope.vnumminera_u,

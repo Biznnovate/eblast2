@@ -438,6 +438,20 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.reporteCamion', {
+            url: '/page34',
+            params: {
+                id: "",
+                status: "",
+                proj: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/reporteCamion.html',
+                    controller: 'reporteCamionCtrl'
+                }
+            }
+        })
 
     $urlRouterProvider.otherwise('/side-menu21/page13')
 
