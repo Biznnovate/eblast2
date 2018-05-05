@@ -2081,12 +2081,12 @@ angular.module('app.editarVoladuraMapa', [])
 
                 $scope.shownewBarrForm = false;
 
-                localprojDB.sync(remoteprojDB).on('complete', function() {
-                    // yay, we're in sync!
+                //  localprojDB.sync(remoteprojDB).on('complete', function() {
+                // yay, we're in sync!
 
-                }).on('error', function(err) {
-                    // boo, we hit an error!
-                });
+                // }).on('error', function(err) {
+                // boo, we hit an error!
+                // });
 
 
 

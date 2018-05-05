@@ -25,7 +25,7 @@
             <div class="col">
 
                 <h3>
-                    <strong>ID {{selectedbarr.barr}} {{cargaTotalMessage}} {{cargaTotal | number:0}}</strong></h3>
+                    <strong>ID {{selectedbarr.barr}} </strong><strong ng-show="cargaTotal!=0"> {{cargaTotalMessage}} {{cargaTotal | number:0}}</strong></h3>
                 <div ng-show="showCoordControl!='yes'">
                     <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
                                                       <span class="input-label h3">Tipo</span>
@@ -69,7 +69,7 @@
                         <br>
 
 
-                        <h3>Carga Total (kg): {{calcVals.Ct | number:2}}</h3>
+                        <h3>Carga Total (kg): {{calcVals.Ct | number:0}}</h3>
 
                     </div>
 
