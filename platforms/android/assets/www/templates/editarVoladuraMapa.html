@@ -23,7 +23,7 @@
                 </ion-scroll>
             </div>
             <div class="col">
-
+                <ion-toggle toggle-class="toggle-negative" id="ajustarCSV-toggleMulti" ng-change="multiToggleFunc(multiToggleVal)" ng-model="multiToggleVal">{{multiToggleDisp}}</ion-toggle>
                 <h3>
                     <strong>ID {{selectedbarr.barr}} </strong><strong ng-show="cargaTotal!=0"> {{cargaTotalMessage}} {{cargaTotal | number:0}}</strong></h3>
                 <div ng-show="showCoordControl!='yes'">
@@ -74,6 +74,7 @@
                     </div>
 
                     <ion-toggle toggle-class="toggle-positive" id="ajustarCSV-toggle5" ng-change="barrDetailstoggle()" ng-model="barrDetails">Ver Detalles de Carga {{tipodecarga}}</ion-toggle>
+
                     <div class="item range">
                         <i class="icon ion-ios-minus"></i>
                         <input type="range" name="radio" ng-model="radioSize" ng-change="dataChartBarrs(radioSize)">

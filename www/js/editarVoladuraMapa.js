@@ -341,43 +341,27 @@ angular.module('app.editarVoladuraMapa', [])
                 });
                 $scope.hide();
             }
+            $scope.loadallProj = function() {
+                localprojDB.allDocs({
+                    include_docs: true,
+                    attachments: true
+                }).then(function(result) {
+                    // handle result
+                    $scope.projInfo = result;
 
-            localprojDB.allDocs({
-                include_docs: true,
-                attachments: true
-            }).then(function(result) {
-                // handle result
-                $scope.projInfo = result;
 
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
 
-            }).catch(function(err) {
-                console.log(err);
-            });
             $scope.changeProjID = function() {
                 $scope.projID = '';
             }
             $scope.projID = $scope.projparam.proj || '';
 
             $scope.loadProj = function() {
-                var proj = $scope.projparam.proj;
 
-
-                localprojDB.get(proj).then(function(doc) {
-
-                    $scope.proj = doc;
-                    console.log(doc)
-                    $scope.tipos = doc.tipos;
-                    $scope.projNam = doc.proj;
-                    console.log(doc.tipos)
-                    $scope.dataChartBarrs();
-
-                }).catch(function(err) {
-                    console.log(err);
-                    // alert('no');
-                    $scope.showForm2 = true;
-                    $scope.projExists = false;
-
-                });
                 var proj = $scope.projID;
                 localprojDB.get(proj).then(function(doc) {
                     $scope.show();
@@ -385,6 +369,7 @@ angular.module('app.editarVoladuraMapa', [])
                     $scope.proj = doc;
                     console.log(doc)
                     $scope.tipobarr = doc.tipos;
+                    $scope.tipos = doc.tipos;
                     $scope.Barrenos = [];
                     $scope.Barrenos = doc.barrenos;
                     $scope.projNam = doc.proj;
@@ -393,12 +378,15 @@ angular.module('app.editarVoladuraMapa', [])
                     $scope.hide();
                 }).catch(function(err) {
                     console.log(err);
+                    $scope.showForm2 = true;
+                    $scope.projExists = false;
 
                 });
             }
             $scope.loadProj();
+            $scope.multiToggleVal = true;
             $scope.syncload = function() {
-                $scope.sync();
+                $scope.multiUserSync($scope.multiToggleVal);
                 $scope.loadProj();
             }
             $scope.selectProj = function(obj) {
@@ -2008,6 +1996,20 @@ angular.module('app.editarVoladuraMapa', [])
                 // Carga a Grandel Disponible *1000*3.1416*(Diametro*Diametro)/4
 
             }
+            $scope.multiToggleDisp = 'Cuantos Tablets?'
+            $scope.multiToggleFunc = function(obj) {
+
+                if (obj == true) {
+                    $scope.multiToggleDisp = 'Multiples Tablets'
+                    $scope.multiToggleVal = true;
+                    console.log('True multiples')
+                } else {
+                    $scope.multiToggleDisp = 'Un Tablet'
+                    $scope.multiToggleVal = false
+                    console.log('False una')
+                }
+
+            }
             $scope.barrDetailstoggle = function() {
                 $scope.barrDetails = true;
             }
@@ -2168,6 +2170,93 @@ angular.module('app.editarVoladuraMapa', [])
 
             }
 
+
+            //agrega valores al barreno Multiple Users
+
+            $scope.multiUserSync = function(obj) {
+                $scope.show();
+                var multi = obj
+                if (multi == true) {
+
+                    console.log('multi')
+                    var id = $scope.projID;
+                    var rows = $scope.Barrenos;
+
+                    var proj = $scope.projID;
+                    remoteprojDB.get(proj).then(function(doc) {
+                        $scope.show();
+
+                        $scope.BarrenosDB = [];
+                        $scope.BarrenosDB = doc.barrenos;
+
+                        $scope.hide();
+                    }).catch(function(err) {
+                        console.log(err);
+
+
+                    });
+                    $scope.BarrenosMulti = [];
+                    var barrDB = $scope.BarrenosDB;
+                    angular.forEach(rows, function(barr) {
+                        var selectedBarr = barr.barr;
+                        for (var i = 0; i < $scope.BarrenosDB.length; i++) {
+                            if ($scope.BarrenosDB[i].barr == selectedBarr) {
+                                if ($scope.BarrenosDB.status == 'Updated') {
+                                    $scope.BarrenosMulti.push($scope.BarrenosDB[i])
+                                    i = $scope.BarrenosDB.length; // break out of the loop. Not strictly necessary
+                                } else {
+                                    $scope.BarrenosMulti.push(barr)
+                                    i = $scope.BarrenosDB.length; // break out of the loop. Not strictly necessary
+                                }
+
+                            }
+                        }
+                    })
+
+                    console.log('updated barrenos filtered')
+                    localprojDB.get(id).then(function(doc) {
+
+                        return localprojDB.put({
+                            _id: id,
+                            _rev: doc._rev,
+                            proj: doc.proj,
+                            date: doc.date,
+                            barrenos: $scope.BarrenosMulti,
+                            tipos: doc.tipos,
+                            productos: doc.productos,
+                            muestras: doc.muestras,
+                            datagral: doc.datagral,
+                            sismo: doc.sismo,
+                            datacamion: doc.datacamion,
+                        });
+                    }).then(function() {
+                        return localprojDB.get(id);
+                        // handle response
+
+                    }).catch(function(err) {
+                        console.log(err);
+                    });
+
+                    $scope.sync();
+                    $scope.message = "Se actualizaron barrenos para multiples proyectos ";
+                } else {
+                    $scope.sync();
+                    console.log('no se escogio multi')
+                    $scope.message = "Se actualizaron barrenos";
+                }
+
+
+
+                //$scope.showReloadButton = true;
+                console.log($scope.message);
+                // $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'status': new Date().toISOString() });
+                $scope.hide();
+                $scope.$applyAsync();
+                $scope.dataChartBarrs();
+
+
+
+            }
 
 
             $scope.message2 = '';
