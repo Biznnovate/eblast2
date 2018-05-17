@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div id="barrenostab" print-section>
+        <div id="barrenos" print-section>
             <table border="1">
                 <thead>
                     <tr class="table-header" style="font-weight: bold">
@@ -112,6 +112,68 @@
 
                         <td>{{x.calcs.Fc | number:2}}</td>
                         <!--td step="0.01">{{x.doc.densidad}}</td-->
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div id="barrenostab" print-section ng-show="neverShowThis">
+            <table border="1">
+                <thead>
+                    <tr class="table-header" style="font-weight: bold">
+                        <th>HOLE {{BarrenosUpdatedCalcs.length}}</th>
+                        <th>DEPH</th>
+                        <th>REAL DEPH {{getProfRealTotal() | number:2}}mts</th>
+                        <th>SUB PERF</th>
+                        <th>TACO INICIAL</th>
+                        <th>TACO FINAL</th>
+                        <th>Diam (pulg)</th>
+                        <th>Iniciador</th>
+                        <th>Iniciador Peso {{getCi()| number:2}}kgs</th>
+                        <th>Explosivo</th>
+                        <th>Explosivo Peso {{getPt() | number:2}}kgs</th>
+                        <th>Peso Total {{getCi() + getPt() | number:2}}kgs</th>
+                        <th>Bordo</th>
+                        <th>Espaciamiento</th>
+                        <th>Vol. Barreno {{getVolumenTotal() | number:2}}</th>
+                        <th>POWDER FACTOR</th>
+                        <!--th>EM. DENSITY</th-->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in Barrenos | orderBy:'x.barr' track by $index ">
+                        <!--tr ng-repeat="x in Barrenos | orderBy:'x.barr' track by $index"-->
+
+                        <td>{{x.barr}}</td>
+                        <td>{{x.prof}}</td>
+                        <td>{{x.profreal}}</td>
+                        <td>{{x.calcs.s | number:2}}</td>
+                        <td>{{x.tacoini}}</td>
+                        <td>{{x.taco}}</td>
+                        <td>{{x.diametro}}</td>
+                        <td>
+                            <ion-item id="vistadereporte-list-ini" ng-repeat="y in cargasBarr | filter:y.tipoid='ini' | filter:y.status='Updated'" ng-if="x.barr==y.barr">{{y.prod}}</ion-item>
+                        </td>
+
+
+                        <td>{{x.calcs.Ci| number:2}}</td>
+                        <td>
+                            <ion-item id="vistadereporte-list-prod" ng-repeat="y in cargasBarr |  filter:y.tipoid='cg' | filter: y.status='Updated'" ng-if="x.barr==y.barr">{{y.prod}}</ion-item>
+                            <ion-item id="vistadereporte-list-prod2" ng-repeat="y in cargasBarr |  filter:y.tipoid='ce' | filter: y.status='Updated'" ng-if="x.barr==y.barr">{{y.prod}}</ion-item>
+                        </td>
+
+
+                        <td>{{x.calcs.Ct | number:2}}</td>
+                        <td>{{x.calcs.Ct+x.calcs.Ci | number:2}}</td>
+                        <td>{{x.bordo}}</td>
+                        <td>{{x.espaciamiento}}</td>
+                        <td>{{x.calcs.V}}</td>
+
+                        <td>{{x.calcs.Fc | number:2}}</td>
+
 
 
                     </tr>
