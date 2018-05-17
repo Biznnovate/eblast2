@@ -305,6 +305,13 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.multiUserSync($scope.multiToggleVal);
                 $scope.loadProj();
             }
+            $scope.letUpdateButton = false;
+            $scope.disableUpdate = function() {
+                $scope.letUpdateButton = true;
+            }
+            $scope.enableUpdate = function() {
+                $scope.letUpdateButton = false;
+            }
             $scope.selectProj = function(obj) {
                 $scope.show();
                 console.log(obj)
@@ -557,6 +564,7 @@ angular.module('app.editarVoladuraMapa', [])
 
 
             }
+
             $scope.updateSelectedBarr23 = function(obj) {
                 console.log(obj)
                 console.log($scope.selectedBarreno)
@@ -688,6 +696,11 @@ angular.module('app.editarVoladuraMapa', [])
                 var i = $scope.findIndexBarr(obj);
                 if ($scope.selectedTipo_u == '') {
                     alert('Seleccione un tipo de barreno')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
                 }
 
                 //var result = $filter('filter')($scope.Barrenos, { barr: value })[0];
@@ -849,6 +862,16 @@ angular.module('app.editarVoladuraMapa', [])
                 $scope.enableCalc = true;
                 $scope.enableResults = true;
                 $scope.calc();
+                var ctForCalc = $scope.calcVals.Ct;
+                console.log('La carga para test menor o mayor a 0' + ctForCalc)
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
                 $scope.hide();
 
             }
@@ -1059,7 +1082,17 @@ angular.module('app.editarVoladuraMapa', [])
                 var Lc = L - Tf - Ta - ((ci * Li));
                 var Vc = 3.1416 * ((D / 2) * (D / 2)) //* L * 1000;
                 var Cm = Vc * d / 1000;
-                var Ct = Cm * Lc;
+
+                var ctForCalc = Cm * Lc;
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
+                var Ct = ctForCalc;
                 var V = B * Es * (L - s);
                 var Pt = Ct + (Ci * ci);
                 var Fc = Ct / V;
@@ -1196,7 +1229,17 @@ angular.module('app.editarVoladuraMapa', [])
                 var Lc = L - Tf - Ta - ((ci * Li));
                 var Vc = 3.1416 * ((D / 2) * (D / 2)) //* L * 1000;
                 var Cm = (1 / (Lv)) * Pe;
-                var Ct = Cm * Lc;
+                var ctForCalc = Cm * Lc;
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
+                var Ct = ctForCalc;
+
                 var V = B * Es * (L - s);
                 var Pt = Ct + (Ci * ci);
                 var Fc = Ct / V;
@@ -1333,7 +1376,16 @@ angular.module('app.editarVoladuraMapa', [])
                 var Lc = L - Tf - Ta - ((ci * Li));
                 var Vc = 3.1416 * ((D / 2) * (D / 2)) //* L * 1000;
                 var Cm = (1 / (Lv)) * Pe;
-                var Ct = Cm * Lc;
+                var ctForCalc = Cm * Lc;
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
+                var Ct = ctForCalc;
                 var V = 0;
                 var Pt = Ct + (Ci * ci);
                 var Fc = Ct / V;
@@ -1481,7 +1533,16 @@ angular.module('app.editarVoladuraMapa', [])
                 var Lc = $scope.cargasEmp.cantidad //L - Tf - Ta - ((ci * Li));
                 var Vc = 3.1416 * ((D / 2) * (D / 2)) // * L *1000
                 var Cm = Vc * d / 1000;
-                var Ct = Cm * Lc;
+                var ctForCalc = Cm * Lc;
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
+                var Ct = ctForCalc;
                 var V = B * Es * (L - s);
                 var Pt = Ct + (Ci * ci);
                 var Fc = Ct / V;
@@ -1631,7 +1692,16 @@ angular.module('app.editarVoladuraMapa', [])
                 var Lc = $scope.cargasEmp.cantidad //L - Tf - Ta - ((ci * Li));
                 var Vc = 3.1416 * ((D / 2) * (D / 2)) // * L *1000
                 var Cm = Cm = (1 / (Lf)) * Pe;
-                var Ct = Cm * Lc;
+                var ctForCalc = Cm * Lc;
+                if (ctForCalc < 0) {
+                    alert('La carga Total no puede ser negativa')
+                    $scope.disableUpdate();
+
+                } else {
+                    $scope.enableUpdate();
+
+                }
+                var Ct = ctForCalc;
                 var V = B * Es * (L - s);
                 var Pt = Ct + (Ci * ci);
                 var Fc = Ct / V;
