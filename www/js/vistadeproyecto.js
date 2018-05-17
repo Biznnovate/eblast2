@@ -1,9 +1,9 @@
 angular.module('app.vistaDeProyecto', [])
-    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup',
+    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup', '$window',
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup) {
+        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup, $window) {
             // Show loader from service
 
             $scope.$root.showMenuIcon = true;
@@ -215,9 +215,15 @@ angular.module('app.vistaDeProyecto', [])
                 //$scope.hide();
 
             // $scope.projID = $scope.projparam.proj || '';
+            $scope.projOpened = true;
+            $scope.abrirProj = function() {
+                $scope.show();
+                window.location.reload()
+                $scope.hide();
+            }
             $scope.selectProjFunc = function() {
 
-
+                    $scope.selectedProj = '';
                     if ($scope.projID != '') {
                         var proj = $scope.projID;
                         localprojDB.get(proj).then(function(doc) {
@@ -229,13 +235,14 @@ angular.module('app.vistaDeProyecto', [])
                                 // $scope.Muesrow = doc.muestras;
                                 // console.log(doc.tipos)
                             console.log('se encontro el proyecto:' + proj)
-
+                            $scope.projOpened = false;
                         }).catch(function(err) {
                             console.log(err);
                         });
                     } else {
                         $scope.selectedProj = ''
                         console.log('no se ha seleccionado un proyecto')
+                        $scope.projOpened = true;
                     };
                     $showAll = false;
                     console.log($scope.showAll)

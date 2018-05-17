@@ -1,4 +1,4 @@
-<ion-view title="eBlast v1.0118.4.9" id="page13" hide-back-button="true">
+<ion-view title="eBlast v1.0118.4.11" id="page13" hide-back-button="true">
     <ion-nav-buttons side="left">
         <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
 
@@ -18,42 +18,45 @@
 
         </div>
 
-        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''">
+        <table class="table table-bordered table-hover table-condensed" ng-show="projID!=''" ng-hide="projOpened">
             <tr>
                 <td><strong><h3>Proyecto: {{projNam}}</h3></strong></td>
-                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon ion-android-list" ng-click="changeProjID()">
-          Otros Proyectos</button>
+                <td><button style="border-radius:26px 26px 26px 26px;" class="button button-positive button-block icon folder-open" ng-click="abrirProj();">
+          Abrir otro Proyecto</button>
                 </td>
             </tr>
         </table>
-        <button ng-click="showAll=false" id="vistaDeProyecto-button36" ng-show="showAll" class="button button-positive button-block icon-left ion-arrow-up-b">Ocultar</button>
-        <table class="table table-bordered table-hover table-condensed" ng-show="showAll">
-            <tr>
-                <th><strong>Proyecto</strong></th>
-                <th><strong>Fecha</strong></th>
-            </tr>
-            <tr ng-repeat="proj in projInfo.rows | orderBy: 'doc.date':true" on-drag-left="showEditProd=false" on-double-tap="showEditProd=true">
-                <td>{{proj.doc.proj}}</td>
-                <td>{{proj.doc.date}}</td>
-                <td ng-show="showEditProd"><button ng-click="selectProj(proj)" class="button button-positive button-full button-clear icon ion-android-checkbox-outline"></button></td>
-                <td ng-show="showEditProd"><button ng-click="showConfirm(proj)" class="button button-positive button-full button-clear icon ion-android-delete"></button></td>
-            </tr>
-        </table>
-        <table class="table table-bordered table-hover table-condensed" ng-hide="showAll">
-            <tr>
-                <td item-width="85%">
-                    <label class="item item-select" id="editarVoladuraMapa-select19">
+        <div ng-show="projOpened">
+            <button ng-click="showAll=false" id="vistaDeProyecto-button36" ng-show="showAll" class="button button-positive button-block icon-left ion-arrow-up-b">Ocultar</button>
+            <table class="table table-bordered table-hover table-condensed" ng-show="showAll">
+                <tr>
+                    <th><strong>Proyecto</strong></th>
+                    <th><strong>Fecha</strong></th>
+                </tr>
+                <tr ng-repeat="proj in projInfo.rows | orderBy: 'doc.date':true" on-drag-left="showEditProd=false" on-double-tap="showEditProd=true">
+                    <td>{{proj.doc.proj}}</td>
+                    <td>{{proj.doc.date}}</td>
+                    <td ng-show="showEditProd"><button ng-click="selectProj(proj)" class="button button-positive button-full button-clear icon ion-android-checkbox-outline"></button></td>
+                    <td ng-show="showEditProd"><button ng-click="showConfirm(proj)" class="button button-positive button-full button-clear icon ion-android-delete"></button></td>
+                </tr>
+            </table>
+            <table class="table table-bordered table-hover table-condensed" ng-hide="showAll">
+                <tr>
+                    <td item-width="85%">
+                        <label class="item item-select" id="editarVoladuraMapa-select19">
                                 <span class="input-label">Seleccione el Proyecto</span>
                                 <select ng-options="proj as proj.proj for proj in projInfoT5 | orderBy: 'date':true"
                                  ng-model="selectedproj" ng-change="selectProjT5(selectedproj)"></select>
                       </label>
-                </td>
-                <td><button ng-click="showAll=true; " class="button button-positive button-full button-clear icon ion-ios-list"></button></td>
+                    </td>
+                    <td><button ng-click="showAll=true; " class="button button-positive button-full button-clear icon ion-ios-list"></button></td>
 
 
-            </tr>
+                </tr>
 
-        </table>
+            </table>
+        </div>
+
         <div class="list card">
 
             <a ion-item ui-sref="menu.subirProyecto()" id="vistaDeProyecto-button36" class="item item-icon-left"><i class="icon ion-android-add-circle"></i>Nuevo Proyecto</a>

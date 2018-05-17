@@ -24,6 +24,7 @@ angular.module('app.editarVoladuraMapa', [])
 
             });
 
+
             //Load BD de de Proyectos y sus caracteristicas
 
             $scope.projparam = {
@@ -47,6 +48,7 @@ angular.module('app.editarVoladuraMapa', [])
 
             $scope.dataChartBarrs = function(obj) {
                 //$scope.show();
+
                 console.log("datachartbarrs started")
                 var barrenosforchart = $scope.Barrenos;
                 var radio = obj || 50;
@@ -97,7 +99,8 @@ angular.module('app.editarVoladuraMapa', [])
                     { label: ['2'], title: 'title2', data: [{ x: 1.1, y: 2.1, r: 5 }] },
                     { label: ['3'], title: 'title3', data: [{ x: 1.3, y: 2.4, r: 5 }] },
                 ]
-
+                $scope.mapaBarrenos = '';
+                $scope.ctx = '';
                 $scope.ctx = document.getElementById("mapaBarrenos");
                 $scope.ctx.height = 700;
 
@@ -211,94 +214,7 @@ angular.module('app.editarVoladuraMapa', [])
                         }
                     },
 
-                    optionsa: {
-                        maintainAspectRatio: false,
-                        title: {
-                            display: true,
-                            text: 'Mapa de Barrenos'
-                        },
-                        responsive: true,
-                        tooltips: false,
-                        aspectRatio: 1,
 
-                        layout: {
-                            padding: {
-                                top: 42,
-                                right: 16,
-                                bottom: 32,
-                                left: 8
-                            }
-                        },
-                        // hover: {
-                        //   mode: 'nearest',
-                        // intersect: true
-                        //},
-                        scales: {
-                            yAxes: [{
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "Norte"
-                                },
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }],
-                            xAxes: [{
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: "Este"
-                                }
-                            }]
-
-                        },
-                        // Container for pan options
-                        pan: {
-                            // Boolean to enable panning
-                            enabled: true,
-
-                            // Panning directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow panning in the y direction
-                            mode: 'xy'
-                        },
-
-                        // Container for zoom options
-                        zoom: {
-                            // Boolean to enable zooming
-                            enabled: true,
-
-                            // Zooming directions. Remove the appropriate direction to disable 
-                            // Eg. 'y' would only allow zooming in the y direction
-                            mode: 'xy',
-                        },
-                        plugins: {
-                            datalabels: {
-                                anchor: 'center',
-                                align: 'center',
-                                color: 'white',
-
-                                font: {
-                                    weight: 'bold'
-                                },
-                                formatter: function(value) {
-                                    return value.v;
-                                },
-                                offset: 2,
-                                padding: 0
-                            }
-                        },
-                        elements: {
-                            point: {
-                                radius: function(context) {
-                                    //var value = context.dataset.data[context.dataIndex];
-                                    var value = context.dataset.data[context.dataIndex];
-                                    var size = context.chart.width;
-                                    var base = 0.25;
-                                    return (size / 24) * base;
-                                }
-                            }
-                        },
-
-                    }
                 });
                 // $scope.showmap = true;
                 // $scope.hide();

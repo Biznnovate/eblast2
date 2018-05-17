@@ -15,17 +15,19 @@
     </ion-nav-buttons>
 
     <ion-content class="has-header">
-        {{radioSize}}
+
         <div class="row responsive-sm">
             <div class="col col-66">
+
                 <ion-scroll direction="xy" zooming="true" has-bouncing="true" overflow-scroll="false">
-                    <canvas id="mapaBarrenos"></canvas>
+                    <!--canvas class="chart chart-base" chart-type="chart_type" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas-->
+                    <canvas id="mapaBarrenos" class="chart chart-base"></canvas>
                 </ion-scroll>
             </div>
             <div class="col">
                 <ion-toggle toggle-class="toggle-negative" id="ajustarCSV-toggleMulti" ng-change="multiToggleFunc(multiToggleVal)" ng-model="multiToggleVal">{{multiToggleDisp}}</ion-toggle>
                 <h3>
-                    <strong>ID {{selectedbarr.barr}} </strong><strong ng-show="cargaTotal!=0"> {{cargaTotalMessage}} {{cargaTotal | number:0}}</strong></h3>
+                    <strong>ID {{selectedbarr.barr}} </strong><strong ng-show="cargaTotal!=0"> {{cargaTotalMessage}} {{cargaTotal | number:0}} kgs</strong></h3>
                 <div ng-show="showCoordControl!='yes'">
                     <label class="item item-select" id="editarVoladuraMapa-select14" ng-show="showAddNewBarr">
                                                       <span class="input-label h3">Tipo</span>
