@@ -10,6 +10,9 @@
     "cordova-pdf-generator": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     },
+    "cordova-plugin-cache-clear": {
+      "PACKAGE_NAME": "com.ionicframework.eblast506119"
+    },
     "cordova-plugin-console": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     },
@@ -45,9 +48,6 @@
     },
     "phonegap-plugin-barcodescanner": {
       "ANDROID_SUPPORT_V4_VERSION": "27.+",
-      "PACKAGE_NAME": "com.ionicframework.eblast506119"
-    },
-    "cordova-plugin-cache-clear": {
       "PACKAGE_NAME": "com.ionicframework.eblast506119"
     }
   },

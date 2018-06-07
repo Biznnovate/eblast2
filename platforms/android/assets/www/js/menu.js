@@ -7,8 +7,8 @@ angular.module('app.menu', [])
                 'id': $stateParams.id,
                 'status': $stateParams.status,
                 'proj': $stateParams.proj,
+                'usr': $stateParams.usr
             }
-
 
 
 

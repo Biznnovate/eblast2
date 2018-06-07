@@ -159,32 +159,36 @@ angular.module('app.services', [])
 })
 
 .factory('Page', function() {
-        var title = 'default';
-        return {
-            title: function() { return title; },
-            setTitle: function(newTitle) { title = newTitle }
-        };
-    })
-    .service('LoginService', function($q) {
-        return {
-            loginUser: function(name, pw) {
-                var deferred = $q.defer();
-                var promise = deferred.promise;
+    var title = 'default';
+    return {
+        title: function() { return title; },
+        setTitle: function(newTitle) { title = newTitle }
+    };
+})
 
-                if (name == 'user' && pw == '123') {
-                    deferred.resolve('Welcome ' + name + '!');
-                } else {
-                    deferred.reject('Wrong credentials.');
-                }
-                promise.success = function(fn) {
-                    promise.then(fn);
-                    return promise;
-                }
-                promise.error = function(fn) {
-                    promise.then(null, fn);
-                    return promise;
-                }
+.service('LoginService', function($q) {
+    return {
+        loginUser: function(name, pw, dbu, dbp) {
+            console.log('name ' + name + ' pw ' + pw + ' dbu ' + dbu)
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+
+            if (name == dbu && pw == dbp) {
+                deferred.resolve('Bienvenido ' + name + '!');
+                console.log('Usuario Correcto')
+            } else {
+                deferred.reject('Credenciales incorrectas');
+                console.log('error de usuario')
+            }
+            promise.success = function(fn) {
+                promise.then(fn);
                 return promise;
             }
+            promise.error = function(fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+            return promise;
         }
-    });
+    }
+});

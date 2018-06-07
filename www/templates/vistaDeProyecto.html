@@ -1,4 +1,4 @@
-<ion-view title="eBlast v1.0118.4.12" id="page13" hide-back-button="true">
+<ion-view title="eBlast v1.0118.5.1" id="page13" hide-back-button="true">
     <ion-nav-buttons side="left">
         <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
 
@@ -10,7 +10,10 @@
     </ion-nav-buttons>
 
     <ion-content padding="true" class="has-header">
-
+        <label class="item" id="editarVoladuraMapa-select19">
+            <span class="input-label">Bienvenido {{usr.u}}</span>
+            
+  </label>
         <div ng-show="displayIntroMessage=='yes'">
             <h1>{{introMessage}}</h1>
 
@@ -70,7 +73,7 @@
             <a ion-item ng-click="gotoCarga()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Informe de Cargas</a>
             <a ion-item ng-click="gotoReporteCamion()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Informe de Camiones</a>
             <a ion-item ng-click="gotoReporte()" ng-hide="projID==''" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-download"></i>Informe de Barrenos</a>
-            <a ion-item ng-click="gotoAdmin()" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-options"></i> Administrativa</a>
+            <a ion-item ng-hide="usr.t!='a'" ng-click="gotoAdmin()" id="vistaDeProyecto-button38" class="item item-icon-left"><i class="icon ion-android-done-all ion-android-options"></i> Administrativa</a>
 
         </div>
         <!--button ion-item ui-sref="menu.subirProyecto()" id="vistaDeProyecto-button36" class="button button-positive button-block icon-left ion-android-add-circle">Nuevo Proyecto</button>

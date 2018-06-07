@@ -140,5 +140,8 @@ angular.module('app.admincons', [])
             $scope.gotoConductor = function() {
                 $state.go('menu.adminConductor', { 'proj': $scope.projID });
             }
+            $scope.gotoUsrs = function() {
+                $state.go('menu.adminUser', { 'proj': $scope.projID });
+            }
         }
     ])

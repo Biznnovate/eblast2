@@ -1,0 +1,102 @@
+<ion-view title="Administrar Usuarios" id="page35" hide-back-button="true">
+
+
+    <ion-nav-buttons side="left">
+        <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon" ng-click="gotovistaDeProj()"><i class="icon ion-navicon"></i></button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon-center button-positive ion-android-sync" ng-click="sync()">
+                                               
+                                                </button>
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
+        <form id="generarReporteProductos-form13" editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+            <div class="btn-edit">
+                <button type="button" style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-edit" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+             
+            </button>
+                <button style="border-radius:50px 50px 50px 50px;" class="btn btn-default button button-positive icon-center ion-android-add-circle" ng-click="addProd()"></button>
+                <div class="btn-group">
+                    <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar</button>
+                    <ul class="dropdown-menu " role="menu">
+                        <li><button class="btn btn-link" ng-click="exportToExcel('#usuarioTable')"><span class="glyphicon glyphicon-share"></span> XLS</button></li>
+
+                        <li><button print-btn class="btn btn-link"><span class="glyphicon glyphicon-share"></span> Print</button></li>
+                        <!--li><button class="btn btn-link" ng-click="export()"><span class="glyphicon glyphicon-share"></span> PDF</button></li>
+                        <li><button class="btn btn-link" onClick="$('#usuarioTable').tableExport({type:'xml',escape:'false'});"><span class="glyphicon glyphicon-share"></span> XML</button></li-->
+
+                    </ul>
+                </div>
+            </div>
+            {{tipo}}
+            <div ng-show="showNewProdForm">
+                <strong>Nuevo</strong>
+                <table>
+
+                    <tr style="font-weight: bold">
+                        <td style="width:30%">Usuario</td>
+                        <td style="width:30%">Contraseña</td>
+                        <td style="width:10%">Tipo</td>
+                        <td style="width:30%"></td>
+
+
+
+                    </tr>
+                    <tr ng-repeat="usuario in newusuario">
+                        <td> <label class="item item-input" id="editarVoladuraMapa-inputnombre">
+                                <span class="input-label"></span>
+                                <input type="text" placeholder="usuario" ng-model="newusuario.name" ng-change="updateNewusuarioName(newusuario.name)">
+                                </label>
+                        </td>
+                        <td>
+                            <label class="item item-input" id="editarVoladuraMapa-inputlicencia">
+                                <span class="input-label"></span>
+                                <input type="text" placeholder="contraseña" ng-model="newusuario.pass" ng-change="updateNewusuarioPass(newusuario.pass)">
+                                </label>
+                        </td>
+                        <td>
+                            <label class="item item-select" id="editarVoladuraMapa-select14">
+                                        <span class="input-label h3">Tipo</span>
+                                        <select ng-options="tipo as tipo.t for tipo in tipos" ng-model="selectedTipo" 
+                                        ng-change="updateTipo(selectedTipo)"></select>
+                                </label>
+                        </td>
+                        <td><button ng-click="saveProd(newusuario,$index)" class="button button-positive button-full button-clear icon ion-android-checkmark-circle"></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+
+            <div id="usuarioTable" print-section>
+                <table class="table table-bordered table-hover table-condensed">
+                    <tr style="font-weight: bold">
+                        <td>Usuario</td>
+                        <td>Tipo</td>
+
+                    </tr>
+
+                    <tr ng-repeat="usuario in usuario track by $index">
+                        <td> <span editable-text="usuario.u">{{usuario.u}}</span></td>
+                        <td> <span editable-text="usuario.t">{{usuario.t}}</span></td>
+                        <td> <button class="btn btn-danger ion-ios-trash" ng-click="removeProd($index)"></button></td>
+                    </tr>
+
+                </table>
+
+            </div>
+            <!-- buttons -->
+
+            <div class="btn-form" ng-show="tableform.$visible">
+                <button type="submit" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" class="btn btn-primary button button-positive button-block icon-left ion-android-checkmark-circle">Aceptar</button>
+                <button type="button" style="border-radius:50px 50px 50px 50px;" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-defaultbutton button-positive button-block icon-left ion-android-cancel">Cancelar</button>
+            </div>
+
+        </form>
+
+
+        <button id="subirProyecto-button35" ng-click="updateusuario()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-right ion-android-checkmark-circle">Confirmar</button>
+
+    </ion-content>
+</ion-view>

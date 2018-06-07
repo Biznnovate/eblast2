@@ -1,6 +1,19 @@
-<ion-view title="Login" id="page4">
+<ion-view title="Eblast" id="page4">
+    <ion-nav-buttons side="left" ng-show="showmenu">
 
+    </ion-nav-buttons>
     <ion-content class="padding">
+
+
+
+        <br>
+        <br>
+        <div class="item item-image">
+            <img src="img/austinlogo.png">
+        </div>
+
+
+
         <div class="list list-inset">
             <label class="item item-input">
                 <input type="text" placeholder="Usuario" ng-model="data.username">
@@ -9,10 +22,7 @@
                 <input type="password" placeholder="Contraseña" ng-model="data.password">
             </label>
         </div>
-        <button class="button button-block button-calm" ng-click="login()">Login</button>
-        <ion-item class="item-icon-right" id="menu-list-item1" ui-sref="menu.vistaDeProyecto()" menu-close="">Volver a Menu de Proyecto
-            <i class="icon ion-android-home"></i>
-        </ion-item>
+        <button class="button button-block button-calm" ng-click="login(data)">Ingresar</button>
     </ion-content>
 
 

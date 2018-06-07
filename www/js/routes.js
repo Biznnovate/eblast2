@@ -11,10 +11,12 @@ angular.module('app.routes', [])
 
         .state('menu.inicio', {
         url: '/page1',
+
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -29,7 +31,9 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
+
         },
         views: {
             'side-menu21': {
@@ -41,10 +45,12 @@ angular.module('app.routes', [])
 
     .state('menu.vistaDeReporte', {
         url: '/page16',
+
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
 
         views: {
@@ -60,7 +66,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         templateUrl: 'templates/menu.html',
         controller: 'menuCtrl'
@@ -68,7 +75,13 @@ angular.module('app.routes', [])
 
     .state('menu.login', {
         url: '/page4',
-
+        cache: false,
+        params: {
+            id: "",
+            status: "",
+            proj: "",
+            usr: ""
+        },
         views: {
             'side-menu21': {
                 templateUrl: 'templates/login.html',
@@ -77,12 +90,14 @@ angular.module('app.routes', [])
         }
     })
 
+
     .state('menu.subirProyecto', {
         url: '/page5',
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -97,7 +112,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
 
         views: {
@@ -114,7 +130,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -129,7 +146,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -145,7 +163,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -160,7 +179,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -175,7 +195,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -190,7 +211,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -205,7 +227,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -220,7 +243,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
         views: {
             'side-menu21': {
@@ -235,7 +259,8 @@ angular.module('app.routes', [])
         params: {
             id: "",
             status: "",
-            proj: ""
+            proj: "",
+            usr: ""
         },
 
         views: {
@@ -252,6 +277,7 @@ angular.module('app.routes', [])
             id: "",
             status: "",
             proj: "",
+            usr: "",
         },
         views: {
             'side-menu21': {
@@ -266,7 +292,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -289,7 +316,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -303,7 +331,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -317,7 +346,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -331,7 +361,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -345,7 +376,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -359,7 +391,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -373,7 +406,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -387,7 +421,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -401,7 +436,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -415,7 +451,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -429,7 +466,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -443,7 +481,8 @@ angular.module('app.routes', [])
             params: {
                 id: "",
                 status: "",
-                proj: ""
+                proj: "",
+                usr: ""
             },
             views: {
                 'side-menu21': {
@@ -452,8 +491,23 @@ angular.module('app.routes', [])
                 }
             }
         })
+        .state('menu.adminUser', {
+            url: '/page35',
+            params: {
+                id: "",
+                status: "",
+                proj: "",
+                usr: ""
+            },
+            views: {
+                'side-menu21': {
+                    templateUrl: 'templates/adminUser.html',
+                    controller: 'adminUserCtrl'
+                }
+            }
+        })
 
-    $urlRouterProvider.otherwise('/side-menu21/page13')
+    $urlRouterProvider.otherwise('/side-menu21/page4')
 
 
 

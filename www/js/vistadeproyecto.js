@@ -21,15 +21,31 @@ angular.module('app.vistaDeProyecto', [])
                     console.log("The loading indicator is now hidden");
                 });
             };
-
+            $scope.projparam = {
+                'id': $stateParams.id,
+                'status': $stateParams.status,
+                'proj': $stateParams.proj,
+                'usr': ''
+            }
 
             $scope.projparam = {
                 'id': $stateParams.id,
                 'status': $stateParams.status,
                 'proj': $stateParams.proj,
+                'usr': $stateParams.usr
             }
             $scope.projID = $scope.projparam.proj || '';
             $scope.showAll = false;
+
+            $scope.usr = $stateParams.usr;
+            console.log($scope.usr.t)
+            $scope.enableAdminButton = false;
+            if ($scope.usr.t == 'a') {
+
+                $scope.enableAdminButton = true;
+            } else {
+                $scope.enableAdminButton = false;
+            }
             // $scope.show();
             //Declara y Sincroniza base de datos de Tipo
             $scope.projInfoT5 = [];
@@ -338,40 +354,40 @@ angular.module('app.vistaDeProyecto', [])
             }
 
             $scope.gotoParam = function() {
-                $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID });
+                $state.go('menu.parametrosVoladura1', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoCapt = function() {
-                $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID });
+                $state.go('menu.editarVoladuraMapa', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoMapa = function() {
-                $state.go('menu.mapaVoladura1', { 'proj': $scope.projID });
+                $state.go('menu.mapaVoladura1', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoProductos = function() {
-                $state.go('menu.generarReporteProductos', { 'proj': $scope.projID });
+                $state.go('menu.generarReporteProductos', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoMuestra = function() {
-                $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID });
+                $state.go('menu.tomaDeMuestra', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoSismo = function() {
-                $state.go('menu.subirSismo', { 'proj': $scope.projID });
+                $state.go('menu.subirSismo', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoDataGral = function() {
-                $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID });
+                $state.go('menu.generarReporteDatosGenerales', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoCarga = function() {
-                $state.go('menu.reporteCarga1', { 'proj': $scope.projID });
+                $state.go('menu.reporteCarga1', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoReporte = function() {
-                $state.go('menu.vistaDeReporte', { 'proj': $scope.projID });
+                $state.go('menu.vistaDeReporte', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoAdmin = function() {
-                $state.go('menu.login', { 'proj': $scope.projID });
+                $state.go('menu.admincons', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoCamion = function() {
-                $state.go('menu.dataCamion', { 'proj': $scope.projID });
+                $state.go('menu.dataCamion', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
             $scope.gotoReporteCamion = function() {
-                $state.go('menu.reporteCamion', { 'proj': $scope.projID });
+                $state.go('menu.reporteCamion', { 'proj': $scope.projID, 'usr': $scope.usr });
             }
 
 

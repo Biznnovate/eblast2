@@ -323,10 +323,10 @@ angular.module('app.parametrosVoladura1', [])
 
 
             };
-            $scope.taco = 0;
-            $scope.tacoini = 0;
-            $scope.aire = 0;
-            $scope.bordo = 0;
+            $scope.taco = $scope.taco || 0;
+            $scope.tacoini = $scope.tacoini || 0;
+            //$scope.aire = $scope.aire || 0;
+            //$scope.bordo = $scope.bordo || 0;
             $scope.espaciamiento = 0;
             $scope.changeTipoCarga = function(obj) {
                 console.log(obj)
