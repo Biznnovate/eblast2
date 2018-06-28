@@ -1,9 +1,11 @@
 angular.module('app.editarVoladuraMapa', [])
-    .controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+    .controller('editarVoladuraMapaCtrl', ['$scope', '$stateParams', '$window', '$state', '$filter', 'pouchDB', 'Excel', '$timeout', '$ionicLoading', 'Page', '$ionicScrollDelegate', '$ionicPopup', '$localStorage', '$sessionStorage',
+        // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup) {
+        function($scope, $stateParams, $window, $state, $filter, pouchDB, Excel, $timeout, $ionicLoading, Page, $ionicScrollDelegate, $ionicPopup, $localStorage, $sessionStorage) {
             $scope.$root.showMenuIcon = true;
+            $state.reload(true)
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...',
@@ -31,8 +33,14 @@ angular.module('app.editarVoladuraMapa', [])
                 'id': $stateParams.id,
                 'status': $stateParams.status,
                 'proj': $stateParams.proj,
+
             }
-            Page.setTitle($stateParams.proj);
+
+
+            $scope.usr = $stateParams.usr;
+            var title = $stateParams.proj + ' Captado por:' + $scope.usr.u;
+            Page.setTitle(title);
+            $scope.$broadcast("$reload", {});
 
             //Declara y Sincroniza base de datos de Tipo
             let localprojDB = new pouchDB('projects');
@@ -142,6 +150,7 @@ angular.module('app.editarVoladuraMapa', [])
                                 left: 16
                             }
                         },
+                        animation: { duration: 0 },
                         elements: {
                             point: {
                                 radius: function(context) {
@@ -220,6 +229,7 @@ angular.module('app.editarVoladuraMapa', [])
                 // $scope.hide();
                 console.log("datachartbarrs ended " + $scope.dataChart)
             }
+
             $scope.$watch('radioSize', function() {
 
 
@@ -620,6 +630,7 @@ angular.module('app.editarVoladuraMapa', [])
                     'cargas ': $scope.cargas,
                     'iniciadores ': $scope.iniciadores,
                     'tacofinal ': $scope.tacofinal,
+                    'updatedby': $scope.usr.u,
                 }
                 $scope.Barrenos.push(newDataBarr);
                 console.log(newDataBarr)
@@ -637,6 +648,7 @@ angular.module('app.editarVoladuraMapa', [])
                         datagral: doc.datagral,
                         sismo: doc.sismo,
                         datacamion: doc.datacamion,
+                        updatedby: $scope.usr.u,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -700,7 +712,7 @@ angular.module('app.editarVoladuraMapa', [])
 
                 } else {
                     $scope.enableUpdate();
-
+                    $scope.mensajeUpdate = '';
                 }
 
                 //var result = $filter('filter')($scope.Barrenos, { barr: value })[0];
@@ -865,11 +877,12 @@ angular.module('app.editarVoladuraMapa', [])
                 var ctForCalc = $scope.calcVals.Ct;
                 console.log('La carga para test menor o mayor a 0' + ctForCalc)
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
+                    $scope.mensajeUpdate = ''
 
                 }
                 $scope.hide();
@@ -1085,11 +1098,12 @@ angular.module('app.editarVoladuraMapa', [])
 
                 var ctForCalc = Cm * Lc;
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
+                    $scope.mensajeUpdate = '';
 
                 }
                 var Ct = ctForCalc;
@@ -1231,12 +1245,12 @@ angular.module('app.editarVoladuraMapa', [])
                 var Cm = (1 / (Lv)) * Pe;
                 var ctForCalc = Cm * Lc;
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
-
+                    $scope.mensajeUpdate = '';
                 }
                 var Ct = ctForCalc;
 
@@ -1378,12 +1392,12 @@ angular.module('app.editarVoladuraMapa', [])
                 var Cm = (1 / (Lv)) * Pe;
                 var ctForCalc = Cm * Lc;
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
-
+                    $scope.mensajeUpdate = '';
                 }
                 var Ct = ctForCalc;
                 var V = 0;
@@ -1535,12 +1549,12 @@ angular.module('app.editarVoladuraMapa', [])
                 var Cm = Vc * d / 1000;
                 var ctForCalc = Cm * Lc;
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
-
+                    $scope.mensajeUpdate = '';
                 }
                 var Ct = ctForCalc;
                 var V = B * Es * (L - s);
@@ -1694,12 +1708,12 @@ angular.module('app.editarVoladuraMapa', [])
                 var Cm = Cm = (1 / (Lf)) * Pe;
                 var ctForCalc = Cm * Lc;
                 if (ctForCalc < 0) {
-                    alert('La carga Total no puede ser negativa')
+                    $scope.mensajeUpdate = 'La carga Total no puede ser negativa'
                     $scope.disableUpdate();
 
                 } else {
                     $scope.enableUpdate();
-
+                    $scope.mensajeUpdate = '';
                 }
                 var Ct = ctForCalc;
                 var V = B * Es * (L - s);
@@ -2040,6 +2054,7 @@ angular.module('app.editarVoladuraMapa', [])
                     'cargas ': $scope.cargas,
                     'iniciadores ': $scope.iniciadores,
                     'tacofinal ': $scope.tacofinal,
+                    'updatedby': $scope.usr.u,
                 }
                 $scope.recentlyupdatedBarr = $scope.selectedbarr.barr;
                 $scope.Barrenos.push(newDataBarr);
@@ -2058,6 +2073,7 @@ angular.module('app.editarVoladuraMapa', [])
                         datagral: doc.datagral,
                         sismo: doc.sismo,
                         datacamion: doc.datacamion,
+                        updatedby: $scope.usr.u,
                     });
                 }).then(function() {
                     return localprojDB.get(id);
@@ -2214,6 +2230,7 @@ angular.module('app.editarVoladuraMapa', [])
                             datagral: doc.datagral,
                             sismo: doc.sismo,
                             datacamion: doc.datacamion,
+                            updatedby: $scope.usr.u,
                         });
                     }).then(function() {
                         return localprojDB.get(id);
@@ -2303,6 +2320,7 @@ angular.module('app.editarVoladuraMapa', [])
                         datagral: doc.datagral,
                         sismo: doc.sismo,
                         datacamion: doc.datacamion,
+                        updatedby: $scope.usr.u,
 
                     });
                 }).then(function(response) {

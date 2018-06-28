@@ -110,15 +110,15 @@ angular.module('app.adminUser', [])
                 console.log('subieron los productos')
 
             }
-            $scope.removeProd = function(prod) {
+            $scope.removeProd = function(idx) {
                 var index = -1;
 
-                $scope.usuario.some(function(obj, i) {
-                    return obj.u === prod.u ? index = i : false;
-                });
+                //$scope.usuario.some(function(obj, i) {
+                //    return obj.u === prod.u ? index = i : false;
+                //});
 
-                console.log(index);
-                $scope.usuario.splice(index, 1);
+                console.log(idx);
+                $scope.usuario.splice(idx, 1);
 
             };
 

@@ -1,7 +1,28 @@
 <ion-view id="page12" hide-back-button="true">
+    <script>
+        var __allChart = []; //array to hold the charts when they are created
+        var __allChartCanvasId = []; //IDs of the canvas - in step with chart array
 
+        //... Create the charts and add them to the array making a note of the canvas IDs 
+
+
+        //... All charts have been created (Android - the charts will be invisible but created behind the scenes)
+
+        function fixCharts() {
+            var chart = null;
+            var elt = null;
+            for (var i = 0; i < __allChart.length; i++) {
+                chart = __allChart[i];
+                //chart should have already been created behind the scenes - if animation mode, call the below after animation complete
+                //Now get the canvas wrapper div, get the canvas image chart as a Base64Image, then rewrite the contents of the wrapper DIV to remove the canvas
+                elt = $('#' + __allChartCanvasId[i]); //jquery syntax
+                elt.parent().html('<img style="max-height:100%;height:auto;width:100%;max-width:100%;margin:auto;display:inline;" src="' + chart.toBase64Image() + '" />');
+            };
+        }
+        setTimeout("fixCharts();", 500); //allow some time after chart creation to get the base64 images
+    </script>
     <ion-nav-title>
-        Proyecto: {{projNam}} Avance: {{countUpdatedBarras()}}/{{Barrenos.length}}
+        Proyecto: {{projNam}} Avance: {{countUpdatedBarras()}}/{{Barrenos.length}} - {{usr.u}}
     </ion-nav-title>
     <ion-nav-buttons side="left">
         <button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"><i class="icon ion-navicon"></i></button>
@@ -83,12 +104,14 @@
                         <i class="icon ion-ios-plus"></i>
                     </div>
                 </div>
+                <br>
 
+                <center> <strong>{{mensajeUpdate}}</strong></center>
                 <button id="editarVoladuranMapa-butto33" ng-disabled="letUpdateButton" ng-hide="disableAddNewBarr" ng-click="updateBarr(); shownewBarrForm=false; selectedBarreno=[];" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-android-checkmark-circle"></button>
                 <button id="editarVoladuranMapa-butto33" ng-click="cloneSelectedBarr();" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-ios-copy"></button>
                 <button id="editarVoladuranMapa-butto33" ng-click="dataChartBarrs()" style="border-radius:50px 50px 50px 50px;" class="button button-positive button-block icon-center ion-ios-refresh-outline"></button>
-
-                <strong>{{message}}</strong>
+                <br>
+                <center><strong>{{message}}</strong></center>
 
                 <div ng-show="showCoordControl=='yes'">
                     <center>

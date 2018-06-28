@@ -8,14 +8,30 @@
 angular.module('app', ['ionic', 'pouchdb', 'chart.js', 'xeditable', 'ngcsv', 'ngSanitize', 'ngCsv', 'ngCsvImport', 'app.controllers', 'app.routes',
     'app.directives', 'app.services', 'barrenos', 'productos', 'iniciadores', 'htmlToPdfSave', 'productosgranel', 'ionic.native', 'AngularPrint', 'app.editarVoladuraMapa', 'app.ajustarCSV', 'app.parametrosVoladura1',
     'app.editProds', 'app.admincons', 'app.adminCrearTipos', 'app.adminExplo', 'app.generarReporteDatosGenerales', 'app.adminCamion', 'app.subirSismo', 'ngFileUpload', 'app.vistaDeReporte',
-    'app.reporteCarga1', 'app.subirProyecto', 'app.vistaDeProyecto', 'app.adminConductor', 'angularjs-input-file', 'naif.base64', 'pdf', 'app.dataCamion', 'app.tomaDeMuestra', 'app.login', 'app.reporteCamion', 'app.vistaPreviaMuestra', 'app.adminUser',
+    'app.reporteCarga1', 'app.subirProyecto', 'app.vistaDeProyecto', 'app.adminConductor', 'angularjs-input-file', 'naif.base64', 'pdf', 'app.dataCamion', 'app.tomaDeMuestra', 'app.login', 'app.reporteCamion', 'app.vistaPreviaMuestra', 'app.adminUser', 'ngStorage',
 ])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider) {
 
-    $sceDelegateProvider.resourceUrlWhitelist(['self', '*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
+        $sceDelegateProvider.resourceUrlWhitelist(['self', '*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 
-})
+    })
+    .config(['$httpProvider', function($httpProvider) {
+        //initialize get if not there
+        if (!$httpProvider.defaults.headers.get) {
+            $httpProvider.defaults.headers.get = {};
+        }
+
+        // Answer edited to include suggestions from comments
+        // because previous version of code introduced browser-related errors
+
+        //disable IE ajax request caching
+        $httpProvider.defaults.headers.get['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+        // extra
+        $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
+        $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+    }])
+
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

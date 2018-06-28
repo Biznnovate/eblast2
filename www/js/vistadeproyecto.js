@@ -1,11 +1,11 @@
 angular.module('app.vistaDeProyecto', [])
-    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup', '$window',
+    .controller('vistaDeProyectoCtrl', ['$scope', '$stateParams', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup', '$window', '$localStorage', '$sessionStorage',
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup, $window) {
+        function($scope, $stateParams, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup, $window, $localStorage, $sessionStorage) {
             // Show loader from service
-
+            $scope.projOpened = true;
             $scope.$root.showMenuIcon = true;
             $scope.show = function() {
                 $ionicLoading.show({
@@ -21,12 +21,49 @@ angular.module('app.vistaDeProyecto', [])
                     console.log("The loading indicator is now hidden");
                 });
             };
-            $scope.projparam = {
-                'id': $stateParams.id,
-                'status': $stateParams.status,
-                'proj': $stateParams.proj,
-                'usr': ''
+            $scope.usr = { u: null, t: null }
+
+
+
+            $scope.loadUsr = function() {
+                // console.log('+++++++' + $stateParams.usr.u)
+
+
+                console.log('fue en el if')
+
+                var user = $stateParams.usr.u
+                var access = $stateParams.usr.t
+                $window.localStorage.setItem("tokenu", user);
+                $window.localStorage.setItem("tokent", access);
+
+                // delete $localStorage
+                // $localStorage = { b: $stateParams.usr }
+                $scope.usr = {
+                        u: $window.localStorage.getItem("tokenu"),
+                        t: $window.localStorage.getItem("tokent")
+                    }
+                    //  $scope.usr = $localStorage.b
+
+                console.log('*******' + $scope.usr.u)
+                    // alert($window.localStorage.getItem("tokenu"))
+
+                if ($scope.usr.u == null || $scope.usr.u == 'undefined') {
+
+                    $state.go('menu.login')
+                }
+
             }
+            if ($scope.usr.u == null || $window.localStorage.getItem("tokenu") == null || $window.localStorage.getItem("tokenu") == 'undefined') {
+                $scope.loadUsr();
+            }
+
+
+            if ($scope.usr.u == null) {
+
+                //$state.go('menu.login')
+            }
+
+
 
             $scope.projparam = {
                 'id': $stateParams.id,
@@ -34,11 +71,12 @@ angular.module('app.vistaDeProyecto', [])
                 'proj': $stateParams.proj,
                 'usr': $stateParams.usr
             }
+
             $scope.projID = $scope.projparam.proj || '';
             $scope.showAll = false;
 
-            $scope.usr = $stateParams.usr;
-            console.log($scope.usr.t)
+            // $scope.usr = $scope.loggeduser;
+            // console.log($scope.usr.t)
             $scope.enableAdminButton = false;
             if ($scope.usr.t == 'a') {
 
@@ -232,9 +270,18 @@ angular.module('app.vistaDeProyecto', [])
 
             // $scope.projID = $scope.projparam.proj || '';
             $scope.projOpened = true;
-            $scope.abrirProj = function() {
+
+            $scope.abrirProj = function(obj) {
                 $scope.show();
-                window.location.reload()
+                console.log('++++' + obj.u)
+
+                $scope.selectedProj = '';
+                $scope.projID = '';
+
+                console.log('++++' + $scope.usr) //.then
+                $window.location.reload()
+
+
                 $scope.hide();
             }
             $scope.selectProjFunc = function() {

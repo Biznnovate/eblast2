@@ -1,18 +1,33 @@
 angular.module('app.login', [])
-    .controller('loginCtrl', ['$scope', '$stateParams', 'LoginService', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup', '$window', '$ionicSlideBoxDelegate', '$ionicSideMenuDelegate',
+    .controller('loginCtrl', ['$scope', '$stateParams', 'LoginService', '$state', 'pouchDB', '$timeout', '$ionicLoading', '$ionicPopup', '$window', '$ionicSlideBoxDelegate', '$ionicSideMenuDelegate', '$localStorage', '$sessionStorage',
         // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
         // You can include any angular dependencies as parameters for this function
         // TIP: Access Route Parameters for your page via $stateParams.parameterName
-        function($scope, $stateParams, LoginService, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup, $window, $ionicSlideBoxDelegate, $ionicSideMenuDelegate) {
+        function($scope, $stateParams, LoginService, $state, pouchDB, $timeout, $ionicLoading, $ionicPopup, $window, $ionicSlideBoxDelegate, $ionicSideMenuDelegate, $localStorage, $sessionStorage) {
 
+            // var token = "este es el token"
+            // $window.localStorage.setItem("token", token);
 
+            //alert($window.localStorage.getItem("token"))
+            // $scope.$storage = $localStorage.$default({
+            //   u: ''
+            // });
+            //$stateParams.usr = ''
+            delete $localStorage;
+            $window.localStorage.removeItem("tokenU")
             $scope.logout = function() {
+
                 $window.location.reload();
+                // $scope.stateParams.usr = ''
             }
 
             if ($stateParams.usr != '') {
+
                 $scope.logout();
+
             }
+
+            // alert($scope.$storage.u)
 
             $ionicSideMenuDelegate.canDragContent(false)
             $scope.showmenu = false;
@@ -80,24 +95,27 @@ angular.module('app.login', [])
 
             $scope.login = function(data) {
                 $scope.sync();
+
                 var rows = $scope.adminu;
                 var u = data.username
                 var p = data.password
                 $scope.dbu = '';
                 $scope.dbp = '';
+                $scope.dbus = '';
                 console.log('u ' + u + ' p ' + p)
                 angular.forEach(rows, function(users) {
                         //console.log(users)
                         if (users.u === u) {
                             $scope.dbu = users.u;
                             $scope.dbp = users.p;
-                            $scope.dbus = users
+                            $scope.dbus = { u: users.u, p: users.p, t: users.t }
                         }
 
                     }
 
 
                 )
+
                 LoginService.loginUser(u, p, $scope.dbu, $scope.dbp).success(function(data) {
                     console.log(data)
                     $state.go('menu.vistaDeProyecto', { 'usr': $scope.dbus });
