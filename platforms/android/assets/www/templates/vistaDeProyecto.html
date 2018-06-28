@@ -36,10 +36,12 @@
                 <tr>
                     <th><strong>Proyecto</strong></th>
                     <th><strong>Fecha</strong></th>
+                    <th><strong>Ultima Actualización</strong></th>
                 </tr>
                 <tr ng-repeat="proj in projInfo.rows | orderBy: 'doc.date':true" on-drag-left="showEditProd=false" on-double-tap="showEditProd=true">
                     <td>{{proj.doc.proj}}</td>
                     <td>{{proj.doc.date}}</td>
+                    <td>{{proj.doc.updatedby}}</td>
                     <td ng-show="showEditProd"><button ng-click="selectProj(proj)" class="button button-positive button-full button-clear icon ion-android-checkbox-outline"></button></td>
                     <td ng-show="showEditProd"><button ng-click="showConfirm(proj)" class="button button-positive button-full button-clear icon ion-android-delete"></button></td>
                 </tr>
