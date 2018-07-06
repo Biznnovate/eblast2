@@ -110,8 +110,9 @@ angular.module('app.login', [])
                 console.log('u ' + u + ' p ' + p)
                 angular.forEach(rows, function(users) {
                         //console.log(users)
-                        if (users.u === u) {
-                            $scope.dbu = users.u;
+
+                        if (users.u.toLowerCase() === u.toLowerCase()) {
+                            $scope.dbu = users.u.toLowerCase();
                             $scope.dbp = users.p;
                             $scope.dbus = { u: users.u, p: users.p, t: users.t }
                         }
@@ -121,7 +122,7 @@ angular.module('app.login', [])
 
                 )
 
-                LoginService.loginUser(u, p, $scope.dbu, $scope.dbp).success(function(data) {
+                LoginService.loginUser(u.toLowerCase(), p, $scope.dbu, $scope.dbp).success(function(data) {
                     console.log(data)
                     $state.go('menu.vistaDeProyecto', { 'usr': $scope.dbus });
                 }).error(function(data) {
