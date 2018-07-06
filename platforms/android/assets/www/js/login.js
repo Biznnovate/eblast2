@@ -59,6 +59,7 @@ angular.module('app.login', [])
 
                 $scope.hide();
             }
+
             let localAdminDB = new pouchDB('admin');
             let remoteAdminDB = new PouchDB('https://00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix.cloudant.com/eblast-admin', { skipSetup: true });
             remoteAdminDB.login('00f2357b-9163-4332-9dce-6c8fa099eb55-bluemix', 'c9df512c425d8e0673255933bac2b2daa7ebdef9ad2806b48c5a2dd1239925b1').then(function(batman) {
@@ -74,7 +75,7 @@ angular.module('app.login', [])
 
             $scope.loadAdminDBFunc = function() {
                 $scope.show();
-
+                $scope.sync();
                 var id = 'user';
                 $scope.adminu = [];
                 localAdminDB.get(id).then(function(doc) {
@@ -85,11 +86,15 @@ angular.module('app.login', [])
                     console.log(err);
 
                 });
+                console.log('downloaded usrs')
+                console.log($scope.adminu)
                 $scope.hide();
 
             }
-
-
+            $scope.reloadPage = function() {
+                $window.location.reload()
+            }
+            $scope.sync();
             $scope.data = [];
             $scope.loadAdminDBFunc();
 
